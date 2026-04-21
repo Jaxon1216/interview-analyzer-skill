@@ -1,44 +1,42 @@
-# interview-analyzer-skill
+<div align="center">
+  <h1>interview-analyzer-skill</h1>
+  <p><a href="README.md">简体中文</a></p>
+  <p><em>Turn your project experience into interview-ready docs you can actually explain and defend.</em></p>
+  <p>
+    <a href="SKILL.md"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
+    <img alt="Type: Agent Skill" src="https://img.shields.io/badge/Type-Agent%20Skill-7c3aed">
+    <img alt="Cursor Compatible" src="https://img.shields.io/badge/Cursor-Compatible-00B8D9">
+    <img alt="VS Code Compatible" src="https://img.shields.io/badge/VS%20Code-Compatible-007ACC?logo=visual-studio-code&logoColor=white">
+    <img alt="Copilot Compatible" src="https://img.shields.io/badge/Copilot-Compatible-222222?logo=githubcopilot&logoColor=white">
+    <img alt="Codex Compatible" src="https://img.shields.io/badge/Codex-Compatible-0A66C2">
+  </p>
+</div>
 
-[简体中文](README.md)
+Generate two practical interview-prep docs from a real codebase (written to your target project root):
 
-Turn a real project into two practical interview docs in your workspace root:
+- `导学-{short-name}.md`: key highlights, code-reading path, and study checklist
+- `面经-{short-name}.md`: resume-ready summary + STAR speaking answers
 
-- `导学-{简称}.md`: key highlights, code-reading path, and study checklist
-- `面经-{简称}.md`: resume-ready summary + interview-focused STAR speaking answers
+## Demo
 
-This skill is designed for engineering interviews and avoids generic filler.
+This merged screenshot shows both trigger input and interview output:
 
-## Demo (3 Steps)
-
-### 1. Trigger in chat
-
-Use `/interview-analyzer-skill` with short name and project context.
-
-![Trigger](image/trigger.png)
-
-### 2. Guidance output
-
-The skill generates a guidance doc focused on what to learn first and where to read in the repo.
-
-![Guidance](image/guidance.png)
-
-### 3. Interview output
-
-The skill generates interview Q&A content with first-person STAR speaking answers.
-
-![Interview Bible](image/interviewBible.png)
+![Demo](demo.jpg)
 
 ## Outputs
 
 | File | Purpose |
 |------|---------|
-| `导学-{简称}.md` | Prerequisites, key highlights, reading order, recommended repo paths, and optional measurement suggestions |
-| `面经-{简称}.md` | 1-2 sentence resume summary, bullets, and 15-25 interview questions with STAR-style speaking answers |
+| `导学-{short-name}.md` | Prerequisites, key highlights, reading order, repo paths, design decisions, optional measurement suggestions |
+| `面经-{short-name}.md` | 1-2 sentence resume summary, project bullets, and 15-25 interview questions |
 
 ## Quick Start
 
-### 1) Clone this repository
+### Installation mode
+
+Current installation mode is **clone + install.sh** (not `npx`).
+
+### 1) Clone
 
 ```bash
 git clone https://github.com/Jaxon1216/interview-analyzer-skill.git
@@ -46,7 +44,12 @@ cd interview-analyzer-skill
 chmod +x install.sh
 ```
 
-### 2) Install the skill
+### 2) Install skill
+
+Run location matters:
+
+- User-level install (global): run inside this `interview-analyzer-skill` repository.
+- Project-level install (current project only): `cd` into your target project root first.
 
 Auto-detect platform:
 
@@ -63,49 +66,66 @@ Common explicit installs:
 ./install.sh --platform codex --project
 ```
 
-### 3) Use in a target project
+Install into a target project explicitly:
 
-Open your target project workspace, start a new chat, then trigger:
+```bash
+cd /path/to/your-project
+/path/to/interview-analyzer-skill/install.sh --platform cursor --project
+```
+
+Need all options?
+
+```bash
+./install.sh --help
+```
+
+Supported `--platform` values:
+
+`claude-code`, `copilot`, `cursor`, `windsurf`, `cline`, `codex`, `gemini`, `kiro`, `trae`, `goose`, `opencode`, `roo-code`, `antigravity`, `universal`
+
+### 3) Trigger in your target project
 
 ```text
-/interview-analyzer-skill 简称：电商；项目描述：......（背景/职责/难点/结果）；技术栈：Vue3、Pinia、Vite；求职方向：前端
+/interview-analyzer-skill 简称：电商；项目描述：...；技术栈：Vue3、Pinia、Vite；求职方向：前端
 ```
 
 The skill writes output files to the target project's root.
 
 ## Repository Structure
 
-- `SKILL.md`: skill contract and output requirements
-- `references/`: rubrics and output templates
-- `scripts/`: helper scripts for input checking and prompt building
-- `install.sh`: cross-platform installer
-- `image/`: README demo screenshots
+```text
+interview-analyzer-skill/
+|-- SKILL.md
+|-- install.sh
+|-- README.md
+|-- README_EN.md
+|-- demo.jpg
+|-- references/
+|   |-- interview-rubric.md
+|   |-- star-framework.md
+|   |-- output-templates.md
+|   `-- oral-and-resume-patterns.md
+`-- scripts/
+    |-- check_inputs.py
+    `-- build_prompt.py
+```
 
 ## Upgrade
 
-Installed skill folders are copied artifacts. They do not auto-update when this GitHub repo changes.
-
-To upgrade:
+Installed skill folders are copied artifacts and do not auto-update.
 
 ```bash
-cd interview-analyzer-skill
 git pull
 ./install.sh --platform <your-platform> [--project]
 ```
 
-## FAQ
+## Support
 
-### Do users need the whole repository?
+If this project helps you, feel free to:
 
-Yes. The skill depends on `SKILL.md`, `references/`, `scripts/`, and `install.sh` together.
-
-### Is measurement section mandatory in both docs?
-
-No. It is an optional suggestion in guidance; interview doc does not require a separate measurement section.
-
-### Can I use this with VS Code-based tools?
-
-Yes. Use `--platform copilot`, `--platform cline`, or `--platform roo-code` depending on your setup.
+- Star the repo
+- Fork and customize for your own interview workflow
+- Open Issues / PRs to improve it together
 
 ## License
 

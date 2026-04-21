@@ -1,8 +1,6 @@
-# interview-analyzer-skill
-
-[English](README_EN.md)
-
 <div align="center">
+  <h1>interview-analyzer-skill</h1>
+  <p><a href="README_EN.md">English</a></p>
   <p><em>把你的项目经历，变成可复述、可追问、可上场的面试战斗手册。</em></p>
   <p>
     <a href="SKILL.md"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
@@ -14,49 +12,23 @@
   </p>
 </div>
 
-
 把真实项目快速整理成两份可直接用于面试准备的文档（输出到目标项目根目录）：
 
 - `导学-{简称}.md`：重点亮点、代码阅读路径、学习顺序与必备知识点
 - `面经-{简称}.md`：简历可用摘要 + 面试题口播（第一人称 STAR）
 
-## 效果演示（3 步）
+## 效果演示
 
-### 1）触发
+下面这张合并图展示了触发输入与面经输出示例：
 
-在对话中输入 `/interview-analyzer-skill`，并提供简称 + 项目描述。
-
-<p align="center">
-  <img src="image/trigger.png" alt="trigger" width="100%" />
-</p>
-
-兜底预览（若本地 Markdown 不渲染 HTML）：
-
-![trigger](image/trigger.png)
-
-
-### 2）输出结果（导学 + 面经）
-
-<p align="center">
-  <img src="image/guidance.png" alt="guidance" width="49%" />
-  <img src="image/interviewBible.png" alt="interview bible" width="49%" />
-</p>
-
-兜底预览（若本地 Markdown 不渲染 HTML）：
-
-| 导学结果 | 面经结果 |
-|---|---|
-| ![guidance](image/guidance.png) | ![interview bible](image/interviewBible.png) |
-
+![Demo](demo.jpg)
 
 ## 输出文件
 
-
-| 文件           | 用途                                         |
-| ------------ | ------------------------------------------ |
+| 文件 | 用途 |
+|------|------|
 | `导学-{简称}.md` | 前置知识、重点亮点与学习顺序、推荐阅读（含仓库相对路径）、关键设计决策、可选量化建议 |
-| `面经-{简称}.md` | 1～2 句简历摘要、项目 bullets、15～25 道面试题（主问/追问口播）   |
-
+| `面经-{简称}.md` | 1～2 句简历摘要、项目 bullets、15～25 道面试题（主问/追问口播） |
 
 ## 快速开始（更详细）
 
@@ -132,18 +104,15 @@ interview-analyzer-skill/
 |-- install.sh
 |-- README.md
 |-- README_EN.md
+|-- demo.jpg
 |-- references/
 |   |-- interview-rubric.md
 |   |-- star-framework.md
 |   |-- output-templates.md
 |   `-- oral-and-resume-patterns.md
-|-- scripts/
-|   |-- check_inputs.py
-|   `-- build_prompt.py
-`-- image/
-    |-- trigger.png
-    |-- guidance.png
-    `-- interviewBible.png
+`-- scripts/
+    |-- check_inputs.py
+    `-- build_prompt.py
 ```
 
 ## 升级说明

@@ -47,9 +47,28 @@ cd interview-analyzer-skill
 chmod +x install.sh
 ```
 
-### 2) Install: pick a row, then run the command
+### 2) Install
 
-**Check “current working directory” carefully.** User-level installs usually run `./install.sh` from the **cloned skill repo root**. Project-only installs run from the **application project root** using the **absolute path** to this repo’s `install.sh`.
+**Recommended: auto-detect (no args)** — from the cloned **skill repo root** (`interview-analyzer-skill/`):
+
+```bash
+./install.sh
+```
+
+**What happens when you run `./install.sh`**:
+
+1. **Validates** `SKILL.md` (including frontmatter) in this directory.
+2. **Detects the platform** if you did not pass `--platform`: the script checks common paths in order (e.g. `~/.claude` → Claude Code; else `~/.cursor` or `./.cursor` → Cursor; then Windsurf, Cline, Gemini, etc., and may fall through to Copilot / universal). The **first match** wins.
+3. **Copies** the skill files from this repo into that tool’s **default user-level** location (under your home directory, e.g. Cursor → `~/.cursor/rules/interview-analyzer-skill/`). It does **not** copy the running `install.sh` itself.
+4. For **Cursor**, it also writes **`interview-analyzer-skill.mdc`** next to `SKILL.md` in the install folder.
+5. In some cases it may add a **symlink** under `~/.agents/skills/` pointing at the install (helps Codex-like tools find the skill).
+6. The script prints **success** and short “what to do next” instructions.
+
+If you have **multiple** AI tools installed, auto-detect may pick the **first** one matched; use **`--platform`** (and **`--project`** if needed) from the table below.
+
+**Other cases: explicit platform / single project only**
+
+**Working directory matters**: user-level installs are usually run from the **skill repo root**; project-only installs are run from the **app project root** using the **absolute path** to this repo’s `install.sh`.
 
 | Scenario | Run from | Command | Typical skill location after install |
 |----------|----------|---------|--------------------------------------|
@@ -59,8 +78,6 @@ chmod +x install.sh
 | Codex / `.agents/skills` tools | **App project root** | `/path/to/interview-analyzer-skill/install.sh --platform codex --project` | `your-app/.agents/skills/interview-analyzer-skill/` |
 
 Replace `/path/to/interview-analyzer-skill` with your local clone path.
-
-**Auto-detect (optional)**: from the **skill repo root**, run `./install.sh` with no args. The script guesses the platform from folders on your machine (e.g. `~/.cursor` → Cursor). If you use **multiple** tools, pass **`--platform` explicitly**.
 
 More flags:
 
@@ -149,7 +166,7 @@ If this project helps you:
 
 - **buy me a coffee** (WeChat): scan the QR below—any amount is appreciated.
 
-![WeChat tip QR](donate.jpg)
+<img src="donate.jpg" alt="WeChat tip QR" width="200" />
 
 - **Contact** (feedback, commercial use, derivatives): **jiangxu05@outlook.com**
 - **Star**, **Fork**, **Issues / PRs** are welcome.

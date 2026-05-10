@@ -47,9 +47,28 @@ cd interview-analyzer-skill
 chmod +x install.sh
 ```
 
-### 2）安装 skill：先选场景，再抄命令
+### 2）安装 skill
 
-**务必看清「在哪个目录执行」**：用户级一般在 **skill 克隆下来的仓库根**里跑 `./install.sh`；只给某一个业务项目用时，在 **业务项目根**里用 **skill 的 `install.sh` 绝对路径**。
+**推荐：自动探测（无参数）**——在已克隆的 **skill 仓库根目录**（`interview-analyzer-skill/`）执行：
+
+```bash
+./install.sh
+```
+
+**执行 `./install.sh` 后大致会发生什么**：
+
+1. **校验**本目录下的 `SKILL.md`（含 frontmatter）是否可用。
+2. **自动探测平台**：若未传 `--platform`，脚本会按固定顺序检查本机常见路径（例如存在 `~/.claude` 则视为 Claude Code；否则若存在 `~/.cursor` 或当前目录下有 `.cursor` 则视为 Cursor；再否则 Windsurf、Cline、Gemini 等，最后可能落到 Copilot / universal）。**命中第一个匹配**即作为安装目标。
+3. **拷贝**本仓库中的 skill 内容到该平台的**默认用户级目录**（默认**不是**「当前业务项目」，而是你家目录下的约定路径，例如 Cursor 多为 `~/.cursor/rules/interview-analyzer-skill/`）。**不会**把 `install.sh` 自己拷进去。
+4. 目标为 **Cursor** 时，会在安装目录额外生成 **`interview-analyzer-skill.mdc`**，便于规则加载。
+5. 部分平台组合下，可能还会在 **`~/.agents/skills/`** 下建立指向安装目录的链接（便于 Codex 等工具发现）。
+6. 终端输出 **成功** 提示与简短「接下来怎么用」说明。
+
+若你本机**同时装了多种工具**，自动探测可能装到「最先被匹配到」的那一个；请改用下面表格中的 **`--platform`**（必要时加 **`--project`**）明确指定。
+
+**其他场景：显式平台 / 只给某一个项目安装**
+
+**务必看清「在哪个目录执行」**：用户级仍在 **skill 仓库根**里跑 `./install.sh ...`；只给某一个业务项目用时，在 **业务项目根**里用 **skill 的 `install.sh` 绝对路径**。
 
 | 你的情况 | 在**哪个目录**执行 | 命令 | 装完后 skill 在哪（典型） |
 |----------|-------------------|------|---------------------------|
@@ -59,8 +78,6 @@ chmod +x install.sh
 | Codex / 其他读 `.agents/skills` 的工具 | **业务项目根** | `/path/to/interview-analyzer-skill/install.sh --platform codex --project` | `业务项目/.agents/skills/interview-analyzer-skill/` |
 
 将 `/path/to/interview-analyzer-skill` 换成你本机克隆下来的真实路径。
-
-**无参数自动探测（可选）**：在 **skill 仓库根**执行 `./install.sh`。脚本会根据本机已存在的配置目录**猜测**平台（例如存在 `~/.cursor` 时按 Cursor 处理）。若你同时装了多种工具，**请用 `--platform` 显式指定**，避免装错位置。
 
 更多参数：
 
@@ -147,9 +164,9 @@ git pull
 
 ## 反馈与支持
 
-觉得有帮助？欢迎 **buy me a coffee**——微信扫码即可，金额随意：
+觉得有帮助？欢迎 **buy me a coffee**——金额随意：
 
-![微信收款码](donate.jpg)
+<img src="donate.jpg" alt="微信收款码" width="200" />
 
 - 需求 / 建议 / 商用 / 二开：**jiangxu05@outlook.com**
 - 欢迎 **Star**、**Fork** 按场景定制、**Issue / PR** 一起改进

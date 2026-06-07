@@ -47,6 +47,25 @@ cd interview-analyzer-skill
 chmod +x install.sh
 ```
 
+### Windows note first
+
+`install.sh` is a **POSIX shell** script. It does not run directly in plain `PowerShell` without a compatible shell.
+
+Recommended options on Windows:
+
+1. **Git Bash**: install Git for Windows, then run `bash ./install.sh --help` from the repo root
+2. **WSL**: open a WSL shell, then run `./install.sh --help`
+
+If you are currently in `PowerShell`, use:
+
+```powershell
+git clone https://github.com/Jaxon1216/interview-analyzer-skill.git
+cd interview-analyzer-skill
+bash ./install.sh --dry-run --platform cursor
+```
+
+If dry-run prints the target directory and copy list, your shell setup is ready; rerun without `--dry-run` for the real install.
+
 ### 2) Install
 
 **Recommended: auto-detect (no args)** — from the cloned **skill repo root** (`interview-analyzer-skill/`):
@@ -159,6 +178,16 @@ No. Same as [SKILL.md](SKILL.md): **导学** may end with 「量化与验证（�
 ### Do updates apply automatically?
 
 No. `git pull` and run `install.sh` again.
+
+## Local Validation
+
+The two Python helper scripts have a minimal regression suite with no extra dependencies:
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+Run it after changing `scripts/`, the input contract in `SKILL.md`, or installation examples in the docs.
 
 ## Support
 

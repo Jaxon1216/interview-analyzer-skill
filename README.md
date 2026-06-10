@@ -47,6 +47,23 @@ cd interview-analyzer-skill
 chmod +x install.sh
 ```
 
+### Windows 用户先看这里
+
+`install.sh` 是 **POSIX shell** 脚本，不能直接在纯 `PowerShell` 里双击或裸跑。Windows 下推荐两种方式：
+
+1. **Git Bash**：安装 Git for Windows 后，在仓库根目录执行 `bash ./install.sh --help`
+2. **WSL**：进入 WSL shell 后再执行 `./install.sh --help`
+
+如果你当前在 `PowerShell` 中：
+
+```powershell
+git clone https://github.com/Jaxon1216/interview-analyzer-skill.git
+cd interview-analyzer-skill
+bash ./install.sh --dry-run --platform cursor
+```
+
+看到 dry-run 列出目标目录和待拷贝文件，说明当前 shell 环境已经通了；再去掉 `--dry-run` 正式安装。
+
 ### 2）安装 skill
 
 **推荐：自动探测（无参数）**——在已克隆的 **skill 仓库根目录**（`interview-analyzer-skill/`）执行：
@@ -161,6 +178,16 @@ git pull
 ### 更新后会自动生效吗？
 
 不会。需要拉取最新代码并重新执行 `install.sh`。
+
+## 本地验证
+
+这两个 Python 辅助脚本可以直接跑最小回归测试，无需额外依赖：
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+建议在修改 `scripts/`、`SKILL.md` 输入契约、或 README 中的安装示例后跑一遍。
 
 ## 反馈与支持
 

@@ -54,6 +54,66 @@ warn()    { printf "${YELLOW}[WARN]${NC}  %s\n" "$1"; }
 error()   { printf "${RED}[ERROR]${NC} %s\n" "$1" >&2; }
 
 # ---------------------------------------------------------------------------
+# Safety helpers
+# ---------------------------------------------------------------------------
+resolve_abs_path() {
+    input_path="$1"
+    case "$input_path" in
+        /*) abs_path="$input_path" ;;
+        *)  abs_path="$(pwd)/$input_path" ;;
+    esac
+
+    parent_dir="$(dirname "$abs_path")"
+    leaf_name="$(basename "$abs_path")"
+    resolved_parent="$(cd "$parent_dir" 2>/dev/null && pwd -P || printf '%s' "$parent_dir")"
+    printf '%s/%s\n' "$resolved_parent" "$leaf_name"
+}
+
+assert_safe_remove_target() {
+    target="$1"
+    abs_target="$(resolve_abs_path "$target")"
+
+    case "$abs_target" in
+        ""|"/")
+            error "Refusing to remove unsafe path: '${target}'"
+            exit 3
+            ;;
+    esac
+
+    case "$abs_target" in
+        "${HOME}"|"${HOME}/")
+            error "Refusing to remove home directory: '${abs_target}'"
+            exit 3
+            ;;
+    esac
+
+    if [ "${abs_target}" = "$(pwd -P)" ]; then
+        error "Refusing to remove current working directory: '${abs_target}'"
+        exit 3
+    fi
+}
+
+remove_tree_safe() {
+    target="$1"
+    assert_safe_remove_target "$target"
+    rm -rf "$target"
+}
+
+should_skip_copy_entry() {
+    entry_name="$1"
+    install_script_name="$2"
+
+    case "$entry_name" in
+        "."|".."|"$install_script_name"|".git"|".idea"|".vscode")
+            return 0
+            ;;
+        *)
+            return 1
+            ;;
+    esac
+}
+
+# ---------------------------------------------------------------------------
 # Usage / help
 # ---------------------------------------------------------------------------
 show_help() {
@@ -535,7 +595,7 @@ install_universal_secondary() {
 
     # Remove existing entry if present
     if [ -e "$universal_dir" ] || [ -L "$universal_dir" ]; then
-        rm -rf "$universal_dir"
+        remove_tree_safe "$universal_dir"
     fi
 
     # Try symlink first, fallback to copy
@@ -563,8 +623,7 @@ install_files() {
         for file in "${SCRIPT_DIR}"/*; do
             [ -e "$file" ] || continue
             fname="$(basename "$file")"
-            # Skip the install script itself
-            [ "$fname" = "$install_script_name" ] && continue
+            should_skip_copy_entry "$fname" "$install_script_name" && continue
             info "Would copy: ${fname}"
             file_count=$((file_count + 1))
         done
@@ -572,7 +631,7 @@ install_files() {
         for file in "${SCRIPT_DIR}"/.*; do
             [ -e "$file" ] || continue
             fname="$(basename "$file")"
-            if [ "$fname" = "." ] || [ "$fname" = ".." ]; then continue; fi
+            should_skip_copy_entry "$fname" "$install_script_name" && continue
             info "Would copy: ${fname}"
             file_count=$((file_count + 1))
         done
@@ -583,7 +642,7 @@ install_files() {
 
     # Clean existing install for idempotency (remove stale files from prior installs).
     if [ -d "$INSTALL_DIR" ]; then
-        rm -rf "$INSTALL_DIR"
+        remove_tree_safe "$INSTALL_DIR"
     fi
 
     # Create destination directory.
@@ -597,7 +656,7 @@ install_files() {
     for file in "${SCRIPT_DIR}"/*; do
         [ -e "$file" ] || continue
         fname="$(basename "$file")"
-        [ "$fname" = "$install_script_name" ] && continue
+        should_skip_copy_entry "$fname" "$install_script_name" && continue
 
         if ! cp -R "$file" "${INSTALL_DIR}/" 2>/dev/null; then
             error "Failed to copy ${fname} to ${INSTALL_DIR}/"
@@ -611,7 +670,7 @@ install_files() {
     for file in "${SCRIPT_DIR}"/.*; do
         [ -e "$file" ] || continue
         fname="$(basename "$file")"
-        [ "$fname" = "." ] || [ "$fname" = ".." ] && continue
+        should_skip_copy_entry "$fname" "$install_script_name" && continue
 
         if ! cp -R "$file" "${INSTALL_DIR}/" 2>/dev/null; then
             error "Failed to copy ${fname} to ${INSTALL_DIR}/"

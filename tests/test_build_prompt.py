@@ -50,6 +50,18 @@ class BuildPromptTests(unittest.TestCase):
         self.assertIn("### 求职方向（可选）", prompt)
         self.assertIn("### 补充说明", prompt)
 
+    def test_build_prompt_clarifies_main_question_counting(self):
+        prompt = build_prompt.build_prompt(
+            description="负责交易链路项目分析与面试题生成",
+            tech_stack="Python",
+            role_focus="AI",
+            short_name="交易",
+            extra="补充信息",
+        )
+
+        self.assertIn("主问题 15～25", prompt)
+        self.assertIn("追问不计入总数", prompt)
+
     def test_main_reads_json_file(self):
         payload = {
             "description": "负责交易链路项目分析与面试题生成",

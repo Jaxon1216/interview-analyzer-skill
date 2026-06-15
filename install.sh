@@ -579,6 +579,13 @@ generate_plain_rule() {
 # Universal .agents/skills/ secondary install (symlink or copy)
 # ---------------------------------------------------------------------------
 install_universal_secondary() {
+    # Project-level installs should stay inside the current project. Do not
+    # create user-level discovery links, otherwise a one-project test install
+    # unexpectedly pollutes ~/.agents/skills.
+    if $PROJECT_LEVEL; then
+        return 0
+    fi
+
     # Skip if primary target is already .agents/
     case "$PLATFORM" in
         codex|antigravity|universal) return 0 ;;

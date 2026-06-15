@@ -78,7 +78,7 @@ bash ./install.sh --dry-run --platform cursor
 2. **自动探测平台**：若未传 `--platform`，脚本会按固定顺序检查本机常见路径（例如存在 `~/.claude` 则视为 Claude Code；否则若存在 `~/.cursor` 或当前目录下有 `.cursor` 则视为 Cursor；再否则 Windsurf、Cline、Gemini 等，最后可能落到 Copilot / universal）。**命中第一个匹配**即作为安装目标。
 3. **拷贝**本仓库中的 skill 内容到该平台的**默认用户级目录**（默认**不是**「当前业务项目」，而是你家目录下的约定路径，例如 Cursor 多为 `~/.cursor/rules/interview-analyzer-skill/`）。**不会**把 `install.sh` 自己拷进去。
 4. 目标为 **Cursor** 时，会在安装目录额外生成 **`interview-analyzer-skill.mdc`**，便于规则加载。
-5. 部分平台组合下，可能还会在 **`~/.agents/skills/`** 下建立指向安装目录的链接（便于 Codex 等工具发现）。
+5. **用户级安装**的部分平台组合下，可能还会在 **`~/.agents/skills/`** 下建立指向安装目录的链接（便于 Codex 等工具发现）。使用 `--project` 做项目级安装时不会写入 `~/.agents/skills/`，避免临时测试污染全局环境。
 6. 终端输出 **成功** 提示与简短「接下来怎么用」说明。
 
 若你本机**同时装了多种工具**，自动探测可能装到「最先被匹配到」的那一个；请改用下面表格中的 **`--platform`**（必要时加 **`--project`**）明确指定。

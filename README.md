@@ -66,35 +66,32 @@ bash ./install.sh --dry-run --platform cursor
 
 ### 2）安装 skill
 
-**推荐：自动探测（无参数）**——在已克隆的 **skill 仓库根目录**（`interview-analyzer-skill/`）执行：
+#### 显式安装
+
+推荐显式指定平台，尤其是电脑里同时装了多个 Agent 工具时。下面命令都在 **skill 仓库根目录**（`interview-analyzer-skill/`）执行：
+
+```bash
+cd /path/to/interview-analyzer-skill
+chmod +x install.sh
+```
+
+| 平台 | 命令 | 安装效果 |
+|------|------|----------|
+| Codex / 通用 Agent 目录 | `./install.sh --platform codex` | 安装到 `~/.agents/skills/interview-analyzer-skill/` |
+| Claude Code | `./install.sh --platform claude-code` | 安装到 `~/.claude/skills/interview-analyzer-skill/`，并在 `~/.agents/skills/` 下创建通用发现链接 |
+| Trae | `./install.sh --platform trae` | 安装到 `~/.trae/skills/interview-analyzer-skill/`，并在 `~/.agents/skills/` 下创建通用发现链接 |
+
+安装完成后，重启对应 Agent / IDE，开启新对话即可加载 `SKILL.md`。`~/.agents/skills/` 是部分 Agent 工具会读取的通用 skill 目录；用户级安装时，脚本可能会在这里创建指向主安装目录的链接，便于跨工具发现。
+
+#### 一键自动探测安装
+
+也可以在 **skill 仓库根目录** 直接执行：
 
 ```bash
 ./install.sh
 ```
 
-**执行 `./install.sh` 后大致会发生什么**：
-
-1. **校验**本目录下的 `SKILL.md`（含 frontmatter）是否可用。
-2. **自动探测平台**：若未传 `--platform`，脚本会按固定顺序检查本机常见路径（例如存在 `~/.claude` 则视为 Claude Code；否则若存在 `~/.cursor` 或当前目录下有 `.cursor` 则视为 Cursor；再否则 Windsurf、Cline、Gemini 等，最后可能落到 Copilot / universal）。**命中第一个匹配**即作为安装目标。
-3. **拷贝**本仓库中的 skill 内容到该平台的**默认用户级目录**（默认**不是**「当前业务项目」，而是你家目录下的约定路径，例如 Cursor 多为 `~/.cursor/rules/interview-analyzer-skill/`）。**不会**把 `install.sh` 自己拷进去。
-4. 目标为 **Cursor** 时，会在安装目录额外生成 **`interview-analyzer-skill.mdc`**，便于规则加载。
-5. **用户级安装**的部分平台组合下，可能还会在 **`~/.agents/skills/`** 下建立指向安装目录的链接（便于 Codex 等工具发现）。使用 `--project` 做项目级安装时不会写入 `~/.agents/skills/`，避免临时测试污染全局环境。
-6. 终端输出 **成功** 提示与简短「接下来怎么用」说明。
-
-若你本机**同时装了多种工具**，自动探测可能装到「最先被匹配到」的那一个；请改用下面表格中的 **`--platform`**（必要时加 **`--project`**）明确指定。
-
-**其他场景：显式平台 / 只给某一个项目安装**
-
-**务必看清「在哪个目录执行」**：用户级仍在 **skill 仓库根**里跑 `./install.sh ...`；只给某一个业务项目用时，在 **业务项目根**里用 **skill 的 `install.sh` 绝对路径**。
-
-| 你的情况 | 在**哪个目录**执行 | 命令 | 装完后 skill 在哪（典型） |
-|----------|-------------------|------|---------------------------|
-| Cursor，所有项目都能用 | **skill 仓库根**（`interview-analyzer-skill/`） | `./install.sh --platform cursor` | `~/.cursor/rules/interview-analyzer-skill/`，内含 `SKILL.md` 与 `interview-analyzer-skill.mdc` |
-| Cursor，只给**某一个**业务项目 | **业务项目根** | `/path/to/interview-analyzer-skill/install.sh --platform cursor --project` | `业务项目/.cursor/rules/interview-analyzer-skill/`（同样有 `.mdc`） |
-| VS Code + Copilot，仅当前项目 | **业务项目根** | `/path/to/interview-analyzer-skill/install.sh --platform copilot --project` | `业务项目/.github/skills/interview-analyzer-skill/` |
-| Codex / 其他读 `.agents/skills` 的工具 | **业务项目根** | `/path/to/interview-analyzer-skill/install.sh --platform codex --project` | `业务项目/.agents/skills/interview-analyzer-skill/` |
-
-将 `/path/to/interview-analyzer-skill` 换成你本机克隆下来的真实路径。
+脚本会校验 `SKILL.md`，再按本机已存在的工具目录自动选择平台，并把本仓库内容复制到该平台的默认用户级目录。若本机同时存在多个 Agent 工具，自动探测可能命中第一个匹配的平台；这种情况下建议使用上面的 `--platform` 显式安装。
 
 更多参数：
 

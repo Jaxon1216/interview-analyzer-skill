@@ -400,7 +400,7 @@ resolve_install_path() {
             codex)         base="${HOME}/.agents/skills" ;;
             gemini)        base="${HOME}/.gemini/skills" ;;
             kiro)          base="${HOME}/.agents/skills" ;;
-            trae)          base="${HOME}/.agents/skills" ;;
+            trae)          base="${HOME}/.trae/skills" ;;
             goose)         base="${HOME}/.config/goose/skills" ;;
             opencode)      base="${HOME}/.config/opencode/skills" ;;
             roo-code)      base="${HOME}/.agents/skills" ;;
@@ -592,6 +592,10 @@ install_universal_secondary() {
     esac
 
     universal_dir="${HOME}/.agents/skills/${SKILL_NAME}"
+
+    if [ "$INSTALL_DIR" = "$universal_dir" ]; then
+        return 0
+    fi
 
     if $DRY_RUN; then
         info "Would create universal symlink: ${universal_dir} -> ${INSTALL_DIR}"

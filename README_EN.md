@@ -68,35 +68,32 @@ If dry-run prints the target directory and copy list, your shell setup is ready;
 
 ### 2) Install
 
-**Recommended: auto-detect (no args)** — from the cloned **skill repo root** (`interview-analyzer-skill/`):
+#### Explicit Install
+
+Explicit platform selection is recommended, especially if you have multiple agent tools installed. Run these commands from the **skill repo root** (`interview-analyzer-skill/`):
+
+```bash
+cd /path/to/interview-analyzer-skill
+chmod +x install.sh
+```
+
+| Platform | Command | Result |
+|----------|---------|--------|
+| Codex / universal agent directory | `./install.sh --platform codex` | Installs to `~/.agents/skills/interview-analyzer-skill/` |
+| Claude Code | `./install.sh --platform claude-code` | Installs to `~/.claude/skills/interview-analyzer-skill/` and creates a universal discovery link under `~/.agents/skills/` |
+| Trae | `./install.sh --platform trae` | Installs to `~/.trae/skills/interview-analyzer-skill/` and creates a universal discovery link under `~/.agents/skills/` |
+
+After installation, restart the target Agent / IDE and start a new chat to load `SKILL.md`. `~/.agents/skills/` is a universal skill directory used by some agent tools; for user-level installs, this script may create a link there pointing to the primary install path.
+
+#### One-Step Auto-Detect Install
+
+You can also run this from the **skill repo root**:
 
 ```bash
 ./install.sh
 ```
 
-**What happens when you run `./install.sh`**:
-
-1. **Validates** `SKILL.md` (including frontmatter) in this directory.
-2. **Detects the platform** if you did not pass `--platform`: the script checks common paths in order (e.g. `~/.claude` → Claude Code; else `~/.cursor` or `./.cursor` → Cursor; then Windsurf, Cline, Gemini, etc., and may fall through to Copilot / universal). The **first match** wins.
-3. **Copies** the skill files from this repo into that tool’s **default user-level** location (under your home directory, e.g. Cursor → `~/.cursor/rules/interview-analyzer-skill/`). It does **not** copy the running `install.sh` itself.
-4. For **Cursor**, it also writes **`interview-analyzer-skill.mdc`** next to `SKILL.md` in the install folder.
-5. In some cases it may add a **symlink** under `~/.agents/skills/` pointing at the install (helps Codex-like tools find the skill).
-6. The script prints **success** and short “what to do next” instructions.
-
-If you have **multiple** AI tools installed, auto-detect may pick the **first** one matched; use **`--platform`** (and **`--project`** if needed) from the table below.
-
-**Other cases: explicit platform / single project only**
-
-**Working directory matters**: user-level installs are usually run from the **skill repo root**; project-only installs are run from the **app project root** using the **absolute path** to this repo’s `install.sh`.
-
-| Scenario | Run from | Command | Typical skill location after install |
-|----------|----------|---------|--------------------------------------|
-| Cursor, all projects | **Skill repo root** | `./install.sh --platform cursor` | `~/.cursor/rules/interview-analyzer-skill/` with `SKILL.md` and `interview-analyzer-skill.mdc` |
-| Cursor, **one** app only | **App project root** | `/path/to/interview-analyzer-skill/install.sh --platform cursor --project` | `your-app/.cursor/rules/interview-analyzer-skill/` (includes `.mdc`) |
-| VS Code + Copilot, project only | **App project root** | `/path/to/interview-analyzer-skill/install.sh --platform copilot --project` | `your-app/.github/skills/interview-analyzer-skill/` |
-| Codex / `.agents/skills` tools | **App project root** | `/path/to/interview-analyzer-skill/install.sh --platform codex --project` | `your-app/.agents/skills/interview-analyzer-skill/` |
-
-Replace `/path/to/interview-analyzer-skill` with your local clone path.
+The script validates `SKILL.md`, auto-detects a platform from existing tool folders on your machine, then copies this repo into that platform's default user-level location. If multiple agent tools are installed, auto-detect may pick the first matching platform; in that case, prefer the explicit `--platform` commands above.
 
 More flags:
 

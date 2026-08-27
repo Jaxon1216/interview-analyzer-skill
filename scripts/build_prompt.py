@@ -59,7 +59,7 @@ def build_prompt(
         Markdown string to paste into a chat or pipe to an LLM.
     """
     lines: list[str] = [
-        "请严格按 `interview-analyzer-skill` 执行：在**工作区根目录**写入两个文件：",
+        "请严格按 `project-interview-skill` 执行：在**工作区根目录**写入两个文件：",
         "`导学-{简称}.md` 与 `面经-{简称}.md`；量化与验证仅作为导学中的可选建议项。",
         "",
         "## 已确认输入",
@@ -124,7 +124,7 @@ def _load_json(path: Path) -> dict[str, Any]:
 def main(argv: list[str] | None = None) -> int:
     """CLI entry point."""
     parser = argparse.ArgumentParser(
-        description="Build consolidated prompt for interview-analyzer-skill."
+        description="Build consolidated prompt for project-interview-skill."
     )
     parser.add_argument(
         "--description",

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Validate project narrative inputs for interview-analyzer-skill.
+Validate project narrative inputs for project-interview-skill.
 
 Reads UTF-8 text from stdin or a file, checks for minimum signal,
 and prints suggested follow-up questions in Chinese.
@@ -113,7 +113,7 @@ def analyze(description: str, tech_stack: str | None, role_focus: str | None) ->
 def main(argv: list[str] | None = None) -> int:
     """CLI entry point."""
     parser = argparse.ArgumentParser(
-        description="Check project description completeness for interview-analyzer-skill."
+        description="Check project description completeness for project-interview-skill."
     )
     parser.add_argument(
         "-f",
@@ -159,7 +159,7 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     status = "PASS" if result.ok else "NEEDS_INPUT"
-    print(f"[{status}] interview-analyzer-skill input check\n")
+    print(f"[{status}] project-interview-skill input check\n")
     if result.missing:
         print("必须补齐：")
         for item in result.missing:

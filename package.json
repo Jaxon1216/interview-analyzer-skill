@@ -1,0 +1,33 @@
+{
+  "name": "project-interview-skill",
+  "version": "1.1.0",
+  "description": "Install a project interview preparation skill for AI coding agents.",
+  "license": "MIT",
+  "author": "EastonJiang <jiangxu05@outlook.com>",
+  "homepage": "https://github.com/Jaxon1216/interview-analyzer-skill#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jaxon1216/interview-analyzer-skill.git"
+  },
+  "bin": {
+    "project-interview-skill": "bin/project-interview-skill.js"
+  },
+  "files": [
+    "bin/",
+    "SKILL.md",
+    "references/",
+    "scripts/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "python3 -m unittest discover -s tests -v",
+    "pack:check": "npm pack --dry-run"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

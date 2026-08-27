@@ -1,13 +1,14 @@
 <div align="center">
-  <h1>interview-analyzer-skill</h1>
-  <p><a href="README_EN.md">English</a></p>
+  <h1>project-interview-skill</h1>
+  <p><a href="https://github.com/Jaxon1216/interview-analyzer-skill/blob/main/README_EN.md">English</a></p>
   <p><em>把你的项目经历，变成可复述、可追问、可上场的面试战斗手册。</em></p>
   <p>
     <a href="SKILL.md"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
     <img alt="Type: Agent Skill" src="https://img.shields.io/badge/Type-Agent%20Skill-7c3aed">
+    <img alt="Trae Compatible" src="https://img.shields.io/badge/Trae-Compatible-111827">
     <img alt="Cursor Compatible" src="https://img.shields.io/badge/Cursor-Compatible-00B8D9">
     <img alt="VS Code Compatible" src="https://img.shields.io/badge/VS%20Code-Compatible-007ACC?logo=visual-studio-code&logoColor=white">
-    <img alt="Copilot Compatible" src="https://img.shields.io/badge/Copilot-Compatible-222222?logo=githubcopilot&logoColor=white">
+    <img alt="Claude Code Compatible" src="https://img.shields.io/badge/Claude%20Code-Compatible-7c3aed">
     <img alt="Codex Compatible" src="https://img.shields.io/badge/Codex-Compatible-0A66C2">
   </p>
 </div>
@@ -21,182 +22,167 @@
 
 下面这张合并图展示了触发输入与面经输出示例：
 
-![Demo](demo.jpg)
+![Demo](https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/demo.jpg)
 
-## 输出文件
+## 安装方式
 
-| 文件 | 用途 |
-|------|------|
-| `导学-{简称}.md` | 前置知识、必备知识点、推荐阅读（含仓库相对路径）、原理与设计决策；文末可含 **「量化与验证（含待测）」**（建议，与 [SKILL.md](SKILL.md) 一致） |
-| `面经-{简称}.md` | 1～2 句简历摘要、项目 bullets、15～25 道面试题（主问/追问口播）；**不强制**单独量化章节 |
-
-## 快速开始（更详细）
-
-当前是 **clone + install.sh**（不是 `npx`）。
-
-### 安装前要分清的两件事
-
-1. **Skill 装在哪**：`install.sh` 会把本仓库**整份拷贝**到编辑器约定的目录（例如 Cursor 的 `~/.cursor/rules/` 或某项目下的 `.cursor/rules/`）。只有这样，Agent 才能在对话里**加载这份规则**。
-2. **导学 / 面经写在哪**：取决于你**在 IDE 里打开的是哪个文件夹**。在**业务项目**根目录打开工作区并触发 skill 后，`导学-*.md` 与 `面经-*.md` 会出现在**该业务项目的根目录**。这与 skill 的安装路径**不是同一处**。
-
-### 1）克隆仓库
+推荐使用 `npx`，不需要 clone 仓库：
 
 ```bash
-git clone https://github.com/Jaxon1216/interview-analyzer-skill.git
-cd interview-analyzer-skill
-chmod +x install.sh
+npx project-interview-skill install
 ```
 
-### Windows 用户先看这里
+默认安装到用户级通用 Agent 目录：
 
-`install.sh` 是 **POSIX shell** 脚本，不能直接在纯 `PowerShell` 里双击或裸跑。Windows 下推荐两种方式：
-
-1. **Git Bash**：安装 Git for Windows 后，在仓库根目录执行 `bash ./install.sh --help`
-2. **WSL**：进入 WSL shell 后再执行 `./install.sh --help`
-
-如果你当前在 `PowerShell` 中：
-
-```powershell
-git clone https://github.com/Jaxon1216/interview-analyzer-skill.git
-cd interview-analyzer-skill
-bash ./install.sh --dry-run --platform cursor
+```text
+~/.agents/skills/project-interview-skill/
 ```
 
-看到 dry-run 列出目标目录和待拷贝文件，说明当前 shell 环境已经通了；再去掉 `--dry-run` 正式安装。
+如果你明确使用某个编辑器或 Agent，建议显式指定产品：
 
-### 2）安装 skill
+| 目标 | 用户级安装 | 安装位置 |
+|------|------------|----------|
+| 通用 Agent / Codex | `npx project-interview-skill install --agents` | `~/.agents/skills/project-interview-skill/` |
+| Trae | `npx project-interview-skill install --trae` | `~/.trae/skills/project-interview-skill/` |
+| Cursor | `npx project-interview-skill install --cursor` | `~/.cursor/rules/project-interview-skill/` |
+| VS Code | `npx project-interview-skill install --vscode` | `~/.copilot/instructions/project-interview-skill.instructions.md` |
+| Claude Code | `npx project-interview-skill install --claude-code` | `~/.claude/skills/project-interview-skill/` |
+| Codex | `npx project-interview-skill install --codex` | `~/.agents/skills/project-interview-skill/` |
 
-#### 显式安装
-
-推荐显式指定平台，尤其是电脑里同时装了多个 Agent 工具时。下面命令都在 **skill 仓库根目录**（`interview-analyzer-skill/`）执行：
+也可以一次安装到全部支持目标：
 
 ```bash
-cd /path/to/interview-analyzer-skill
-chmod +x install.sh
+npx project-interview-skill install --all
 ```
 
-| 平台 | 命令 | 安装效果 |
-|------|------|----------|
-| Codex / 通用 Agent 目录 | `./install.sh --platform codex` | 安装到 `~/.agents/skills/interview-analyzer-skill/` |
-| Claude Code | `./install.sh --platform claude-code` | 安装到 `~/.claude/skills/interview-analyzer-skill/`，并在 `~/.agents/skills/` 下创建通用发现链接 |
-| Trae | `./install.sh --platform trae` | 安装到 `~/.trae/skills/interview-analyzer-skill/`，并在 `~/.agents/skills/` 下创建通用发现链接 |
-
-安装完成后，重启对应 Agent / IDE，开启新对话即可加载 `SKILL.md`。`~/.agents/skills/` 是部分 Agent 工具会读取的通用 skill 目录；用户级安装时，脚本可能会在这里创建指向主安装目录的链接，便于跨工具发现。
-
-#### 一键自动探测安装
-
-也可以在 **skill 仓库根目录** 直接执行：
+只查看会安装到哪里，不写入文件：
 
 ```bash
-./install.sh
+npx project-interview-skill install --trae --dry-run
+npx project-interview-skill doctor
 ```
 
-脚本会校验 `SKILL.md`，再按本机已存在的工具目录自动选择平台，并把本仓库内容复制到该平台的默认用户级目录。若本机同时存在多个 Agent 工具，自动探测可能命中第一个匹配的平台；这种情况下建议使用上面的 `--platform` 显式安装。
+## 项目级安装
 
-更多参数：
-
-```bash
-./install.sh --help
-```
-
-支持的 `--platform` 值（节选，完整见 `--help`）：`claude-code`、`copilot`、`cursor`、`windsurf`、`cline`、`codex`、`gemini`、`kiro`、`trae`、`goose`、`opencode`、`roo-code`、`antigravity`、`universal`
-
-### 3）确认安装是否成功
-
-- 打开上表中 **「装完后 skill 在哪」** 对应文件夹，应能看到 **`SKILL.md`**；使用 Cursor 时同一目录下还应有 **`interview-analyzer-skill.mdc`**。
-- **效果验证**：用 Cursor（或其他已配置的工具）**打开业务项目根目录**，新建对话，输入 `/interview-analyzer-skill`（或描述「写导学、面经」）。规则生效时，Agent 会按 [SKILL.md](SKILL.md) 在**业务根目录**生成两个 `.md`；若环境无法写文件，应给出两个可保存的 Markdown 代码块。
-
-### 可选：安装前预览（不写入磁盘）
-
-在**业务项目根**执行（路径按你本机修改）：
+如果你只想让某个业务项目使用这个 skill，进入业务项目根目录后执行：
 
 ```bash
 cd /path/to/your-project
-/path/to/interview-analyzer-skill/install.sh --platform cursor --project --dry-run
+npx project-interview-skill install --project --trae
 ```
 
-终端会打印将要创建的路径与拷贝列表，确认无误后再去掉 `--dry-run` 执行一次。
+支持的项目级目标：
 
-### 4）在业务项目里触发
+| 目标 | 项目级安装 | 安装位置 |
+|------|------------|----------|
+| 通用 Agent / Codex | `npx project-interview-skill install --project --agents` | `.agents/skills/project-interview-skill/` |
+| Trae | `npx project-interview-skill install --project --trae` | `.trae/rules/project-interview-skill/` |
+| Cursor | `npx project-interview-skill install --project --cursor` | `.cursor/rules/project-interview-skill/` |
+| VS Code | `npx project-interview-skill install --project --vscode` | `.github/instructions/project-interview-skill.instructions.md` |
+| Claude Code | `npx project-interview-skill install --project --claude-code` | `.claude/skills/project-interview-skill/` |
+| Codex | `npx project-interview-skill install --project --codex` | `.agents/skills/project-interview-skill/` |
 
-在**被分析项目**的工作区开启新对话，例如：
+安装完成后，重启对应 IDE / Agent，开启新对话。
+
+## 使用方式
+
+在被分析项目的工作区开启新对话，例如：
 
 ```text
-/interview-analyzer-skill 简称：电商；项目描述：......（背景/职责/难点/结果）；技术栈：Vue3、Pinia、Vite；求职方向：前端
+/project-interview-skill 简称：电商；项目描述：......（背景/职责/难点/结果）；技术栈：Vue3、Pinia、Vite；求职方向：前端
 ```
 
-随后在**该业务项目根目录**生成 `导学-电商.md`、`面经-电商.md`（简称以你输入为准）。
+随后在该业务项目根目录生成：
+
+| 文件 | 用途 |
+|------|------|
+| `导学-{简称}.md` | 前置知识、必备知识点、推荐阅读（含仓库相对路径）、原理与设计决策；文末可含「量化与验证（含待测）」 |
+| `面经-{简称}.md` | 1～2 句简历摘要、项目 bullets、15～25 道面试题（主问/追问口播） |
+
+也可以不写 slash 命令，直接描述“请基于这个项目生成导学和面经”。
+
+## 源码安装兼容入口
+
+`install.sh` 仍保留给 clone 仓库的用户使用，但它只是 Node CLI 的兼容包装器：
+
+```bash
+git clone https://github.com/Jaxon1216/interview-analyzer-skill.git
+cd interview-analyzer-skill
+./install.sh --trae
+./install.sh --project --cursor
+```
+
+npm 包不会打包 `install.sh`；对普通用户优先推荐 `npx project-interview-skill ...`。
 
 ## 仓库结构
 
 ```text
 interview-analyzer-skill/
+|-- bin/
+|   `-- project-interview-skill.js
 |-- SKILL.md
 |-- install.sh
+|-- package.json
 |-- README.md
 |-- README_EN.md
 |-- demo.jpg
-|-- donate.jpg
 |-- LICENSE
 |-- references/
 |   |-- interview-rubric.md
 |   |-- star-framework.md
 |   |-- output-templates.md
-|   `-- oral-and-resume-patterns.md
-`-- scripts/
-    |-- check_inputs.py
-    `-- build_prompt.py
+|   |-- oral-and-resume-patterns.md
+|   `-- oral-style-samples.md
+|-- scripts/
+|   |-- check_inputs.py
+|   `-- build_prompt.py
+`-- tests/
 ```
 
-## 升级说明
+## 维护与发布
 
-已安装目录是“拷贝产物”，不会随 GitHub 自动更新。
+本项目作为 npm CLI 包发布，不需要编译。npm 包会按 `package.json` 的 `files` 白名单打包：
 
 ```bash
-cd interview-analyzer-skill
-git pull
-./install.sh --platform <你的平台> [--project]
+npm pack --dry-run
+npm publish --access public
+```
+
+本地验证：
+
+```bash
+npm test
+npm run pack:check
+node bin/project-interview-skill.js install --trae --dry-run
 ```
 
 ## 常见问题
 
-### 输入写多详细比较好？
+### `.npmrc` 是必要的吗？
 
-至少包含：项目背景、你的职责、一个关键难点、最终结果。越具体，生成题目越准。
+不是 npm 包必须文件。它只用于本仓库开发时指定 registry。真正发布到公网 npm 的关键配置是 `package.json` 里的 `publishConfig.registry`。
 
-### 生成后我该先看哪份文档？
+### 为什么默认安装到 `.agents/skills`？
 
-建议先看 `导学`（明确学习路径），再看 `面经`（练口播与追问）。
+这是最稳的用户级默认值，不依赖猜测用户正在使用哪个产品。如果你明确使用 Trae、Cursor、VS Code 或 Claude Code，使用对应参数即可。
 
-### 量化与验证是强制的吗？
+### `install` 会自动探测产品吗？
 
-不是。与 [SKILL.md](SKILL.md) 一致：**导学**可在文末增加「量化与验证（含待测）」为**建议**（性能类可写清如何测）；**面经**不要求单独量化章节。
+不会。当前设计刻意收敛：默认只装到通用 `.agents/skills`，分产品安装必须显式指定 `--trae`、`--cursor`、`--vscode`、`--claude-code` 或 `--codex`。`doctor` 只展示路径，不安装。
 
 ### 更新后会自动生效吗？
 
-不会。需要拉取最新代码并重新执行 `install.sh`。
-
-## 本地验证
-
-这两个 Python 辅助脚本可以直接跑最小回归测试，无需额外依赖：
+不会。已安装目录是拷贝产物，需要重新执行安装命令：
 
 ```bash
-python -m unittest discover -s tests -v
+npx project-interview-skill install --trae
 ```
 
-建议在修改 `scripts/`、`SKILL.md` 输入契约、或 README 中的安装示例后跑一遍。
-
 ## 反馈与支持
-
-觉得有帮助？欢迎 **buy me a coffee**——金额随意：
-
-<img src="donate.jpg" alt="微信收款码" width="200" />
 
 - 需求 / 建议 / 商用 / 二开：**jiangxu05@outlook.com**
 - 欢迎 **Star**、**Fork** 按场景定制、**Issue / PR** 一起改进
 
 ## License
 
-本项目采用 **MIT License**，完整条款见 **[LICENSE](LICENSE)**（**英文正文 + 中文参考译文**；若理解有出入，以英文为准）。
-
-使用或再分发本软件时：**请保留**版权与许可声明；**商用 / 二开** 请**标注来源**（例如本仓库链接），便于他人找到原版。
+本项目采用 **MIT License**，完整条款见 **[LICENSE](LICENSE)**（英文正文 + 中文参考译文；若理解有出入，以英文为准）。

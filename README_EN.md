@@ -1,204 +1,188 @@
 <div align="center">
-  <h1>interview-analyzer-skill</h1>
-  <p><a href="README.md">简体中文</a></p>
+  <h1>project-interview-skill</h1>
+  <p><a href="https://github.com/Jaxon1216/interview-analyzer-skill/blob/main/README.md">简体中文</a></p>
   <p><em>Turn your project experience into interview-ready docs you can actually explain and defend.</em></p>
   <p>
     <a href="SKILL.md"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
     <img alt="Type: Agent Skill" src="https://img.shields.io/badge/Type-Agent%20Skill-7c3aed">
+    <img alt="Trae Compatible" src="https://img.shields.io/badge/Trae-Compatible-111827">
     <img alt="Cursor Compatible" src="https://img.shields.io/badge/Cursor-Compatible-00B8D9">
     <img alt="VS Code Compatible" src="https://img.shields.io/badge/VS%20Code-Compatible-007ACC?logo=visual-studio-code&logoColor=white">
-    <img alt="Copilot Compatible" src="https://img.shields.io/badge/Copilot-Compatible-222222?logo=githubcopilot&logoColor=white">
+    <img alt="Claude Code Compatible" src="https://img.shields.io/badge/Claude%20Code-Compatible-7c3aed">
     <img alt="Codex Compatible" src="https://img.shields.io/badge/Codex-Compatible-0A66C2">
   </p>
 </div>
 
-Generate two practical interview-prep docs from a real codebase (written to your **target project root**):
+Generate two practical interview-prep docs from a real codebase, written to the target project root:
 
 - `导学-{short-name}.md`: key highlights, code-reading path, and study checklist
-- `面经-{short-name}.md`: resume-ready summary + STAR speaking answers
+- `面经-{short-name}.md`: resume-ready summary plus first-person STAR speaking answers
 
 ## Demo
 
 This merged screenshot shows both trigger input and interview output:
 
-![Demo](demo.jpg)
+![Demo](https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/demo.jpg)
 
-## Outputs
+## Install
 
-| File | Purpose |
-|------|---------|
-| `导学-{short-name}.md` | Prerequisites, checklist, reading guide (repo-relative paths), design decisions; optional end section **「量化与验证（含待测）」** (recommended; see [SKILL.md](SKILL.md)) |
-| `面经-{short-name}.md` | 1–2 sentence resume summary, project bullets, 15–25 interview questions; **no mandatory** separate measurement section |
-
-## Quick Start
-
-Installation is **clone + install.sh** (not `npx`).
-
-### Two things to understand first
-
-1. **Where the skill is installed**: `install.sh` **copies** this repo into your tool’s convention folder (e.g. `~/.cursor/rules/` or `./.cursor/rules/` in one project). The agent loads rules from **that** path.
-2. **Where the two Markdown files are written**: Depends on **which folder you open** in the IDE. Open your **application project root**, trigger the skill, and `导学-*.md` / `面经-*.md` appear in **that project’s root**. This is **not** the same path as the skill install.
-
-### 1) Clone
+Use `npx`; cloning is not required:
 
 ```bash
-git clone https://github.com/Jaxon1216/interview-analyzer-skill.git
-cd interview-analyzer-skill
-chmod +x install.sh
+npx project-interview-skill install
 ```
 
-### Windows note first
+The default target is the user-level generic Agent directory:
 
-`install.sh` is a **POSIX shell** script. It does not run directly in plain `PowerShell` without a compatible shell.
-
-Recommended options on Windows:
-
-1. **Git Bash**: install Git for Windows, then run `bash ./install.sh --help` from the repo root
-2. **WSL**: open a WSL shell, then run `./install.sh --help`
-
-If you are currently in `PowerShell`, use:
-
-```powershell
-git clone https://github.com/Jaxon1216/interview-analyzer-skill.git
-cd interview-analyzer-skill
-bash ./install.sh --dry-run --platform cursor
+```text
+~/.agents/skills/project-interview-skill/
 ```
 
-If dry-run prints the target directory and copy list, your shell setup is ready; rerun without `--dry-run` for the real install.
+If you know which editor or Agent you use, specify it explicitly:
 
-### 2) Install
+| Target | User-level command | Install location |
+|--------|--------------------|------------------|
+| Generic Agent / Codex | `npx project-interview-skill install --agents` | `~/.agents/skills/project-interview-skill/` |
+| Trae | `npx project-interview-skill install --trae` | `~/.trae/skills/project-interview-skill/` |
+| Cursor | `npx project-interview-skill install --cursor` | `~/.cursor/rules/project-interview-skill/` |
+| VS Code | `npx project-interview-skill install --vscode` | `~/.copilot/instructions/project-interview-skill.instructions.md` |
+| Claude Code | `npx project-interview-skill install --claude-code` | `~/.claude/skills/project-interview-skill/` |
+| Codex | `npx project-interview-skill install --codex` | `~/.agents/skills/project-interview-skill/` |
 
-#### Explicit Install
-
-Explicit platform selection is recommended, especially if you have multiple agent tools installed. Run these commands from the **skill repo root** (`interview-analyzer-skill/`):
+Install every supported target:
 
 ```bash
-cd /path/to/interview-analyzer-skill
-chmod +x install.sh
+npx project-interview-skill install --all
 ```
 
-| Platform | Command | Result |
-|----------|---------|--------|
-| Codex / universal agent directory | `./install.sh --platform codex` | Installs to `~/.agents/skills/interview-analyzer-skill/` |
-| Claude Code | `./install.sh --platform claude-code` | Installs to `~/.claude/skills/interview-analyzer-skill/` and creates a universal discovery link under `~/.agents/skills/` |
-| Trae | `./install.sh --platform trae` | Installs to `~/.trae/skills/interview-analyzer-skill/` and creates a universal discovery link under `~/.agents/skills/` |
-
-After installation, restart the target Agent / IDE and start a new chat to load `SKILL.md`. `~/.agents/skills/` is a universal skill directory used by some agent tools; for user-level installs, this script may create a link there pointing to the primary install path.
-
-#### One-Step Auto-Detect Install
-
-You can also run this from the **skill repo root**:
+Preview paths without writing files:
 
 ```bash
-./install.sh
+npx project-interview-skill install --trae --dry-run
+npx project-interview-skill doctor
 ```
 
-The script validates `SKILL.md`, auto-detects a platform from existing tool folders on your machine, then copies this repo into that platform's default user-level location. If multiple agent tools are installed, auto-detect may pick the first matching platform; in that case, prefer the explicit `--platform` commands above.
+## Project-Level Install
 
-More flags:
-
-```bash
-./install.sh --help
-```
-
-Supported `--platform` values (see `--help` for full list): `claude-code`, `copilot`, `cursor`, `windsurf`, `cline`, `codex`, `gemini`, `kiro`, `trae`, `goose`, `opencode`, `roo-code`, `antigravity`, `universal`
-
-### 3) Verify the install
-
-- Open the **“Typical skill location”** folder from the table: you should see **`SKILL.md`**; with Cursor you should also see **`interview-analyzer-skill.mdc`**.
-- **Behavior check**: open your **app project root** in the IDE, start a **new** chat, and send `/interview-analyzer-skill` (or ask for 导学/面经). When the rule loads, the agent should write two `.md` files to the **app root** per [SKILL.md](SKILL.md), or paste two Markdown blocks if the environment cannot write files.
-
-### Optional: preview without writing
-
-From **app project root**:
+To install the skill only for one application repository, run the command from that repository root:
 
 ```bash
 cd /path/to/your-project
-/path/to/interview-analyzer-skill/install.sh --platform cursor --project --dry-run
+npx project-interview-skill install --project --trae
 ```
 
-Review the printed paths, then rerun without `--dry-run`.
+Supported project-level targets:
 
-### 4) Trigger in the app project
+| Target | Project-level command | Install location |
+|--------|-----------------------|------------------|
+| Generic Agent / Codex | `npx project-interview-skill install --project --agents` | `.agents/skills/project-interview-skill/` |
+| Trae | `npx project-interview-skill install --project --trae` | `.trae/rules/project-interview-skill/` |
+| Cursor | `npx project-interview-skill install --project --cursor` | `.cursor/rules/project-interview-skill/` |
+| VS Code | `npx project-interview-skill install --project --vscode` | `.github/instructions/project-interview-skill.instructions.md` |
+| Claude Code | `npx project-interview-skill install --project --claude-code` | `.claude/skills/project-interview-skill/` |
+| Codex | `npx project-interview-skill install --project --codex` | `.agents/skills/project-interview-skill/` |
+
+Restart the target IDE or Agent after installation.
+
+## Usage
+
+Open the target project root in your IDE or Agent, then start a new chat:
 
 ```text
-/interview-analyzer-skill 简称：电商；项目描述：...；技术栈：Vue3、Pinia、Vite；求职方向：前端
+/project-interview-skill 简称：电商；项目描述：...；技术栈：Vue3、Pinia、Vite；求职方向：前端
 ```
 
-Files such as `导学-电商.md` and `面经-电商.md` are created under **that app’s root** (short name as you provide).
+The skill creates these files under the target project root:
+
+| File | Purpose |
+|------|---------|
+| `导学-{short-name}.md` | Prerequisites, key concepts, repo-relative reading guide, design decisions, and optional measurement notes |
+| `面经-{short-name}.md` | 1-2 sentence resume summary, project bullets, and 15-25 interview Q&A speaking answers |
+
+You can also invoke it naturally by asking for project interview preparation docs.
+
+## Source Checkout Compatibility
+
+`install.sh` is kept for users who clone the repository. It is only a wrapper around the Node CLI:
+
+```bash
+git clone https://github.com/Jaxon1216/interview-analyzer-skill.git
+cd interview-analyzer-skill
+./install.sh --trae
+./install.sh --project --cursor
+```
+
+The npm package does not include `install.sh`; regular users should prefer `npx project-interview-skill ...`.
 
 ## Repository Structure
 
 ```text
 interview-analyzer-skill/
+|-- bin/
+|   `-- project-interview-skill.js
 |-- SKILL.md
 |-- install.sh
+|-- package.json
 |-- README.md
 |-- README_EN.md
 |-- demo.jpg
-|-- donate.jpg
 |-- LICENSE
 |-- references/
 |   |-- interview-rubric.md
 |   |-- star-framework.md
 |   |-- output-templates.md
-|   `-- oral-and-resume-patterns.md
-`-- scripts/
-    |-- check_inputs.py
-    `-- build_prompt.py
+|   |-- oral-and-resume-patterns.md
+|   `-- oral-style-samples.md
+|-- scripts/
+|   |-- check_inputs.py
+|   `-- build_prompt.py
+`-- tests/
 ```
 
-## Upgrade
+## Maintenance and Publishing
 
-Installed skill folders are copied artifacts and do not auto-update.
+This npm CLI package does not need a build step. The package contents are controlled by the `files` allowlist in `package.json`:
 
 ```bash
-cd interview-analyzer-skill
-git pull
-./install.sh --platform <your-platform> [--project]
+npm pack --dry-run
+npm publish --access public
+```
+
+Local checks:
+
+```bash
+npm test
+npm run pack:check
+node bin/project-interview-skill.js install --trae --dry-run
 ```
 
 ## FAQ
 
-### How detailed should the input be?
+### Is `.npmrc` required?
 
-Include at least: background, your role, one hard problem, and outcome. More detail yields better questions.
+No. It is only useful for this repository's development registry selection. Public npm publishing is controlled by `publishConfig.registry` in `package.json`.
 
-### Which doc should I read first?
+### Why does the default install target `.agents/skills`?
 
-`导学` for the learning path, then `面经` for spoken answers and follow-ups.
+It is the least surprising user-level default and avoids guessing which product the user wants. Use an explicit flag for Trae, Cursor, VS Code, Claude Code, or Codex.
 
-### Is the measurement section mandatory?
+### Does `install` auto-detect products?
 
-No. Same as [SKILL.md](SKILL.md): **导学** may end with 「量化与验证（含待测）」 as a **recommendation**; **面经** does not require a separate measurement section.
+No. The behavior is intentionally narrow: the default installs only to `.agents/skills`, product-specific installs require `--trae`, `--cursor`, `--vscode`, `--claude-code`, or `--codex`. `doctor` only prints paths.
 
 ### Do updates apply automatically?
 
-No. `git pull` and run `install.sh` again.
-
-## Local Validation
-
-The two Python helper scripts have a minimal regression suite with no extra dependencies:
+No. Installed skill folders are copied artifacts. Re-run the install command:
 
 ```bash
-python -m unittest discover -s tests -v
+npx project-interview-skill install --trae
 ```
 
-Run it after changing `scripts/`, the input contract in `SKILL.md`, or installation examples in the docs.
-
 ## Support
-
-If this project helps you:
-
-- **buy me a coffee** (WeChat): scan the QR below—any amount is appreciated.
-
-<img src="donate.jpg" alt="WeChat tip QR" width="200" />
 
 - **Contact** (feedback, commercial use, derivatives): **jiangxu05@outlook.com**
 - **Star**, **Fork**, **Issues / PRs** are welcome.
 
 ## License
 
-Licensed under the **[MIT License](LICENSE)**. The file includes the **English legal text** plus an **unofficial Chinese translation** for convenience; if they disagree, the **English** section controls.
-
-When you redistribute (including commercial use or forks): **keep** the copyright and license notices, and **credit the source** (e.g. link to this repo).
+Licensed under the **[MIT License](LICENSE)**. The file includes the English legal text plus an unofficial Chinese translation for convenience; if they disagree, the English section controls.

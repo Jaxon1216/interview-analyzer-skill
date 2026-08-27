@@ -97,7 +97,7 @@ The skill creates these files under the target project root:
 | File | Purpose |
 |------|---------|
 | `导学-{short-name}.md` | Prerequisites, key concepts, repo-relative reading guide, design decisions, and optional measurement notes |
-| `面经-{short-name}.md` | 1-2 sentence resume summary, project bullets, and 15-25 interview Q&A speaking answers |
+| `面经-{short-name}.md` | 1-2 sentence resume summary, architecture-level bullets, and interview Q&A mapped to those bullets |
 
 You can also invoke it naturally by asking for project interview preparation docs.
 
@@ -132,7 +132,8 @@ interview-analyzer-skill/
 |   |-- star-framework.md
 |   |-- output-templates.md
 |   |-- oral-and-resume-patterns.md
-|   `-- oral-style-samples.md
+|   |-- oral-style-samples.md
+|   `-- excellent-resumes/
 |-- scripts/
 |   |-- check_inputs.py
 |   `-- build_prompt.py

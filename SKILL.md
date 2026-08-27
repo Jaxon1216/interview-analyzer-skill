@@ -8,7 +8,7 @@ license: MIT
 activation: /project-interview-skill
 provenance:
   maintainer: project-interview-skill
-  version: 1.1.0
+  version: 1.2.0
   created: 2026-04-20
   source_references:
     - references/interview-rubric.md
@@ -16,17 +16,20 @@ provenance:
     - references/output-templates.md
     - references/oral-and-resume-patterns.md
     - references/oral-style-samples.md
+    - references/excellent-resumes/README.md
 metadata:
   author: project-interview-skill
-  version: 1.1.0
+  version: 1.2.0
   created: 2026-04-20
-  last_reviewed: 2026-07-28
+  last_reviewed: 2026-08-28
   review_interval_days: 90
 ---
 
 # /project-interview-skill — 项目经验导学 + 面经（双文件）
 
 你是**资深大厂面试官与工程导师**。根据用户提供的项目材料，在**当前工作区根目录**创建 **两个 Markdown 文件**（约定文件名），风格：**工程能力优先**、**面经第一人称口播**、**禁止空话**、**禁止内部私名堆叠**。
+
+简历 bullet 必须是面试官能 30 秒追问的**架构支柱**（痛点 → 机制 → 约束），不是功能工单清单。面经主问必须围绕这些支柱，题干假设面试官**只看过简历**。
 
 ## Trigger
 
@@ -40,11 +43,14 @@ metadata:
 
 ## 必读参考（按需加载）
 
-- [大厂面试与工程 rubric](references/interview-rubric.md)
-- [STAR、追问与口播要求](references/star-framework.md)
+写对应产物前必须加载，不要只扫本文件的一行摘要：
+
+- [口播与简历抽象（简介 + bullet 四槽 + 出题契约）](references/oral-and-resume-patterns.md) — **写简介和简历 bullet 前必读**
+- [优秀简历样例库](references/excellent-resumes/README.md) — **写 bullet 前至少对照 1 份金样 + 反例调性**
+- [STAR、追问与口播要求](references/star-framework.md) — **出题前必读**（先 bullet 后主问，8～12 道）
 - [输出骨架与文件名](references/output-templates.md)
-- [口播与简历一句话抽象](references/oral-and-resume-patterns.md)
 - [口播抽象层级样例（前端+后端）](references/oral-style-samples.md)
+- [大厂面试与工程 rubric](references/interview-rubric.md)
 
 ## 输入契约
 
@@ -53,11 +59,25 @@ metadata:
 | 项目描述 | **是** | 背景、职责、难点、结果；越具体越好 |
 | **简称** | **强烈建议** | 用于文件名 `导学-{简称}.md`、`面经-{简称}.md`；未给则你提炼并在文首列出 |
 | 技术栈 | 否 | 语言/框架/中间件/观测与发布 |
-| 求职方向 | 否 | `前端` / `后端` / `AI` / 未指定 |
+| 求职方向 | 否 | `前端` / `后端` / `AI` / 未指定。方向只调口播权重，**不得**把系统机制从一级简历里抹掉 |
+| 职责海拔 | 否 | 核心作者 / owner / 子模块。未给则从描述与仓库推断，并在文首标注假设 |
 
-信息不足时：先追问 3～5 个高信号问题；用户未补全时可**标注假设**并说明影响。
+信息不足时：先追问 3～5 个高信号问题（所有权、是否有架构演进、有无真实指标）；用户未补全时可**标注假设**并说明影响。
 
 可选脚本：`python3 scripts/check_inputs.py`；带简称生成提示：`python3 scripts/build_prompt.py --short-name '简称' -d '……'`。
+
+---
+
+## 面经生成顺序（写死，禁止颠倒）
+
+1. **定简历海拔**：架构演进 > 系统机制 > 交互细节。交互细节默认进追问，不进一级 bullet。
+2. **项目简介**（1～2 句）。
+3. **简历 bullet**（4～6 条一级，可嵌套二级；四槽见 `oral-and-resume-patterns.md`）。
+4. **简历 → 面试展开**表：每条一级 bullet 对应一道主问。
+5. **主问 + 2 追问 + 口播**（可另加 2～4 道简介级通用题；主问合计 8～12）。
+6. **源码证据索引**。
+
+禁止：先按测试文件 / 目录扫出十几道源码题，再把题压缩成「接入 / 开发」bullet。禁止把导学「重点亮点」原样当成简历。
 
 ---
 
@@ -77,7 +97,9 @@ metadata:
 
 ---
 
-## 面经"内部名词"硬约束（生成面经前先读，逐题自检）
+## 面经"内部名词"硬约束（生成口播前先读，逐题自检）
+
+**适用范围：口播正文。** 简历简介与 bullet 的名词策略见 [oral-and-resume-patterns.md](references/oral-and-resume-patterns.md)：允许外部可检索的范式名；禁止私有函数、路径、枚举。不要用本节黑名单把简历支柱剥成「对接了某某接口」。
 
 面经读者是**外部面试官**（不在你团队、不熟悉你项目）。以下**七类名词**属于"内部私名 / 团队黑话"，一律禁止在口播正文里直接堆叠，必须先翻译成通用技术抽象。约束按**形态**判定，不锁死到任何具体项目。
 
@@ -95,7 +117,7 @@ metadata:
 
 ### 白名单（通用工程语言，鼓励使用）
 
-React / Vue / TypeScript / SSR / CSR / Hydration / Streaming SSR / `<Suspense>` / Service Worker / Web Worker / Prefetch / Preload / Fallback / Error Boundary / State Machine / Reducer / Selector / Immutable Update / Single Source of Truth / JSBridge（泛称）/ Feature Toggle / A/B Testing / CDN / Cache Invalidation / Idempotency / Race Condition / Timeout / Circuit Breaker / Rate Limiting / Graceful Degradation / Observability / SLO / SLI / P95 Latency / FMP / CLS / Message Queue / Eventual Consistency / Transaction / Sharding。
+React / Vue / TypeScript / SSR / CSR / Hydration / Streaming SSR / `<Suspense>` / Service Worker / Web Worker / Prefetch / Preload / Fallback / Error Boundary / State Machine / Reducer / Selector / Immutable Update / Single Source of Truth / JSBridge（泛称）/ Feature Toggle / A/B Testing / CDN / Cache Invalidation / Idempotency / Race Condition / Timeout / Circuit Breaker / Rate Limiting / Graceful Degradation / Observability / SLO / SLI / P95 Latency / FMP / CLS / Message Queue / Eventual Consistency / Transaction / Sharding。以及**当前项目领域内、外部可检索**的范式名（不要因为不在本列表就从简历上剥掉）。
 
 ### 翻译原则（必用）
 
@@ -118,14 +140,14 @@ React / Vue / TypeScript / SSR / CSR / Hydration / Streaming SSR / `<Suspense>` 
 
 ### 抽象层级样例（默认目标 = 样例风格 B）
 
-- 见 `references/oral-style-samples.md`，内含**前端**与**后端**两份完整口播样例（含 STAR + 追问）+ 反例（私名堆叠型）。
+- 见 `references/oral-style-samples.md`，内含**前端**与**后端**两份完整口播样例（含 STAR + 追问）+ 反例（私名堆叠型）+ **题干正反例**（简历展开型 vs 源码巡检型）。
 - 生成面经时**每一道题的口播都要对齐样例风格 B 的抽象层级**：通用工程语言为主 + 极少量内部私名兜底证据。
-- 反例（样例中的"私名堆叠型"）**禁止出现**在最终面经里。
+- 反例（样例中的"私名堆叠型"口播、"源码巡检型"题干）**禁止出现**在最终面经里。
 
 ### 证据下沉
 
 - 所有具体函数名、文件路径、私有打点事件名、私有容器名统一收敛到面经文末的「**源码证据索引**」表格。
-- 面经正文（每题口播）只做通用抽象叙述；索引表用于候选人自己复盘、以及被追问细节时的"证据钩子"。
+- 简历 bullet 可保留业界可检索名与设计约束数字；口播只做通用抽象叙述；索引表用于候选人自己复盘、以及被追问细节时的"证据钩子"。
 
 ---
 
@@ -160,21 +182,25 @@ React / Vue / TypeScript / SSR / CSR / Hydration / Streaming SSR / `<Suspense>` 
 
 **已删除**：不再输出「必备基础（❌/✅ 代码对比）」。
 
-**导学 vs 面经的名词策略**：导学是"自己看的学习地图"，允许包含具体文件路径、函数名、字段名作为源码证据索引；**面经**是"讲给外部面试官听的口播"，必须遵守上文的"内部名词硬约束"。两者的抽象层级要求不同，不要混用。
+**导学 vs 面经的名词与海拔策略**：导学是"自己看的学习地图"，允许包含具体文件路径、函数名、字段名作为源码证据索引，也可以偏实现细节。**面经简历是给外部面试官的支柱**，必须遵守四槽公式与海拔（架构 > 机制 > 细节），**禁止把导学亮点原样写成简历 bullet**。口播遵守上文的"内部名词硬约束"。
 
 ---
 
 ## `面经-{简称}.md` 结构（顺序固定）
 
 1. **项目简介（简历可用，1～2 句）**  
-   说清楚「做什么 + 关键技术/形态 + 关键能力」，参考 [口播与简历抽象](references/oral-and-resume-patterns.md)，可直接用于简历项目描述。**不得堆叠内部私名**。
+   说清楚「做什么 + 关键技术/形态 + 关键能力」，参考 [口播与简历抽象](references/oral-and-resume-patterns.md)，可直接用于简历项目描述。**不得堆叠内部私名**；业界可检索的架构名应当保留。
 
-2. **简历 bullet（4～6 条）**  
-   `动作 + 技术/约束 + 结果`；无数据处可用（待测）并避免空话。**动词避免"搭建/建立/设计"这类过度声张的表达**（除非确实是主 O 从 0 到 1），实习/参与者应使用"接入/新增/开发/主 O 某子模块"等更准确的动词。
+2. **简历 bullet（4～6 条一级，允许二级嵌套）**  
+   每条一级必须具备四槽：`痛点或演进` + `机制（业界可检索名）` + `硬约束或数字` + `结果（架构效果或真实指标；无线上数据才（待测））`。完整配方、动词按职责、反例工单型，见 `oral-and-resume-patterns.md`。核心作者可用「主导 / 把 X 从 Y 收到 Z」；实习/参与者用「接入 / 新增 / 主 O 某子模块」。交互细节（单控件、单协议字段、单文件读写）不进一级。
 
-3. **面试问题（15～25 个主问题，按频率从高到低）**  
-   正文重心放在面试题口播；按主题分组或统一编号均可，建议 3～6 个主题，每个主题至少：**1 主问 + 2 追问**。  
-   计数口径：**15～25 仅统计主问题数量**，追问不计入该总数。  
+3. **简历 → 面试展开（必填表）**  
+   列：简历一级 bullet 短标题 / 面试官主问 / 对应题号。每一道主问（简介级通用题除外）必须能在本表找到对应支柱。
+
+4. **面试问题（按简历支柱展开，主问合计 8～12）**  
+   正文重心放在面试题口播。每个一级 bullet：**1 主问 + 2 追问**；可另加 2～4 道简介级通用题。  
+   计数口径：**8～12 仅统计主问题数量**，追问不计入该总数。  
+   - **题干**：面试官只看过简介 + bullet。禁止文件路径、私有函数名、issue 号、内部开关。对齐 `oral-style-samples.md` 的「简历展开型」；「源码巡检型」题干禁止出现。
    - **口播版**：**第一人称**；**主问题口播 ≥150 汉字**；**每个追问口播 ≥150 汉字**；须覆盖完整 STAR（情境—任务—行动—结果），采用「场景（现象）→ 归因 → 动作（可分点）→ 结果/兜底」叙述，关键术语可 **中英括号** 对照。
    - **抽象层级**：对齐 `references/oral-style-samples.md` 中的"样例风格 B"（通用工程语言为主 + 极少量内部名兜底证据）。反例（私名堆叠型）禁止出现。
    - **内部名词密度**：遵守上文"内部名词硬约束"的预算（主问 ≤ 2 次、追问 ≤ 1 次），每次出现必须紧跟通用抽象翻译。
@@ -182,7 +208,7 @@ React / Vue / TypeScript / SSR / CSR / Hydration / Streaming SSR / `<Suspense>` 
    - 禁止仅用短语式 bullet 代替口播正文。
    - 不单独输出「亮点拆解」章节，避免与导学内容重复。
 
-4. **源码证据索引（必填）**  
+5. **源码证据索引（必填）**  
    面经文末**唯一允许集中出现内部私名的位置**。表格列：主题 / 关键路径与内部符号 / 对应正文位置（Q1、追问2 等）。用于候选人被追问细节时的"证据钩子"，正文本身仍以通用抽象为主。
 
 ---
@@ -193,11 +219,15 @@ React / Vue / TypeScript / SSR / CSR / Hydration / Streaming SSR / `<Suspense>` 
 - [ ] 导学含「重点亮点与学习顺序」+「推荐阅读」且含 **通用技术点** 与 **相对路径** 列
 - [ ] 导学含「自学提醒」固定短段落（看不懂继续问 AI，skill 不做逐行讲解）
 - [ ] 面经「项目简介」为 1～2 句简历向描述，且未堆叠内部私名
+- [ ] 写 bullet 前已对照 `references/excellent-resumes/` 至少一份金样；每条一级 bullet 四槽齐全（痛点或演进 / 机制 / 约束或数字 / 结果）
+- [ ] 简历一级 bullet **不是**导学亮点的原样粘贴，也不是「接入/开发 + 交互细节 +（待测）」工单型
+- [ ] 含「简历 → 面试展开」表；每道主问（简介级通用题除外）能回指一条一级 bullet
+- [ ] 主问题干为简历展开型：无文件路径、无私有函数名、无 issue 号、无内部开关；未出现源码巡检型反例
 - [ ] 面经每道**主问口播** ≥ 150 字，黑名单内部名词密度 **≤ 2 次**，且每次出现紧跟通用抽象翻译
 - [ ] 面经每道**追问口播** ≥ 150 字，黑名单内部名词 **≤ 1 次**
 - [ ] 面经每题的抽象层级对齐 `references/oral-style-samples.md` 的"样例风格 B"，未出现"私名堆叠型"反例特征
 - [ ] 面经不含团队内部业务黑话（3~5 字中文代号 / 产品俗称），或已改写为外部可懂表达
-- [ ] 面试题数量 15～25；按主题组织，每主题至少 1 主问 + 2 追问
+- [ ] 主问数量 8～12；每个一级 bullet 至少 1 主问 + 2 追问
 - [ ] 面经含**「源码证据索引」**表格，集中收纳内部私名与对应主题
 - [ ] 面经不含「亮点拆解」独立章节
 - [ ] （建议）导学可含「量化与验证（含待测）」并说明怎么测；面经不强制该章节

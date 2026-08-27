@@ -59,8 +59,9 @@ class BuildPromptTests(unittest.TestCase):
             extra="补充信息",
         )
 
-        self.assertIn("主问题 15～25", prompt)
+        self.assertIn("主问合计 8～12", prompt)
         self.assertIn("追问不计入总数", prompt)
+        self.assertIn("简历 → 面试展开", prompt)
 
     def test_main_reads_json_file(self):
         payload = {

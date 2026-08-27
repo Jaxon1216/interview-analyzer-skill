@@ -97,7 +97,7 @@ npx project-interview-skill install --project --trae
 | 文件 | 用途 |
 |------|------|
 | `导学-{简称}.md` | 前置知识、必备知识点、推荐阅读（含仓库相对路径）、原理与设计决策；文末可含「量化与验证（含待测）」 |
-| `面经-{简称}.md` | 1～2 句简历摘要、项目 bullets、15～25 道面试题（主问/追问口播） |
+| `面经-{简称}.md` | 1～2 句简历摘要、架构向 bullets、按简历支柱展开的面试题（主问/追问口播） |
 
 也可以不写 slash 命令，直接描述“请基于这个项目生成导学和面经”。
 
@@ -132,7 +132,8 @@ interview-analyzer-skill/
 |   |-- star-framework.md
 |   |-- output-templates.md
 |   |-- oral-and-resume-patterns.md
-|   `-- oral-style-samples.md
+|   |-- oral-style-samples.md
+|   `-- excellent-resumes/
 |-- scripts/
 |   |-- check_inputs.py
 |   `-- build_prompt.py

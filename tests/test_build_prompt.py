@@ -77,7 +77,10 @@ class BuildPromptTests(unittest.TestCase):
 
         self.assertIn("Bullet few-shot（仅学习结构，不复制素材）", prompt)
         self.assertIn("针对异常处理逻辑散落", prompt)
+        self.assertIn("**通用支柱名：**", prompt)
+        self.assertIn("**分层容错：**", prompt)
         self.assertIn("接入缓存和重试，优化接口请求", prompt)
+        self.assertIn("RunManager", prompt)
         self.assertIn("结果写可验证的架构变化或真实指标", prompt)
 
     def test_main_reads_json_file(self):

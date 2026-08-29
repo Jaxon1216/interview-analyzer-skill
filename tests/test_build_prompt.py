@@ -63,6 +63,20 @@ class BuildPromptTests(unittest.TestCase):
         self.assertIn("追问不计入总数", prompt)
         self.assertIn("简历 → 面试展开", prompt)
 
+    def test_build_prompt_includes_domain_neutral_bullet_few_shot(self):
+        prompt = build_prompt.build_prompt(
+            description="负责一个需要治理异常和扩展性的业务系统",
+            tech_stack="Python",
+            role_focus="后端",
+            short_name="系统",
+            extra="",
+        )
+
+        self.assertIn("Bullet few-shot（仅学习结构，不复制素材）", prompt)
+        self.assertIn("针对异常处理逻辑散落", prompt)
+        self.assertIn("接入缓存和重试，优化接口请求", prompt)
+        self.assertIn("结果写可验证的架构变化或真实指标", prompt)
+
     def test_main_reads_json_file(self):
         payload = {
             "description": "负责交易链路项目分析与面试题生成",

@@ -1,6 +1,10 @@
 # Local Cursor install of this skill (do not ship into other projects via install.sh)
 .cursor/
 
+# Temporary local clones and agent-generated workspace notes.
+ASu-skills/
+.trae/
+
 .DS_Store
 __pycache__/
 *.py[cod]

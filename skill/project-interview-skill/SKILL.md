@@ -11,11 +11,11 @@ provenance:
   version: 1.2.0
   created: 2026-04-20
   source_references:
-    - references/interview-rubric.md
-    - references/star-framework.md
-    - references/output-templates.md
-    - references/oral-and-resume-patterns.md
-    - references/oral-style-samples.md
+    - references/rules/interview-rubric.md
+    - references/rules/star-framework.md
+    - references/templates/output-templates.md
+    - references/rules/oral-and-resume-patterns.md
+    - references/examples/oral-style-samples.md
     - references/excellent-resumes/README.md
 metadata:
   author: project-interview-skill
@@ -45,13 +45,13 @@ metadata:
 
 写对应产物前必须加载，不要只扫本文件的一行摘要：
 
-- [口播与简历抽象（简介 + bullet 四槽 + 出题契约）](references/oral-and-resume-patterns.md) — **写简介和简历 bullet 前必读**
-- [领域中立 Bullet few-shot](references/bullet-few-shots.md) — **生成 bullet 时对照正例、反例与改写，不复制样例素材**
+- [口播与简历抽象（简介 + bullet 四槽 + 出题契约）](references/rules/oral-and-resume-patterns.md) — **写简介和简历 bullet 前必读**
+- [领域中立 Bullet few-shot](references/examples/bullet-few-shots.md) — **生成 bullet 时对照正例、反例与改写，不复制样例素材**
 - [优秀简历样例库](references/excellent-resumes/README.md) — **写 bullet 前至少对照 1 份金样 + 反例调性**
-- [STAR、追问与口播要求](references/star-framework.md) — **出题前必读**（先 bullet 后主问，8～12 道）
-- [输出骨架与文件名](references/output-templates.md)
-- [口播抽象层级样例（前端+后端）](references/oral-style-samples.md)
-- [大厂面试与工程 rubric](references/interview-rubric.md)
+- [STAR、追问与口播要求](references/rules/star-framework.md) — **出题前必读**（先 bullet 后主问，8～12 道）
+- [输出骨架与文件名](references/templates/output-templates.md)
+- [口播抽象层级样例（前端+后端）](references/examples/oral-style-samples.md)
+- [大厂面试与工程 rubric](references/rules/interview-rubric.md)
 
 ## 输入契约
 
@@ -73,7 +73,7 @@ metadata:
 
 1. **定简历海拔**：架构演进 > 系统机制 > 交互细节。交互细节默认进追问，不进一级 bullet。
 2. **项目简介**（1～2 句）。
-3. **简历 bullet**（4～6 条一级，可嵌套二级；先抽取架构支柱，再按 few-shot 成稿；四槽见 `oral-and-resume-patterns.md`）。
+3. **简历 bullet**（4～6 条一级，可嵌套二级；先抽取架构支柱，再按 few-shot 成稿；四槽见 `references/rules/oral-and-resume-patterns.md`）。
 4. **简历 → 面试展开**表：每条一级 bullet 对应一道主问。
 5. **主问 + 2 追问 + 口播**（可另加 2～4 道简介级通用题；主问合计 8～12）。
 6. **源码证据索引**。
@@ -100,7 +100,7 @@ metadata:
 
 ## 面经"内部名词"硬约束（生成口播前先读，逐题自检）
 
-**适用范围：口播正文。** 简历简介与 bullet 的名词策略见 [oral-and-resume-patterns.md](references/oral-and-resume-patterns.md)：允许外部可检索的范式名；禁止私有函数、路径、枚举。不要用本节黑名单把简历支柱剥成「对接了某某接口」。
+**适用范围：口播正文。** 简历简介与 bullet 的名词策略见 [oral-and-resume-patterns.md](references/rules/oral-and-resume-patterns.md)：允许外部可检索的范式名；禁止私有函数、路径、枚举。不要用本节黑名单把简历支柱剥成「对接了某某接口」。
 
 面经读者是**外部面试官**（不在你团队、不熟悉你项目）。以下**七类名词**属于"内部私名 / 团队黑话"，一律禁止在口播正文里直接堆叠，必须先翻译成通用技术抽象。约束按**形态**判定，不锁死到任何具体项目。
 
@@ -141,7 +141,7 @@ React / Vue / TypeScript / SSR / CSR / Hydration / Streaming SSR / `<Suspense>` 
 
 ### 抽象层级样例（默认目标 = 样例风格 B）
 
-- 见 `references/oral-style-samples.md`，内含**前端**与**后端**两份完整口播样例（含 STAR + 追问）+ 反例（私名堆叠型）+ **题干正反例**（简历展开型 vs 源码巡检型）。
+- 见 `references/examples/oral-style-samples.md`，内含**前端**与**后端**两份完整口播样例（含 STAR + 追问）+ 反例（私名堆叠型）+ **题干正反例**（简历展开型 vs 源码巡检型）。
 - 生成面经时**每一道题的口播都要对齐样例风格 B 的抽象层级**：通用工程语言为主 + 极少量内部私名兜底证据。
 - 反例（样例中的"私名堆叠型"口播、"源码巡检型"题干）**禁止出现**在最终面经里。
 
@@ -190,10 +190,10 @@ React / Vue / TypeScript / SSR / CSR / Hydration / Streaming SSR / `<Suspense>` 
 ## `面经-{简称}.md` 结构（顺序固定）
 
 1. **项目简介（简历可用，1～2 句）**  
-   说清楚「做什么 + 关键技术/形态 + 关键能力」，参考 [口播与简历抽象](references/oral-and-resume-patterns.md)，可直接用于简历项目描述。**不得堆叠内部私名**；业界可检索的架构名应当保留。
+   说清楚「做什么 + 关键技术/形态 + 关键能力」，参考 [口播与简历抽象](references/rules/oral-and-resume-patterns.md)，可直接用于简历项目描述。**不得堆叠内部私名**；业界可检索的架构名应当保留。
 
 2. **简历 bullet（4～6 条一级，允许二级嵌套）**  
-   先从架构演进、核心失败模式和系统机制中抽取支柱，再对照 `references/bullet-few-shots.md` 的正例、反例和改写对照成稿。每条一级必须具备四槽：`痛点或演进` + `机制（业界可检索名）` + `硬约束或数字` + `结果（架构效果或真实指标；无线上数据才（待测））`；至少保证「问题或演进 + 机制 + 结果」。结果必须紧跟机制，禁止用“提升性能/提高稳定性/优化体验”等空泛句代替。完整配方、动词按职责、反例工单型，见 `oral-and-resume-patterns.md`。核心作者可用「主导 / 把 X 从 Y 收到 Z」；实习/参与者用「接入 / 新增 / 主 O 某子模块」。交互细节（单控件、单协议字段、单文件读写）不进一级。禁止复制 few-shot 或优秀简历样例中的项目名、数字、领域名词和指标。
+   先从架构演进、核心失败模式和系统机制中抽取支柱，再对照 `references/examples/bullet-few-shots.md` 的正例、反例和改写对照成稿。每条一级必须具备四槽：`痛点或演进` + `机制（业界可检索名）` + `硬约束或数字` + `结果（架构效果或真实指标；无线上数据才（待测））`；至少保证「问题或演进 + 机制 + 结果」。结果必须紧跟机制，禁止用“提升性能/提高稳定性/优化体验”等空泛句代替。完整配方、动词按职责、反例工单型，见 `references/rules/oral-and-resume-patterns.md`。核心作者可用「主导 / 把 X 从 Y 收到 Z」；实习/参与者用「接入 / 新增 / 主 O 某子模块」。交互细节（单控件、单协议字段、单文件读写）不进一级。禁止复制 few-shot 或优秀简历样例中的项目名、数字、领域名词和指标。
 
 3. **简历 → 面试展开（必填表）**  
    列：简历一级 bullet 短标题 / 面试官主问 / 对应题号。每一道主问（简介级通用题除外）必须能在本表找到对应支柱。
@@ -203,7 +203,7 @@ React / Vue / TypeScript / SSR / CSR / Hydration / Streaming SSR / `<Suspense>` 
    计数口径：**8～12 仅统计主问题数量**，追问不计入该总数。  
    - **题干**：面试官只看过简介 + bullet。禁止文件路径、私有函数名、issue 号、内部开关。对齐 `oral-style-samples.md` 的「简历展开型」；「源码巡检型」题干禁止出现。
    - **口播版**：**第一人称**；**主问题口播 ≥150 汉字**；**每个追问口播 ≥150 汉字**；须覆盖完整 STAR（情境—任务—行动—结果），采用「场景（现象）→ 归因 → 动作（可分点）→ 结果/兜底」叙述，关键术语可 **中英括号** 对照。
-   - **抽象层级**：对齐 `references/oral-style-samples.md` 中的"样例风格 B"（通用工程语言为主 + 极少量内部名兜底证据）。反例（私名堆叠型）禁止出现。
+   - **抽象层级**：对齐 `references/examples/oral-style-samples.md` 中的"样例风格 B"（通用工程语言为主 + 极少量内部名兜底证据）。反例（私名堆叠型）禁止出现。
    - **内部名词密度**：遵守上文"内部名词硬约束"的预算（主问 ≤ 2 次、追问 ≤ 1 次），每次出现必须紧跟通用抽象翻译。
    - 若需要解释代码实现，优先写「机制 + 简化伪代码/数据流」：例如 `Worker 预取 → Store 消费 → Hook 聚合 → Page 渲染`，而不是逐行描述某个组件内部函数。具体组件名、函数名、文件路径统一放到「源码证据索引」或括号里轻量带过。
    - 禁止仅用短语式 bullet 代替口播正文。
@@ -221,14 +221,14 @@ React / Vue / TypeScript / SSR / CSR / Hydration / Streaming SSR / `<Suspense>` 
 - [ ] 导学含「自学提醒」固定短段落（看不懂继续问 AI，skill 不做逐行讲解）
 - [ ] 面经「项目简介」为 1～2 句简历向描述，且未堆叠内部私名
 - [ ] 写 bullet 前已对照 `references/excellent-resumes/` 至少一份金样；每条一级 bullet 四槽齐全（痛点或演进 / 机制 / 约束或数字 / 结果）
-- [ ] 写 bullet 前已对照 `references/bullet-few-shots.md`；每条先完成支柱事实归档，再按正例/反例/改写对照成稿
+- [ ] 写 bullet 前已对照 `references/examples/bullet-few-shots.md`；每条先完成支柱事实归档，再按正例/反例/改写对照成稿
 - [ ] 简历一级 bullet **不是**导学亮点的原样粘贴，也不是「接入/开发 + 交互细节 +（待测）」工单型
 - [ ] 简历一级 bullet 每条只表达一个支柱，至少具备「问题或演进 + 机制 + 结果」；没有真实证据时未编造数字
 - [ ] 含「简历 → 面试展开」表；每道主问（简介级通用题除外）能回指一条一级 bullet
 - [ ] 主问题干为简历展开型：无文件路径、无私有函数名、无 issue 号、无内部开关；未出现源码巡检型反例
 - [ ] 面经每道**主问口播** ≥ 150 字，黑名单内部名词密度 **≤ 2 次**，且每次出现紧跟通用抽象翻译
 - [ ] 面经每道**追问口播** ≥ 150 字，黑名单内部名词 **≤ 1 次**
-- [ ] 面经每题的抽象层级对齐 `references/oral-style-samples.md` 的"样例风格 B"，未出现"私名堆叠型"反例特征
+- [ ] 面经每题的抽象层级对齐 `references/examples/oral-style-samples.md` 的"样例风格 B"，未出现"私名堆叠型"反例特征
 - [ ] 面经不含团队内部业务黑话（3~5 字中文代号 / 产品俗称），或已改写为外部可懂表达
 - [ ] 主问数量 8～12；每个一级 bullet 至少 1 主问 + 2 追问
 - [ ] 面经含**「源码证据索引」**表格，集中收纳内部私名与对应主题

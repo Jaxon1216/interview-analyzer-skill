@@ -55,7 +55,7 @@ Redis 是这条链路的**关键依赖**,单点挂掉必须有兜底,不能让�
 
 ## 面试官题干：简历展开型 vs 源码巡检型
 
-题干必须像面试官**只看过简历**在问，不能像 Code Review 在问。口播可以讲机制；题干不能出现私有函数、路径、issue 号、内部开关。完整契约见 [oral-and-resume-patterns.md](oral-and-resume-patterns.md)。下面沿用**本文样例一**的 SSR 场景，便于前后对照。
+题干必须像面试官**只看过简历**在问，不能像 Code Review 在问。口播可以讲机制；题干不能出现私有函数、路径、issue 号、内部开关。完整契约见 [oral-and-resume-patterns.md](../rules/oral-and-resume-patterns.md)。下面沿用**本文样例一**的 SSR 场景，便于前后对照。
 
 **正例（简历展开型）**：
 

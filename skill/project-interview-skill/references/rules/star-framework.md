@@ -28,7 +28,7 @@
 - 禁止题干出现：文件路径、私有函数名、issue 号、只有读过代码才知道的开关 / 枚举 / 内部字段。
 - 正例形态：「为什么用这种结构，而不是把逻辑写在主路径里？」
 - 反例形态：「某个内部配置键 / 函数为什么必须是这个字面量？」（像读过仓库）
-- 题干正反例见 [oral-style-samples.md](oral-style-samples.md)（与该文件已有的 SSR 样例对齐）；完整契约见 [oral-and-resume-patterns.md](oral-and-resume-patterns.md)。
+- 题干正反例见 [oral-style-samples.md](../examples/oral-style-samples.md)（与该文件已有的 SSR 样例对齐）；完整契约见 [oral-and-resume-patterns.md](oral-and-resume-patterns.md)。
 
 ## 数量（只统计主问，追问不计入）
 

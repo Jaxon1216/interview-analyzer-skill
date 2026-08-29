@@ -14,10 +14,9 @@
   },
   "files": [
     "bin/",
-    "SKILL.md",
-    "references/",
-    "scripts/",
+    "skill/",
     "README.md",
+    "README_EN.md",
     "LICENSE"
   ],
   "scripts": {

@@ -3,7 +3,7 @@
   <p><a href="https://github.com/Jaxon1216/interview-analyzer-skill/blob/main/README_EN.md">English</a></p>
   <p><em>把你的项目经历，变成可复述、可追问、可上场的面试战斗手册。</em></p>
   <p>
-    <a href="SKILL.md"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
+    <a href="skill/project-interview-skill/SKILL.md"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
     <img alt="Type: Agent Skill" src="https://img.shields.io/badge/Type-Agent%20Skill-7c3aed">
     <img alt="Trae Compatible" src="https://img.shields.io/badge/Trae-Compatible-111827">
     <img alt="Cursor Compatible" src="https://img.shields.io/badge/Cursor-Compatible-00B8D9">
@@ -114,29 +114,40 @@ cd interview-analyzer-skill
 
 npm 包不会打包 `install.sh`；对普通用户优先推荐 `npx project-interview-skill ...`。
 
+## 可直接复制的 Skill Bundle
+
+仓库外层是 npm CLI 和开发工程；真正可独立迁移的 Skill 位于：
+
+```text
+skill/project-interview-skill/
+├── SKILL.md
+├── references/
+└── scripts/
+```
+
+复制这个目录即可迁移 Skill，不需要复制 `bin/`、`tests/` 或 `package.json`。npm CLI 安装时也只从这个目录生成目标 Skill。
+
 ## 仓库结构
 
 ```text
 interview-analyzer-skill/
+|-- skill/
+|   `-- project-interview-skill/
+|       |-- SKILL.md
+|       |-- references/
+|       |   |-- rules/
+|       |   |-- templates/
+|       |   |-- examples/
+|       |   `-- excellent-resumes/
+|       `-- scripts/
 |-- bin/
 |   `-- project-interview-skill.js
-|-- SKILL.md
 |-- install.sh
 |-- package.json
 |-- README.md
 |-- README_EN.md
 |-- demo.jpg
 |-- LICENSE
-|-- references/
-|   |-- interview-rubric.md
-|   |-- star-framework.md
-|   |-- output-templates.md
-|   |-- oral-and-resume-patterns.md
-|   |-- oral-style-samples.md
-|   `-- excellent-resumes/
-|-- scripts/
-|   |-- check_inputs.py
-|   `-- build_prompt.py
 `-- tests/
 ```
 

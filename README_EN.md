@@ -3,7 +3,7 @@
   <p><a href="https://github.com/Jaxon1216/interview-analyzer-skill/blob/main/README.md">简体中文</a></p>
   <p><em>Turn your project experience into interview-ready docs you can actually explain and defend.</em></p>
   <p>
-    <a href="SKILL.md"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
+    <a href="skill/project-interview-skill/SKILL.md"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
     <img alt="Type: Agent Skill" src="https://img.shields.io/badge/Type-Agent%20Skill-7c3aed">
     <img alt="Trae Compatible" src="https://img.shields.io/badge/Trae-Compatible-111827">
     <img alt="Cursor Compatible" src="https://img.shields.io/badge/Cursor-Compatible-00B8D9">
@@ -114,29 +114,40 @@ cd interview-analyzer-skill
 
 The npm package does not include `install.sh`; regular users should prefer `npx project-interview-skill ...`.
 
+## Standalone Skill Bundle
+
+The repository root contains the npm CLI and development files. The independently portable Skill bundle is:
+
+```text
+skill/project-interview-skill/
+├── SKILL.md
+├── references/
+└── scripts/
+```
+
+Copy this directory to migrate the Skill; `bin/`, `tests/`, and `package.json` are not required. The npm CLI also builds installed targets from this directory only.
+
 ## Repository Structure
 
 ```text
 interview-analyzer-skill/
+|-- skill/
+|   `-- project-interview-skill/
+|       |-- SKILL.md
+|       |-- references/
+|       |   |-- rules/
+|       |   |-- templates/
+|       |   |-- examples/
+|       |   `-- excellent-resumes/
+|       `-- scripts/
 |-- bin/
 |   `-- project-interview-skill.js
-|-- SKILL.md
 |-- install.sh
 |-- package.json
 |-- README.md
 |-- README_EN.md
 |-- demo.jpg
 |-- LICENSE
-|-- references/
-|   |-- interview-rubric.md
-|   |-- star-framework.md
-|   |-- output-templates.md
-|   |-- oral-and-resume-patterns.md
-|   |-- oral-style-samples.md
-|   `-- excellent-resumes/
-|-- scripts/
-|   |-- check_inputs.py
-|   `-- build_prompt.py
 `-- tests/
 ```
 

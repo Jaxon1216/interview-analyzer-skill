@@ -8,6 +8,7 @@ const path = require('path');
 const PACKAGE_NAME = 'project-interview-skill';
 const SKILL_DIR_NAME = 'project-interview-skill';
 const SUPPORTED_PRODUCTS = ['agents', 'trae', 'cursor', 'vscode', 'claude-code', 'codex'];
+const SKILL_BUNDLE_PATH = path.join('skill', 'project-interview-skill');
 const COLORS = {
   reset: '\x1b[0m',
   bold: '\x1b[1m',
@@ -20,8 +21,6 @@ const BUNDLE_ENTRIES = [
   'SKILL.md',
   'references',
   'scripts',
-  'README.md',
-  'LICENSE',
 ];
 
 function main() {
@@ -146,6 +145,7 @@ function doctor(options) {
   const home = os.homedir();
 
   info(`Package root: ${packageRoot()}`);
+  info(`Skill bundle: ${skillBundleRoot()}`);
   info(`Current project: ${cwd}`);
   info(`Home: ${home}`);
   console.log('');
@@ -240,9 +240,9 @@ function installProduct(product, target, options) {
 }
 
 function validatePackage() {
-  const skillPath = path.join(packageRoot(), 'SKILL.md');
+  const skillPath = path.join(skillBundleRoot(), 'SKILL.md');
   if (!fs.existsSync(skillPath)) {
-    throw new Error(`Missing SKILL.md at ${skillPath}`);
+    throw new Error(`Missing Skill bundle entry: ${skillPath}`);
   }
 
   const firstLine = fs.readFileSync(skillPath, 'utf8').split(/\r?\n/, 1)[0];
@@ -255,7 +255,7 @@ function copyBundle(destination) {
   fs.mkdirSync(destination, { recursive: true });
 
   for (const entry of BUNDLE_ENTRIES) {
-    const source = path.join(packageRoot(), entry);
+    const source = path.join(skillBundleRoot(), entry);
     if (!fs.existsSync(source)) {
       continue;
     }
@@ -322,7 +322,7 @@ function writeFile(filePath, content) {
 }
 
 function skillBody() {
-  const content = fs.readFileSync(path.join(packageRoot(), 'SKILL.md'), 'utf8');
+  const content = fs.readFileSync(path.join(skillBundleRoot(), 'SKILL.md'), 'utf8');
   const lines = content.split(/\r?\n/);
   let delimiterCount = 0;
   const body = [];
@@ -341,7 +341,7 @@ function skillBody() {
 }
 
 function extractDescription() {
-  const content = fs.readFileSync(path.join(packageRoot(), 'SKILL.md'), 'utf8');
+  const content = fs.readFileSync(path.join(skillBundleRoot(), 'SKILL.md'), 'utf8');
   const lines = content.split(/\r?\n/);
   let inFrontmatter = false;
   let inDescriptionBlock = false;
@@ -381,6 +381,10 @@ function extractDescription() {
 
 function packageRoot() {
   return path.resolve(__dirname, '..');
+}
+
+function skillBundleRoot() {
+  return path.join(packageRoot(), SKILL_BUNDLE_PATH);
 }
 
 function printHelp() {

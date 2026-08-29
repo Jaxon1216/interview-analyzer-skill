@@ -22,7 +22,10 @@ def load_module(name: str, relative_path: str):
     return module
 
 
-check_inputs = load_module("check_inputs_module", "scripts/check_inputs.py")
+check_inputs = load_module(
+    "check_inputs_module",
+    "skill/project-interview-skill/scripts/check_inputs.py",
+)
 
 
 class CheckInputsTests(unittest.TestCase):

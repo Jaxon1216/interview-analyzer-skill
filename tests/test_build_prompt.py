@@ -21,7 +21,10 @@ def load_module(name: str, relative_path: str):
     return module
 
 
-build_prompt = load_module("build_prompt_module", "scripts/build_prompt.py")
+build_prompt = load_module(
+    "build_prompt_module",
+    "skill/project-interview-skill/scripts/build_prompt.py",
+)
 
 
 class BuildPromptTests(unittest.TestCase):

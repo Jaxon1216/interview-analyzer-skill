@@ -3,7 +3,7 @@
   <p><a href="https://github.com/Jaxon1216/interview-analyzer-skill/blob/main/README_EN.md">English</a></p>
   <p><em>把你的项目经历，变成可复述、可追问、可上场的面试战斗手册。</em></p>
   <p>
-    <a href="skill/project-interview-skill/SKILL.md"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
+    <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
     <img alt="Type: Agent Skill" src="https://img.shields.io/badge/Type-Agent%20Skill-7c3aed">
     <img alt="Trae Compatible" src="https://img.shields.io/badge/Trae-Compatible-111827">
     <img alt="Cursor Compatible" src="https://img.shields.io/badge/Cursor-Compatible-00B8D9">
@@ -144,6 +144,7 @@ interview-analyzer-skill/
 |   `-- project-interview-skill.js
 |-- install.sh
 |-- package.json
+|-- .npmrc
 |-- README.md
 |-- README_EN.md
 |-- demo.jpg
@@ -151,28 +152,7 @@ interview-analyzer-skill/
 `-- tests/
 ```
 
-## 维护与发布
-
-本项目作为 npm CLI 包发布，不需要编译。npm 包会按 `package.json` 的 `files` 白名单打包：
-
-```bash
-npm pack --dry-run
-npm publish --access public
-```
-
-本地验证：
-
-```bash
-npm test
-npm run pack:check
-node bin/project-interview-skill.js install --trae --dry-run
-```
-
 ## 常见问题
-
-### `.npmrc` 是必要的吗？
-
-不是 npm 包必须文件。它只用于本仓库开发时指定 registry。真正发布到公网 npm 的关键配置是 `package.json` 里的 `publishConfig.registry`。
 
 ### 为什么默认安装到 `.agents/skills`？
 

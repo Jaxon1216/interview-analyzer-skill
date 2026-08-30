@@ -3,7 +3,7 @@
   <p><a href="https://github.com/Jaxon1216/interview-analyzer-skill/blob/main/README.md">简体中文</a></p>
   <p><em>Turn your project experience into interview-ready docs you can actually explain and defend.</em></p>
   <p>
-    <a href="skill/project-interview-skill/SKILL.md"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
+    <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
     <img alt="Type: Agent Skill" src="https://img.shields.io/badge/Type-Agent%20Skill-7c3aed">
     <img alt="Trae Compatible" src="https://img.shields.io/badge/Trae-Compatible-111827">
     <img alt="Cursor Compatible" src="https://img.shields.io/badge/Cursor-Compatible-00B8D9">
@@ -89,7 +89,7 @@ Restart the target IDE or Agent after installation.
 Open the target project root in your IDE or Agent, then start a new chat:
 
 ```text
-/project-interview-skill 简称：电商；项目描述：...；技术栈：Vue3、Pinia、Vite；求职方向：前端
+/project-interview-skill Short name: ecommerce; project description: ...; stack: Vue3, Pinia, Vite; target role: frontend
 ```
 
 The skill creates these files under the target project root:
@@ -144,6 +144,7 @@ interview-analyzer-skill/
 |   `-- project-interview-skill.js
 |-- install.sh
 |-- package.json
+|-- .npmrc
 |-- README.md
 |-- README_EN.md
 |-- demo.jpg
@@ -151,28 +152,7 @@ interview-analyzer-skill/
 `-- tests/
 ```
 
-## Maintenance and Publishing
-
-This npm CLI package does not need a build step. The package contents are controlled by the `files` allowlist in `package.json`:
-
-```bash
-npm pack --dry-run
-npm publish --access public
-```
-
-Local checks:
-
-```bash
-npm test
-npm run pack:check
-node bin/project-interview-skill.js install --trae --dry-run
-```
-
 ## FAQ
-
-### Is `.npmrc` required?
-
-No. It is only useful for this repository's development registry selection. Public npm publishing is controlled by `publishConfig.registry` in `package.json`.
 
 ### Why does the default install target `.agents/skills`?
 

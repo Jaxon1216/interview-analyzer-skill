@@ -13,17 +13,35 @@
   </p>
 </div>
 
-把真实项目快速整理成两份可直接用于面试准备的文档（输出到目标项目根目录）：
+把真实项目变成能讲、能追问、能复习的面试材料，直接输出到目标项目根目录。
 
-- `导学-{简称}.md`：重点亮点、代码阅读路径、学习顺序与必备知识点
-- `面经-{简称}.md`：简历可用摘要 + 面试题口播（第一人称 STAR）
+## 核心能力
+
+- 全链路扫描：从项目结构、入口到关键模块，提炼真实技术支柱
+- 简历 bullet：把代码事实整理成可复用的简历表达
+- STAR 口播：围绕每条 bullet 生成主问、追问和第一人称回答
+- 表达护栏：约束内部名词和实现细节，转换成外部面试官听得懂的说法
+- 学习路径：按优先级安排必备知识、源码阅读和验证任务
+- 前后端样例：内置参考模板，帮助校准表达深度和面试口径
+
+## 快速开始
+
+```bash
+npx project-interview-skill install
+```
+
+安装完成后，在目标项目根目录开启新对话，直接输入：
+
+```text
+/project-interview-skill 简称：电商；项目描述：......；技术栈：Vue3、Pinia、Vite；求职方向：前端
+```
 
 ## 生成结果
 
 从一次自然语言输入开始，Skill 会把项目拆成三条可执行的准备路径：
 
 <p align="center">
-  <img src="docs/images/bullet-output.png" alt="简历 bullet 与提示词侧栏" width="100%">
+  <img src="https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/docs/images/bullet-output.png" alt="简历 bullet 与提示词侧栏" width="100%">
 </p>
 
 <table>
@@ -32,18 +50,12 @@
     <td width="50%" align="center"><strong>导学：安排学习顺序</strong></td>
   </tr>
   <tr>
-    <td><img src="docs/images/interview-questions.png" alt="面试问题与口播答案" width="100%"></td>
-    <td><img src="docs/images/learning-path.png" alt="学习顺序与推荐阅读" width="100%"></td>
+    <td><img src="https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/docs/images/interview-questions.png" alt="面试问题与口播答案" width="100%"></td>
+    <td><img src="https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/docs/images/learning-path.png" alt="学习顺序与推荐阅读" width="100%"></td>
   </tr>
 </table>
 
 ## 安装方式
-
-推荐使用 `npx`，不需要 clone 仓库：
-
-```bash
-npx project-interview-skill install
-```
 
 默认安装到用户级通用 Agent 目录：
 
@@ -98,12 +110,6 @@ npx project-interview-skill install --project --trae
 安装完成后，重启对应 IDE / Agent，开启新对话。
 
 ## 使用方式
-
-在被分析项目的工作区开启新对话，例如：
-
-```text
-/project-interview-skill 简称：电商；项目描述：......（背景/职责/难点/结果）；技术栈：Vue3、Pinia、Vite；求职方向：前端
-```
 
 随后在该业务项目根目录生成：
 
@@ -161,7 +167,8 @@ interview-analyzer-skill/
 |-- README.md
 |-- README_EN.md
 |-- docs/
-|   `-- images/
+|   |-- images/
+|   `-- promo.md
 |-- LICENSE
 `-- tests/
 ```

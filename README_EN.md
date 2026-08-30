@@ -13,17 +13,35 @@
   </p>
 </div>
 
-Generate two practical interview-prep docs from a real codebase, written to the target project root:
+Turn a real codebase into interview material you can explain, defend, and study, written to the target project root.
 
-- `导学-{short-name}.md`: key highlights, code-reading path, and study checklist
-- `面经-{short-name}.md`: resume-ready summary plus first-person STAR speaking answers
+## Core Capabilities
+
+- Full-project scan: trace structure, entry points, and key modules into real technical pillars
+- Resume bullets: turn code facts into reusable resume language
+- STAR speaking answers: generate primary questions, follow-ups, and first-person responses
+- Explanation guardrails: translate internal implementation terms into interviewer-friendly language
+- Study path: prioritize concepts, source reading, and verification tasks
+- Frontend and backend examples: provide reference templates for depth and phrasing
+
+## Quick Start
+
+```bash
+npx project-interview-skill install
+```
+
+After installation, open the target project root in a new chat and enter:
+
+```text
+/project-interview-skill Short name: ecommerce; project description: ...; stack: Vue3, Pinia, Vite; target role: frontend
+```
 
 ## Generated Output
 
 Starting from one natural-language request, the Skill turns a codebase into three practical preparation views:
 
 <p align="center">
-  <img src="docs/images/bullet-output.png" alt="Resume bullets and prompt sidebar" width="100%">
+  <img src="https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/docs/images/bullet-output.png" alt="Resume bullets and prompt sidebar" width="100%">
 </p>
 
 <table>
@@ -32,18 +50,12 @@ Starting from one natural-language request, the Skill turns a codebase into thre
     <td width="50%" align="center"><strong>Study guide: an ordered learning path</strong></td>
   </tr>
   <tr>
-    <td><img src="docs/images/interview-questions.png" alt="Interview questions and spoken answers" width="100%"></td>
-    <td><img src="docs/images/learning-path.png" alt="Learning order and recommended reading" width="100%"></td>
+    <td><img src="https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/docs/images/interview-questions.png" alt="Interview questions and spoken answers" width="100%"></td>
+    <td><img src="https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/docs/images/learning-path.png" alt="Learning order and recommended reading" width="100%"></td>
   </tr>
 </table>
 
 ## Install
-
-Use `npx`; cloning is not required:
-
-```bash
-npx project-interview-skill install
-```
 
 The default target is the user-level generic Agent directory:
 
@@ -98,12 +110,6 @@ Supported project-level targets:
 Restart the target IDE or Agent after installation.
 
 ## Usage
-
-Open the target project root in your IDE or Agent, then start a new chat:
-
-```text
-/project-interview-skill Short name: ecommerce; project description: ...; stack: Vue3, Pinia, Vite; target role: frontend
-```
 
 The skill creates these files under the target project root:
 
@@ -161,7 +167,8 @@ interview-analyzer-skill/
 |-- README.md
 |-- README_EN.md
 |-- docs/
-|   `-- images/
+|   |-- images/
+|   `-- promo.md
 |-- LICENSE
 `-- tests/
 ```

@@ -15,7 +15,6 @@
   "files": [
     "bin/",
     "skill/",
-    "docs/",
     "README.md",
     "README_EN.md",
     "LICENSE"

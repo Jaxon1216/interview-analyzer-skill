@@ -18,11 +18,24 @@ Generate two practical interview-prep docs from a real codebase, written to the 
 - `导学-{short-name}.md`: key highlights, code-reading path, and study checklist
 - `面经-{short-name}.md`: resume-ready summary plus first-person STAR speaking answers
 
-## Demo
+## Generated Output
 
-This merged screenshot shows both trigger input and interview output:
+Starting from one natural-language request, the Skill turns a codebase into three practical preparation views:
 
-![Demo](https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/demo.jpg)
+<p align="center">
+  <img src="docs/images/bullet-output.png" alt="Resume bullets and prompt sidebar" width="100%">
+</p>
+
+<table>
+  <tr>
+    <td width="50%" align="center"><strong>Interview guide: resume-driven questions</strong></td>
+    <td width="50%" align="center"><strong>Study guide: an ordered learning path</strong></td>
+  </tr>
+  <tr>
+    <td><img src="docs/images/interview-questions.png" alt="Interview questions and spoken answers" width="100%"></td>
+    <td><img src="docs/images/learning-path.png" alt="Learning order and recommended reading" width="100%"></td>
+  </tr>
+</table>
 
 ## Install
 
@@ -147,7 +160,8 @@ interview-analyzer-skill/
 |-- .npmrc
 |-- README.md
 |-- README_EN.md
-|-- demo.jpg
+|-- docs/
+|   `-- images/
 |-- LICENSE
 `-- tests/
 ```

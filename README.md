@@ -18,11 +18,24 @@
 - `导学-{简称}.md`：重点亮点、代码阅读路径、学习顺序与必备知识点
 - `面经-{简称}.md`：简历可用摘要 + 面试题口播（第一人称 STAR）
 
-## 效果演示
+## 生成结果
 
-下面这张合并图展示了触发输入与面经输出示例：
+从一次自然语言输入开始，Skill 会把项目拆成三条可执行的准备路径：
 
-![Demo](https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/demo.jpg)
+<p align="center">
+  <img src="docs/images/bullet-output.png" alt="简历 bullet 与提示词侧栏" width="100%">
+</p>
+
+<table>
+  <tr>
+    <td width="50%" align="center"><strong>面经：按简历支柱展开</strong></td>
+    <td width="50%" align="center"><strong>导学：安排学习顺序</strong></td>
+  </tr>
+  <tr>
+    <td><img src="docs/images/interview-questions.png" alt="面试问题与口播答案" width="100%"></td>
+    <td><img src="docs/images/learning-path.png" alt="学习顺序与推荐阅读" width="100%"></td>
+  </tr>
+</table>
 
 ## 安装方式
 
@@ -147,7 +160,8 @@ interview-analyzer-skill/
 |-- .npmrc
 |-- README.md
 |-- README_EN.md
-|-- demo.jpg
+|-- docs/
+|   `-- images/
 |-- LICENSE
 `-- tests/
 ```

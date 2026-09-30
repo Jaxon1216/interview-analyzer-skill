@@ -13,11 +13,11 @@
   </p>
 </div>
 
-Turn a real codebase into interview material you can explain, defend, and study, written to the target project root.
+Turn a real codebase into interview material you can explain, defend, and study, written under `interview-prep/{short-name}/` in the target project.
 
 ## Core Capabilities
 
-- Full-project scan: trace structure, entry points, and key modules into real technical pillars
+- Core-flow investigation: trace entry points, mechanisms, failure boundaries, and source evidence into technical pillars
 - Resume bullets: turn code facts into reusable resume language
 - STAR speaking answers: generate primary questions, follow-ups, and first-person responses
 - Explanation guardrails: translate internal implementation terms into interviewer-friendly language
@@ -115,8 +115,10 @@ The skill creates these files under the target project root:
 
 | File | Purpose |
 |------|---------|
-| `导学-{short-name}.md` | Prerequisites, key concepts, repo-relative reading guide, design decisions, and optional measurement notes |
-| `面经-{short-name}.md` | 1-2 sentence resume summary, architecture-level bullets, and interview Q&A mapped to those bullets |
+| `interview-prep/{short-name}/导学.md` | Prerequisites, repo-relative reading guide, traced system flows and evidence, design decisions, and optional measurement notes |
+| `interview-prep/{short-name}/面经.md` | 1-2 sentence resume summary, titled architecture bullets, and interview Q&A mapped to those bullets |
+
+Complex topics can be expanded in `interview-prep/{short-name}/导学/01-topic.md` and linked from the main study guide. The default output remains two files.
 
 You can also invoke it naturally by asking for project interview preparation docs.
 

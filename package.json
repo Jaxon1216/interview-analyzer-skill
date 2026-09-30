@@ -1,6 +1,6 @@
 {
   "name": "project-interview-skill",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Install a project interview preparation skill for AI coding agents.",
   "license": "MIT",
   "author": "EastonJiang <jiangxu05@outlook.com>",
@@ -14,7 +14,9 @@
   },
   "files": [
     "bin/",
-    "skill/",
+    "skill/project-interview-skill/SKILL.md",
+    "skill/project-interview-skill/references/",
+    "skill/project-interview-skill/scripts/*.py",
     "README.md",
     "README_EN.md",
     "LICENSE"

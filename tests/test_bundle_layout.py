@@ -19,7 +19,9 @@ class BundleLayoutTests(unittest.TestCase):
 
     def test_package_files_publish_bundle(self):
         package = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))
-        self.assertIn("skill/", package["files"])
+        self.assertIn("skill/project-interview-skill/SKILL.md", package["files"])
+        self.assertIn("skill/project-interview-skill/references/", package["files"])
+        self.assertIn("skill/project-interview-skill/scripts/*.py", package["files"])
         self.assertNotIn("SKILL.md", package["files"])
         self.assertNotIn("references/", package["files"])
         self.assertNotIn("scripts/", package["files"])

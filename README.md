@@ -55,6 +55,14 @@ npx project-interview-skill install
   </tr>
 </table>
 
+## 工作流
+
+Skill 从项目描述或可访问的仓库出发，先整理项目事实与源码证据，再生成导学、简历支柱和面经，最后检查产物是否符合规则。证据不足的内容会标注为待确认。
+
+![project-interview-skill 工作流](docs/images/project-interview-workflow.png)
+
+[查看可编辑的飞书画板](https://bytedance.larkoffice.com/docx/EedMdMYZwoM5JHxVHAOc37NOnPf)
+
 ## 安装方式
 
 默认安装到用户级通用 Agent 目录：

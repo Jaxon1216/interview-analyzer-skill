@@ -51,7 +51,7 @@ def build_prompt(
     Args:
         description: Required project description.
         tech_stack: Optional stack string.
-        role_focus: Optional frontend/backend/AI.
+        role_focus: Optional direction; omitted means fullstack.
         short_name: Optional short name for `interview-prep/{简称}/`.
         extra: Optional free-form notes.
 
@@ -59,7 +59,7 @@ def build_prompt(
         Markdown string to paste into a chat or pipe to an LLM.
     """
     lines: list[str] = [
-        "请严格按 `project-interview-skill` 执行：在目标项目根目录的 `interview-prep/{简称}/` 写入 `导学.md` 与 `面经.md`；量化与验证仅作为导学中的可选建议项。",
+        "请按 `project-interview-skill` 执行：写入 `interview-prep/{简称}/导学.md`、`面经.md` 与全部核心课程；单项目课程使用 `interview-prep/guide-{方向}/`，多项目输出根目录使用各项目子目录。",
         "",
         "## 已确认输入",
         "",
@@ -87,7 +87,7 @@ def build_prompt(
     if role_focus and role_focus.strip():
         lines.append(role_focus.strip())
     else:
-        lines.append("_（未提供，请从描述推断或给出交叉标签）_")
+        lines.append("_（未提供，默认全栈；课程目录 guide-fullstack，按真实源码调整比重）_")
     lines.append("")
 
     if extra and extra.strip():
@@ -100,8 +100,9 @@ def build_prompt(
         [
             "## 输出要求（摘要）",
             "",
-            "- 先探索仓库：确认入口与职责范围，追踪 2～4 条核心链路，逐条记录问题/演进、我的动作、机制、失败边界、结果、源码/测试相对路径与证据缺口；只有用户描述时标明证据限制，不编造职责、指标或旧架构。",
-            "- 面经：从事实卡抽取有证据的架构支柱，再写简介与 bullet；每条一级 bullet 独立成行，格式为 `- **具体支柱名：** 正文`，先给标题，再交代问题/演进和职责、机制、约束/边界与结果，最后填「简历 → 面试展开」表并按表出题。证据不足时少写。",
+            "- 先探索仓库：确认入口与实际技术范围，追踪 2～4 条核心链路，逐条记录问题/演进、已实现机制、失败边界、具体效果、源码/测试相对路径与验证状态；只有用户描述时标明证据限制，不虚构源码、实测指标或旧架构。",
+            "- 面经：从事实卡抽取有证据的架构支柱，再写目标简介与 bullet；每条一级 bullet 独立成行，格式为 `- **具体支柱名：** 正文`，先给标题，再交代问题/演进、机制、约束/边界与具体结果，最后填「简历 → 面试展开」表并按表出题。证据不足时少写。",
+            "- 默认目标简历：仓库已有机制均可入选，不主动核验 commit author；用户明确参与在同等含金量下优先。未实现增强另列进阶，只有明确要求实际贡献时才限制职责。",
             "- 面经 bullet：对照领域中立 few-shot 的正例、反例和改写对照，只学习表达结构；禁止复制样例的项目名、数字、领域名词或指标。",
             "",
             "## Bullet few-shot（仅学习结构，不复制素材）",
@@ -115,12 +116,12 @@ def build_prompt(
             "- 面经 bullet 质检：每条只表达一个支柱，至少包含「问题或演进 + 机制 + 结果」；关键支柱尽量补充约束或数字。",
             "- 面经 bullet 质检：删除“提升性能/提高稳定性/优化体验”等不可验证结果；私有函数、路径、内部枚举只进入源码证据索引。",
             "- 面经 bullet 质检：支柱名必须是通用架构/工程能力；`RunManager`、`Stream Bridge`、`execution id` 等项目实现名改写为通用表达或下沉到源码证据索引。",
-            "- 面经：每个一级 bullet 1 主问 + 2 追问；可另加 0～4 道简介级通用题；主问通常 4～10 道，证据少时更少，追问不计入总数。题干须简历可读，禁止源码巡检型。",
+            "- 面经：每条 bullet 至少一组 Q&A，通常 1 主问与 2～4 个递进追问；主问通常 4～10 道，按实际主张调整，追问不计入总数。每题记录 B 编号、简历触发依据、考查目标与 C 课程链接；追问来自简历或前序回答。",
             "- 面经：正文重心放在面试题口播，不单独输出「亮点拆解」章节。",
-            "- 口播：第一人称；主问与每个追问口播均 **≥150 字**，完整 STAR（场景→归因→动作→结果/兜底）。",
-            "- 导学：必须包含「重点亮点与学习顺序」和「推荐阅读」表，含 **仓库相对路径**。",
-            "- 导学：写「链路与证据」，说明入口→机制→结果、失败边界和证据缺口；复杂主题可在 `导学/01-主题.md` 中展开并从主导学链接。",
-            "- 导学：加一条固定自学提醒——看不懂继续问 AI，本 skill 不做逐行讲解。",
+            "- 口播：先正面回答，按方案/原理/故障/演进题选择结构；项目口播第一人称，不设统一最低字数，不强制每道追问完整 STAR。",
+            "- 默认读者能写 CRUD；方向未指定用全栈。基础按需补齐，核心精力用于数据流、特色机制、运行原理、工程质量和设计取舍。",
+            "- 导学：总览含项目地图、核心课程路线与 B/Q/C 导航；首次完整展开全部核心课程，选读只列入口；课程讲清场景、主链、源码阅读、机制边界、动手验证与理解题。",
+            "- 源码引用：相对文件链接＋符号名＋必要片段，链接相对当前文档计算；课程反向链接主导学和面经，保留用户笔记。",
             "- 量化与验证：仅导学可选添加（建议语气）；面经不强制该章节。",
             "",
         ]
@@ -156,7 +157,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--role",
         default="",
-        help="Job direction, e.g. 前端 / 后端 / AI.",
+        help="Job direction, e.g. 前端 / 后端 / 全栈 / AI; default 全栈.",
     )
     parser.add_argument(
         "--extra",

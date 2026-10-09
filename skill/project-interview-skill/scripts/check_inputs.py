@@ -74,12 +74,12 @@ def analyze(description: str, tech_stack: str | None, role_focus: str | None) ->
     if desc_len < MIN_DESCRIPTION_CHARS:
         missing.append(
             f"项目描述过短（当前约 {desc_len} 字符，建议至少 {MIN_DESCRIPTION_CHARS}+ "
-            "并包含职责、难点或结果线索）"
+            "并包含项目目标、机制或难点线索）"
         )
 
     if not _has_any_keyword(description, KEYWORD_HINTS) and desc_len < MIN_DESCRIPTION_CHARS * 2:
         suggestions.append(
-            "请补充：你在项目中的**具体职责**（独立负责模块 / 协作边界）？"
+            "请补充：项目解决什么问题，最值得掌握的核心机制是什么？"
         )
         suggestions.append(
             "请补充：一个**技术或业务难点**，以及你如何验证「已解决」？"
@@ -92,19 +92,19 @@ def analyze(description: str, tech_stack: str | None, role_focus: str | None) ->
 
     if not role_focus or not role_focus.strip():
         suggestions.append(
-            "求职方向未指定：目标是 **前端 / 后端 / AI** 中的哪些？会影响题目权重与标签。"
+            "求职方向未指定：默认全栈，按仓库实际技术范围安排课程；可选指定前端或后端。"
         )
 
     suggestions.extend(
         [
-            "请描述一次**线上问题或惊险排障**：现象、定位手段、修复、复盘项？",
+            "可选补充一条**完整业务链路**：入口、状态变化、结果与失败边界。",
             "若重新做一遍，你会在哪个**设计决策**上改变？为什么？",
             "项目中**如何发布与回滚**（灰度、特性开关、数据迁移）？",
         ]
     )
 
     if desc_len >= MIN_DESCRIPTION_CHARS:
-        notes.append("项目描述长度达标；可按追问补齐量化与线上证据。")
+        notes.append("项目描述长度达标；默认生成目标简历与核心课程，职责和线上指标不作为生成前提。")
 
     ok = len(missing) == 0
     return CheckResult(ok=ok, missing=missing, suggestions=suggestions, notes=notes)

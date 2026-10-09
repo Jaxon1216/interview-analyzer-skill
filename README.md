@@ -13,15 +13,15 @@
   </p>
 </div>
 
-把真实项目变成能讲、能追问、能复习的面试材料，输出到目标项目的 `interview-prep/{简称}/` 目录。
+把真实项目变成能讲、能追问、能复习的面试材料，主文件输出到 `interview-prep/{简称}/`，核心课程输出到 `interview-prep/guide-{方向}/`。
 
 ## 核心能力
 
 - 核心链路探索：追踪入口、关键机制、失败边界与源码证据，再提炼技术支柱
-- 简历 bullet：把代码事实整理成可复用的简历表达
-- STAR 口播：围绕每条 bullet 生成主问、追问和第一人称回答
+- 简历 bullet：把仓库已有机制整理成目标简历，配套学习后选用，不主动核验提交作者
+- 面试展开：从简历主张生成主问，按前序回答递进追问，答案按题型组织
 - 表达护栏：约束内部名词和实现细节，转换成外部面试官听得懂的说法
-- 学习路径：按优先级安排必备知识、源码阅读和验证任务
+- 源码课程：默认全栈，首次展开全部核心课程，关联 bullet、Q&A、源码与验证任务
 - 前后端样例：内置参考模板，帮助校准表达深度和面试口径
 
 ## 快速开始
@@ -57,7 +57,7 @@ npx project-interview-skill install
 
 ## 工作流
 
-Skill 从项目描述或可访问的仓库出发，先整理项目事实与源码证据，再生成导学、简历支柱和面经，最后检查产物是否符合规则。证据不足的内容会标注为待确认。
+Skill 从项目描述或可访问的仓库出发，先整理项目事实与源码证据，再生成导学、简历支柱和面经，最后检查产物是否符合规则。未实现增强另列进阶目标；缺少个人提交证据不影响目标机制入选。
 
 ![project-interview-skill 工作流](docs/images/project-interview-workflow.png)
 
@@ -123,10 +123,22 @@ npx project-interview-skill install --project --trae
 
 | 文件 | 用途 |
 |------|------|
-| `导学.md` | 前置知识、源码阅读路线、核心链路与证据、原理和设计决策；文末可含「量化与验证（含待测）」 |
+| `导学.md` | 项目地图、核心课程路线、前置依赖、简历与面试导航、选读及验证建议 |
 | `面经.md` | 1～2 句简历摘要、以 `- **支柱名：**` 开头的 bullet、按简历支柱展开的面试题（主问/追问口播） |
 
-复杂知识点可在 `导学/01-主题.md` 等子文件中展开，由 `导学.md` 链接；默认只生成两份主文件。
+默认还会完整生成 `interview-prep/guide-fullstack/01-主题.md` 等核心课程；明确前端或后端时使用 `guide-frontend` / `guide-backend`。多项目输出根目录中，课程放到各自的 `{简称}/guide-{方向}/`。用户明确只要大纲或指定章节时遵从本次范围。
+
+默认读者懂语言和框架基础、能写 CRUD。每课讲清场景、数据流、关键源码、机制边界、动手验证与理解题，按“看懂 → 验证与修改 → 设计与表达”分层；基础按需补齐，选读按需展开。
+
+每条目标 bullet 都关联主问、核心课程和源码；追问由简历或前序回答触发。用户要求“仅整理实际贡献”时才限制个人参与范围，未实现能力与未测量收益不写成已完成结果。
+
+交付后可运行结构校验（路径替换为实际安装目录）：
+
+```bash
+python3 ~/.agents/skills/project-interview-skill/scripts/validate_output.py interview-prep/电商/面经.md --guide interview-prep/电商/导学.md
+```
+
+校验覆盖 bullet 格式、B/Q/C 关联、核心课程关键章节及本地文件链接；技术准确性与问题相关性仍需内容审读。
 
 也可以不写 slash 命令，直接描述“请基于这个项目生成导学和面经”。
 
@@ -195,11 +207,21 @@ interview-analyzer-skill/
 
 ### 更新后会自动生效吗？
 
-不会。已安装目录是拷贝产物，需要重新执行安装命令：
+不会。已安装目录是拷贝产物。使用 `@latest` 获取最新版，再安装到原来的目标位置：
 
 ```bash
-npx project-interview-skill install --trae
+npx project-interview-skill@latest install --agents
 ```
+
+上面适用于通用 Agent / Codex。Trae、Cursor、Claude Code 等用户将 `--agents` 换成原安装参数；项目级安装需在目标项目根目录添加 `--project`。更新会替换对应 skill 安装目录，生成的 `interview-prep/` 材料需要重新调用 skill 才会更新。
+
+更新后重启对应 Agent / 编辑器并开启新对话。可查看安装的版本：
+
+```bash
+rg 'version:' ~/.agents/skills/project-interview-skill/SKILL.md
+```
+
+需要固定版本时，将 `@latest` 换成明确版本，例如 `@1.4.0`。
 
 ## 反馈与支持
 

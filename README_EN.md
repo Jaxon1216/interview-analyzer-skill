@@ -19,7 +19,7 @@ Turn a real codebase into interview material you can explain, defend, and study,
 
 - Core-flow investigation: trace entry points, mechanisms, failure boundaries, and source evidence into technical pillars
 - Resume bullets: turn code facts into reusable resume language
-- STAR speaking answers: generate primary questions, follow-ups, and first-person responses
+- Interview expansion: derive primary questions from resume claims and follow-ups from preceding answers; adapt answer structure to question type
 - Explanation guardrails: translate internal implementation terms into interviewer-friendly language
 - Study path: prioritize concepts, source reading, and verification tasks
 - Frontend and backend examples: provide reference templates for depth and phrasing
@@ -118,7 +118,19 @@ The skill creates these files under the target project root:
 | `interview-prep/{short-name}/导学.md` | Prerequisites, repo-relative reading guide, traced system flows and evidence, design decisions, and optional measurement notes |
 | `interview-prep/{short-name}/面经.md` | 1-2 sentence resume summary, titled architecture bullets, and interview Q&A mapped to those bullets |
 
-Complex topics can be expanded in `interview-prep/{short-name}/导学/01-topic.md` and linked from the main study guide. The default output remains two files.
+The default delivery also includes all core lessons in `interview-prep/guide-fullstack/01-topic.md`. An explicit frontend/backend direction selects `guide-frontend` / `guide-backend`. For multiple projects sharing one output root, place courses under each `{short-name}/guide-{direction}/` instead. Outline-only and selected-lesson requests keep their requested scope.
+
+Lessons target developers who know the language/framework basics and can write CRUD. Each explains a concrete flow, source reading, mechanisms and failure boundaries, a verification task, and understanding questions. Progress from understanding to verification/modification and then design/explanation. Optional topics expand on demand.
+
+Resume bullets are learning targets drawn from implemented repository mechanisms; personal commit authorship is not audited or required. Only an explicit actual-contributions request restricts ownership scope. Keep unimplemented improvements and unmeasured gains distinct from current behavior.
+
+Every bullet links to questions and core lessons, with source references. Check the linked delivery using:
+
+```bash
+python3 ~/.agents/skills/project-interview-skill/scripts/validate_output.py interview-prep/shop/面经.md --guide interview-prep/shop/导学.md
+```
+
+This checks bullet format, B/Q/C coverage, required lesson sections, and local file links. Semantic accuracy and natural question progression still require content review.
 
 You can also invoke it naturally by asking for project interview preparation docs.
 
@@ -187,11 +199,21 @@ No. The behavior is intentionally narrow: the default installs only to `.agents/
 
 ### Do updates apply automatically?
 
-No. Installed skill folders are copied artifacts. Re-run the install command:
+No. Installed skill folders are copied artifacts. Use `@latest` and reinstall to the same target:
 
 ```bash
-npx project-interview-skill install --trae
+npx project-interview-skill@latest install --agents
 ```
+
+This targets Generic Agent / Codex. For Trae, Cursor, Claude Code, or another product, use your original product flag instead. For a project-level installation, run from the target project root and add `--project`. Updating replaces the selected skill installation; existing `interview-prep/` documents only change when you invoke the skill again.
+
+Restart the Agent/editor and start a new chat. Check the installed version with:
+
+```bash
+rg 'version:' ~/.agents/skills/project-interview-skill/SKILL.md
+```
+
+To pin a release, replace `@latest` with a version such as `@1.4.0`.
 
 ## Support
 

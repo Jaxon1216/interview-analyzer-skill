@@ -42,14 +42,15 @@ class ValidateOutputTests(unittest.TestCase):
         self.lesson.write_text(
             "# C03 查询\n[总览](../项目/导学.md) [面经](../项目/面经.md#q4)\n"
             "## 源码阅读\n先看 [服务](../service.go)，再沿调用追踪数据组装。\n"
-            "## 动手验证\n准备两个用户，请求列表，比较返回资料与数据库记录。\n",
+            "## 需要懂什么\n后端将用户资料组装进读模型，调用方不必逐条请求。\n"
+            "## 需要记住什么\n先查业务列表，再批量取资料，最后按 ID 关联返回。\n",
             encoding="utf-8",
         )
 
     def replace(self, path, old, new):
         path.write_text(path.read_text(encoding="utf-8").replace(old, new), encoding="utf-8")
 
-    def test_accepts_linked_delivery_with_preserved_nonsequential_ids(self):
+    def test_accepts_linked_delivery_without_exercises_and_preserves_ids(self):
         self.assertEqual(validate_output.check_delivery(self.interview, self.guide), [])
 
     def test_rejects_bullet_without_question_and_course_mapping(self):
@@ -85,8 +86,14 @@ class ValidateOutputTests(unittest.TestCase):
         self.lesson.write_text("# C03 查询\n", encoding="utf-8")
         errors = validate_output.check_delivery(self.interview, self.guide)
         self.assertTrue(any("源码阅读" in error for error in errors))
-        self.assertTrue(any("动手验证" in error for error in errors))
+        self.assertTrue(any("需要懂什么" in error for error in errors))
+        self.assertTrue(any("需要记住什么" in error for error in errors))
         self.assertTrue(any("missing backlink" in error for error in errors))
+
+    def test_experiment_section_does_not_replace_knowledge_content(self):
+        self.replace(self.lesson, "## 需要懂什么", "## 动手验证")
+        errors = validate_output.check_delivery(self.interview, self.guide)
+        self.assertTrue(any("需要懂什么" in error for error in errors))
 
     def test_rejects_broken_source_link_in_lesson(self):
         (self.root / "service.go").unlink()

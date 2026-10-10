@@ -115,16 +115,16 @@ The skill creates these files under the target project root:
 
 | File | Purpose |
 |------|---------|
-| `interview-prep/{short-name}/导学.md` | Prerequisites, repo-relative reading guide, traced system flows and evidence, design decisions, and optional measurement notes |
+| `interview-prep/{short-name}/导学.md` | Prerequisites, repo-relative reading guide, traced system flows and evidence, design decisions, and key conclusions to remember |
 | `interview-prep/{short-name}/面经.md` | 1-2 sentence resume summary, titled architecture bullets, and interview Q&A mapped to those bullets |
 
 The default delivery also includes all core lessons in `interview-prep/guide-fullstack/01-topic.md`. An explicit frontend/backend direction selects `guide-frontend` / `guide-backend`. For multiple projects sharing one output root, place courses under each `{short-name}/guide-{direction}/` instead. Outline-only and selected-lesson requests keep their requested scope.
 
-Lessons target developers who know the language/framework basics and can write CRUD. Each explains a concrete flow, source reading, mechanisms and failure boundaries, a verification task, and understanding questions. Progress from understanding to verification/modification and then design/explanation. Optional topics expand on demand.
+Lessons target developers who know the language/framework basics and can write CRUD. Each states its focus, explains a concrete flow, source reading, mechanisms and failure boundaries, and directly gives what to understand and remember. Progress from tracing the flow to understanding mechanisms and then design/explanation. Add predictions, hands-on labs, and exercises only when requested. Optional topics expand on demand.
 
 Resume bullets are learning targets drawn from implemented repository mechanisms; personal commit authorship is not audited or required. Only an explicit actual-contributions request restricts ownership scope. Keep unimplemented improvements and unmeasured gains distinct from current behavior.
 
-Every bullet links to questions and core lessons, with source references. Check the linked delivery using:
+Use the [default resume style template](skill/project-interview-skill/references/excellent-resumes/susu-bullet-template.md): name concrete mechanisms, explain actions and effects directly, and place relevant constraints with their steps. Split complex mechanisms into sub-bullets; keep measurement plans and future work outside resume bullets. Every bullet links to questions and core lessons, with source references. Check the linked delivery using:
 
 ```bash
 python3 ~/.agents/skills/project-interview-skill/scripts/validate_output.py interview-prep/shop/面经.md --guide interview-prep/shop/导学.md
@@ -213,7 +213,7 @@ Restart the Agent/editor and start a new chat. Check the installed version with:
 rg 'version:' ~/.agents/skills/project-interview-skill/SKILL.md
 ```
 
-To pin a release, replace `@latest` with a version such as `@1.4.0`.
+To pin a release, replace `@latest` with a version such as `@1.4.1`.
 
 ## Support
 

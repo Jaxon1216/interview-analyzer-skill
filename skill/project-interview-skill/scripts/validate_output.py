@@ -2,7 +2,7 @@
 """Check resume format, or linked B/Q/C delivery structure with --guide.
 
 Only simple inline Markdown file links are checked. Semantic accuracy, anchors,
-question relevance, and whether an experiment passed require content review.
+question relevance, and writing quality require content review.
 """
 from __future__ import annotations
 
@@ -115,7 +115,7 @@ def check_delivery(interview: Path, guide: Path) -> list[str]:
         content = without_fences(lesson)
         if not re.search(r"^# " + re.escape(cid) + r"\b", content, re.M):
             errors.append(f"{cid}: course heading does not match ID")
-        for heading in ("源码阅读", "动手验证"):
+        for heading in ("源码阅读", "需要懂什么", "需要记住什么"):
             body = section(content, heading)
             if not body.strip():
                 errors.append(f"{cid}: missing expanded '{heading}' section")

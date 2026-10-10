@@ -6,14 +6,14 @@ description: >-
 license: MIT
 metadata:
   author: project-interview-skill
-  version: 1.4.0
+  version: 1.4.1
   created: 2026-04-20
-  last_reviewed: 2026-10-09
+  last_reviewed: 2026-10-10
   review_interval_days: 90
   activation: /project-interview-skill
   provenance:
     maintainer: project-interview-skill
-    version: 1.4.0
+    version: 1.4.1
     created: 2026-04-20
     source_references:
       - references/rules/interview-rubric.md
@@ -25,6 +25,7 @@ metadata:
       - references/rules/oral-and-resume-patterns.md
       - references/examples/oral-style-samples.md
       - references/excellent-resumes/README.md
+      - references/excellent-resumes/susu-bullet-template.md
 ---
 
 # /project-interview-skill — 目标简历、源码课程与项目面经
@@ -47,7 +48,7 @@ metadata:
 按阶段读取：
 
 1. 有源码先读[仓库探索](references/rules/repository-investigation.md)，沿真实链路查证机制。
-2. 写简介与 bullet 前读[表达规则](references/rules/oral-and-resume-patterns.md)、[领域中立 few-shot](references/examples/bullet-few-shots.md)，并对照[金样库](references/excellent-resumes/README.md)中最相关的一份。只学习结构，不复制领域素材与数字。
+2. 写简介与 bullet 前读[表达规则](references/rules/oral-and-resume-patterns.md)、[酥神简历 bullet 模板](references/excellent-resumes/susu-bullet-template.md)与[领域中立 few-shot](references/examples/bullet-few-shots.md)。该模板是默认表达基准；按需补读[金样库](references/excellent-resumes/README.md)。只学习表达和组织方式，不复制领域素材与数字。
 3. 规划并展开课程前读[课程设计与质量分层](references/rules/course-design.md)。
 4. 出题前读[问题与回答契约](references/rules/star-framework.md)；写口播时读[内部名词规则](references/rules/internal-terms.md)与[口播样例](references/examples/oral-style-samples.md)。[面试 rubric](references/rules/interview-rubric.md)用于补查本项目适用的工程维度。
 5. 写文件时对照[输出模板](references/templates/output-templates.md)。
@@ -76,7 +77,7 @@ metadata:
 
 后续更新保留用户笔记和未请求章节；沿用既有 B/Q/C 编号，新条目追加。改动 bullet 或课程范围时同步相关题目与链接。旧 `导学/` 子文件可以直接复用并链接，不擅自迁移或删除。记录源码基线与覆盖范围；行号仅作辅助定位，不核验作者。
 
-若只有描述，生成描述所能支持的机制课程，标明源码阅读与实验尚无法核验；不用虚构文件或函数凑路径。无法写入时在对话输出本次所有交付内容及目标文件名，明确哪些文件尚未落盘，不用空壳课程冒充完成。
+若只有描述，生成描述所能支持的机制课程，标明源码事实尚无法核验；不用虚构文件或函数凑路径。无法写入时在对话输出本次所有交付内容及目标文件名，明确哪些文件尚未落盘，不用空壳课程冒充完成。
 
 ## 主文件内容契约
 
@@ -84,19 +85,19 @@ metadata:
 
 1. 学习目标、默认水平、实际技术定位与源码基线。
 2. 项目地图：模块职责、主要入口、2～4 条代表性端到端链路；只讲覆盖范围内的真实实现。
-3. 核心学习路线表：`课程 ID / 场景与课程链接 / 前置依赖 / 学完能做什么 / 对应 B、Q`。所有核心课程本次完整展开。
+3. 核心学习路线表：`课程 ID / 场景与课程链接 / 前置依赖 / 需要掌握什么 / 对应 B、Q`。所有核心课程本次完整展开。
 4. 前置知识按需补齐：知识点、项目落点与补习入口；可跳过的基础不占主路线。
 5. 简历与面试导航：目标支柱、所需课程、问题入口；每条支柱至少有一节核心课程。
 6. 选读与进阶目标：说明价值、触发条件及当前是否实现；不创建待填空文件。
-7. 学习与验证建议：先预测再读代码、执行课程实验、用自己的话回答；相关测量方案可集中放文末。
+7. 学习重点与记忆提纲：直接说明先理解哪些因果与边界、再记住哪些流程与结论，并链接课程与面经。
 
-总览负责导航和依赖，不复制课程全文；取消“本 skill 不提供讲解”的固定提醒。课程负责解释关键代码与机制。
+总览负责导航和依赖，不复制课程全文；课程负责解释关键代码与机制，并明确“本课重点、需要懂什么、需要记住什么”。默认不设置预测、动手验证、实验任务或理解题环节；用户明确要求练习或验证时再补充。源码查证仍是生成者的工作，不能转成读者必须完成的作业。
 
 ### 面经.md
 
 1. 文首一句说明目标简历模式与分析范围；贡献模式改为用户提供的实际范围。
 2. 项目简介（1～2 句），说清产品、技术形态与关键能力。
-3. 简历 bullet：每条独立成行 `- **具体支柱名：** 正文`，写问题/演进、机制、约束与具体结果；不塞文件路径、私有符号或未实现能力。
+3. 简历 bullet：每条独立成行 `- **具体支柱名：** 正文`，以具体机制命名，直接写技术动作、机制如何工作与具体效果；背景只在有事实且有助理解时交代，约束嵌入相关机制句。信息较多时按机制分二级 bullet，不堆成长句；不塞文件路径、私有符号、待测尾注或未来计划。
 4. `简历 → 面试展开` 表：`支柱 ID / bullet 标题 / 简历触发词 / 面试官主问 / 题号 / 核心课程`。B 编号按 bullet 顺序，主问可覆盖一条或多条支柱。
 5. `面试问题`：每道主问用 `### Q1…` 标题，注明 `对应支柱`、`触发依据`、`考查目标`、`学习入口`，再给题干、口播与递进追问。简介级题写“简介”并注明具体钩子。追问注明来自 bullet 或上一个回答的哪句话。
 6. `源码证据索引`：主题、真实相对路径与符号、对应 B/Q/C。未实现方案写在相关回答的演进部分，不写成已完成结果。
@@ -107,9 +108,10 @@ metadata:
 
 - 目标模式没有按作者或职责证据过滤项目机制；贡献模式才限制参与范围。
 - 已实现机制、代码可见效果、测量结果与进阶方案表达准确，未复制样例事实。
+- bullet 已对照默认金样：具体机制标题、直接的动作与因果、自然分句；没有为凑四槽虚构旧架构、强塞无关约束或逐条套“针对……的问题”。
 - 每条 bullet 至少有一组 Q&A 和一节核心课程；每个主问都能指向简历触发词。
 - 追问来自简历或前一个回答，答案先回应问题，再解释机制；没有突然跳到另一条业务链路。
-- 核心课程全部展开，包含源码阅读、机制解释、异常边界、可操作验证及理解题；有前置依赖和反向导航。
+- 核心课程全部展开，包含重点、源码阅读、机制解释、异常边界、需要懂什么与需要记住什么；有前置依赖和反向导航。默认没有预测、动手验证或作业环节。
 - 基础按需补齐，知识覆盖与真实技术栈匹配；没有强塞 TS、Kubernetes 或项目不存在的框架。
 - 用户笔记与未请求内容被保留，相对文件链接可解析。
 
@@ -119,4 +121,4 @@ metadata:
 python3 <skill目录>/scripts/validate_output.py <面经路径> --guide <导学路径>
 ```
 
-校验器检查 bullet 格式、B/Q/C 覆盖、核心课程展开结构与本地文件链接；它不证明内容准确、问题自然或实验已通过，这些需要沿源码审读。仅检查旧版面经格式可不传 `--guide`。
+校验器检查 bullet 格式、B/Q/C 覆盖、核心课程展开结构与本地文件链接；表达密度、内容准确性和问题自然度需要人工对照金样与源码审读。仅检查旧版面经格式可不传 `--guide`。

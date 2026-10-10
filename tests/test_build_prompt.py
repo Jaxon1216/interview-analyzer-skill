@@ -76,7 +76,8 @@ class BuildPromptTests(unittest.TestCase):
         )
 
         self.assertIn("Bullet few-shot（仅学习结构，不复制素材）", prompt)
-        self.assertIn("针对异常处理逻辑散落", prompt)
+        self.assertIn("susu-bullet-template.md", prompt)
+        self.assertIn("将错误处理集中到统一入口", prompt)
         self.assertIn("- **具体支柱名：** 正文", prompt)
         self.assertIn("- **分层容错：**", prompt)
         self.assertIn("interview-prep/{简称}/", prompt)

@@ -18,6 +18,7 @@ Turn a real codebase into interview material you can explain, defend, and study,
 ## Core Capabilities
 
 - Core-flow investigation: trace entry points, mechanisms, failure boundaries, and source evidence into technical pillars
+- Goal and evidence mapping: connect pillars to users, goals, and obstacles; distinguish implementation, responsibility, measured results, and documented historical decisions
 - Resume bullets: turn code facts into reusable resume language
 - Interview expansion: derive primary questions from resume claims and follow-ups from preceding answers; adapt answer structure to question type
 - Explanation guardrails: translate internal implementation terms into interviewer-friendly language
@@ -214,6 +215,12 @@ rg 'version:' ~/.agents/skills/project-interview-skill/SKILL.md
 ```
 
 To pin a release, replace `@latest` with a version such as `@1.4.1`.
+
+## Tests and Validation
+
+Run `npm test` for scripts and delivery structure, and `npm run pack:check` for package contents. Behavioral review separately checks goal selection, metric attribution, and historical decisions; passing structural checks does not prove these claims.
+
+See [tests/README.md](tests/README.md) for cases, replay instructions, and the DeerFlow repository evaluation.
 
 ## Support
 

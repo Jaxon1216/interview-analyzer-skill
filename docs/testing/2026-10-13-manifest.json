@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-13",
+  "skill_baseline_commit": "1999ebb7138fc07883743da48db6a99c32140832",
+  "deerflow_commit": "5ecc1c2ac2de624af354bc515d5cb04f80df226c",
+  "dataset_sha256": "9bba6da48d5d2e8a153a4d293f719ca45a6de8a202fb49f729f2216f5b088fab",
+  "candidate_evaluated_bundle_sha256": "45c46137c9835ca39c8f98bc4ed4da2cc716c90ec1862c7e5cd4a59ba81077b1",
+  "fingerprint_method": "Sorted POSIX relative path + NUL + file bytes + NUL, excluding __pycache__",
+  "candidate_reviewed_cases": 6,
+  "candidate_core_courses": 9,
+  "notes": "Behavior run used a frozen bundle. Final course-design guidance additionally documents resolving symlinked directories; archived source links were rebased and revalidated.",
+  "final_bundle_sha256": "07f89695f31d1348239caecaf73854de01c81e0c4fe0c72c0fc7b2e6479c516a",
+  "post_evaluation_changed_files": [
+    "references/rules/course-design.md"
+  ],
+  "baseline_bundle_sha256": "af1dd6a2ffd380d9b28d6e9e6efeaf16839b7532bbaff57184d4d33c47de8793",
+  "model_settings": "Inherited from parent session; no model override or random seed specified.",
+  "baseline_reviewed_cases": 6,
+  "baseline_core_courses": 9,
+  "candidate_heading_anchors": 17,
+  "baseline_heading_anchors": 23,
+  "baseline_service_capacity_errors": 1,
+  "final_review_status": "all-six-cases-passed-after-review-for-both-versions"
+}

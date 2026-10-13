@@ -5,6 +5,9 @@
 ASu-skills/
 .trae/
 
+# Local model evaluation deliveries; portable results live in docs/testing/.
+.test-runs/
+
 .DS_Store
 __pycache__/
 *.py[cod]

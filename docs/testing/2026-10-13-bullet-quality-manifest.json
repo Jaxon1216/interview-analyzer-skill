@@ -1,0 +1,79 @@
+{
+  "date": "2026-10-13",
+  "start": {
+    "skill_repo_baseline": "12196a4f9b5ddc3064962dc9a85f577614184185",
+    "deerflow_sha": "5ecc1c2ac2de624af354bc515d5cb04f80df226c",
+    "skill_v1": {
+      "SKILL.md": "c37feeae268b2d10efd54e136a04f9adc15d3b50b30ec5604fabfa532c593e29",
+      "references/examples/bullet-few-shots.md": "840a23ff74ecf5cbc5cb3accf81fd2904258de12e65d9cdeea621b40d33e2853",
+      "references/examples/oral-style-samples.md": "b72f9409673b2ba6f0e51d0fc16f003af3e30b8b9946f0dc5cb29caac343bb5c",
+      "references/excellent-resumes/README.md": "482ecb10b19222a8038146a1c308085264c9dc7527339a7186eb33975bf97d22",
+      "references/excellent-resumes/ai4se-agent-infra.md": "8abab28c7fc37836fd197376de353565cd3ddf93a86fcabeba994682b7eafa07",
+      "references/excellent-resumes/deer-flow-harness.md": "08017f68eb26c0e483371671183bb8dbc3f2a84a96879546912a9b9444c94715",
+      "references/excellent-resumes/susu-bullet-template.md": "ce0debb7e39de322706fd341f7c46a3c16460a07af8db17f08ac3f5a32c60881",
+      "references/rules/course-design.md": "e76e9758000b3aee802ad73dcf0fc9b8d2dc736c172b16a4e1e545bc67227a63",
+      "references/rules/internal-terms.md": "1d3163a2ab2edf0dc51393978122391e11986e6deb7378cae62a84e92ad5bb42",
+      "references/rules/interview-rubric.md": "d0f17fd5f7a567020caa719ea818b7a35f708d61f4d6809cb07e1311028cb553",
+      "references/rules/oral-and-resume-patterns.md": "7af10f8bc5af509dcb752903e14edac10bcc83ecc1d11d440849d71e8a224f5c",
+      "references/rules/repository-investigation.md": "3c8869517f3454e3a9fc50fabaf37298455032532314a02d7238e983081fbbe2",
+      "references/rules/star-framework.md": "c3a9ba30060c3a875b4679860b3aef37717fdbfa50b3d73ec0447c0a86a36710",
+      "references/templates/output-templates.md": "d30764a1c5da6b81640e9f4fb06e57398559e865df51140ba7f1e3789f92190a",
+      "scripts/build_prompt.py": "89c502cac14d799b9b7cf0d7742573787565e6ce5771eb7c89b32d8aaafc87a3",
+      "scripts/check_inputs.py": "58c122f8ef8158897616b74c37028d7ded80fd5a69867acb22f714cf67e07b73",
+      "scripts/validate_output.py": "a528e788cf203bf2f9923c79f65b2da0ce70a4b7bb8005f7ce51a885a42864e0"
+    },
+    "requests": {
+      "deerflow-request.md": "df08d1a72232a9cdbe9cd3fc602ffa120a15332a72bf4fb814145aeee45e6bb9",
+      "edgemetric-request.md": "c334aa4c7955dcf43cd0c16945790d773754da0e1724222a2e2147c7833ceaa1"
+    }
+  },
+  "runtime_skill_equals_frozen": true,
+  "skill_final": {
+    "SKILL.md": "c37feeae268b2d10efd54e136a04f9adc15d3b50b30ec5604fabfa532c593e29",
+    "references/examples/bullet-few-shots.md": "840a23ff74ecf5cbc5cb3accf81fd2904258de12e65d9cdeea621b40d33e2853",
+    "references/examples/oral-style-samples.md": "b72f9409673b2ba6f0e51d0fc16f003af3e30b8b9946f0dc5cb29caac343bb5c",
+    "references/excellent-resumes/README.md": "482ecb10b19222a8038146a1c308085264c9dc7527339a7186eb33975bf97d22",
+    "references/excellent-resumes/ai4se-agent-infra.md": "8abab28c7fc37836fd197376de353565cd3ddf93a86fcabeba994682b7eafa07",
+    "references/excellent-resumes/deer-flow-harness.md": "08017f68eb26c0e483371671183bb8dbc3f2a84a96879546912a9b9444c94715",
+    "references/excellent-resumes/susu-bullet-template.md": "ce0debb7e39de322706fd341f7c46a3c16460a07af8db17f08ac3f5a32c60881",
+    "references/rules/course-design.md": "e76e9758000b3aee802ad73dcf0fc9b8d2dc736c172b16a4e1e545bc67227a63",
+    "references/rules/internal-terms.md": "1d3163a2ab2edf0dc51393978122391e11986e6deb7378cae62a84e92ad5bb42",
+    "references/rules/interview-rubric.md": "d0f17fd5f7a567020caa719ea818b7a35f708d61f4d6809cb07e1311028cb553",
+    "references/rules/oral-and-resume-patterns.md": "7af10f8bc5af509dcb752903e14edac10bcc83ecc1d11d440849d71e8a224f5c",
+    "references/rules/repository-investigation.md": "3c8869517f3454e3a9fc50fabaf37298455032532314a02d7238e983081fbbe2",
+    "references/rules/star-framework.md": "c3a9ba30060c3a875b4679860b3aef37717fdbfa50b3d73ec0447c0a86a36710",
+    "references/templates/output-templates.md": "d30764a1c5da6b81640e9f4fb06e57398559e865df51140ba7f1e3789f92190a",
+    "scripts/build_prompt.py": "89c502cac14d799b9b7cf0d7742573787565e6ce5771eb7c89b32d8aaafc87a3",
+    "scripts/check_inputs.py": "58c122f8ef8158897616b74c37028d7ded80fd5a69867acb22f714cf67e07b73",
+    "scripts/validate_output.py": "a528e788cf203bf2f9923c79f65b2da0ce70a4b7bb8005f7ce51a885a42864e0"
+  },
+  "samples": {
+    "deerflow-independent-failure.md": "9a5cb501ed2063643bb8b5d8fa7a5a3c11c5f357ad8a2fe0a1038b7c27116418",
+    "deerflow-primary-evidence.md": "4874b4ba18a1e2a9caf7591e2f1995f2a2693cbc08442053b8936a5efbb3c0e7",
+    "deerflow-primary-first.md": "35fa813c60e7076b1007e9159e7d9f07ff8af7911540e42227990a77bc2ab7e9",
+    "deerflow-primary-revised.md": "f96bde30cb0eb17cf338117991e2ab1ac8575452ef7d88441b62a49f23824c5b",
+    "edgemetric-evidence.md": "913a80ff7f8129a294484015f5e8a15690628af65574141b79461371bd5dc79d",
+    "edgemetric-first.md": "a6aa49481e1eaa483e199d3d3c76d8eb906136273a2b03588c13b72837cac80c",
+    "review.md": "cd9f540afad83966044fbbc1ec4a7fb16848ff712010e33782cccce7f1980e26",
+    "validation/git-diff-check.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "validation/git-diff-check.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "validation/npm-pack-check.stderr.log": "941d7a2603c7d8585af63ac5c7c74b12561cf3cd0741aa2699b851dbabfbeb19",
+    "validation/npm-pack-check.stdout.log": "9079384afd3f2926209fc892cbc92ca36cf958111e16a346836e4a2b163fb9ea",
+    "validation/npm-test.stderr.log": "3eb7b9daa2d6ace6577312978d83337dc139de9194771251b8c66ff290e259ad",
+    "validation/npm-test.stdout.log": "6c8ed0ea8ac79c15a911d7840e833dc0c43d81197d099da1c008f9775cf764c3",
+    "validation/results.json": "1e4d5346ed929e5d66398524da41eed020e4a2568e6349c0fb9c58abe0326db6",
+    "validation/skill-metadata.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "validation/skill-metadata.stdout.log": "db349825903d66adffea3ecf1bd8e1803043e8a71cf1a051235dabc5371f5bb0"
+  },
+  "requests": {
+    "README.md": "245a4a239a4ad1d0d83daa4457644c410823b36f191abb20a4960ee6341ce433",
+    "deerflow-request.md": "df08d1a72232a9cdbe9cd3fc602ffa120a15332a72bf4fb814145aeee45e6bb9",
+    "edgemetric-request.md": "c334aa4c7955dcf43cd0c16945790d773754da0e1724222a2e2147c7833ceaa1"
+  },
+  "previous_terminology_evaluation_unchanged": true,
+  "deerflow_final_status": "",
+  "independent_deerflow": "failed_usage_limit_no_complete_output",
+  "primary_deerflow": "generated_then_editorially_revised_not_independent",
+  "independent_transfer": "first_complete_output_preserved",
+  "portable_log_normalization": "npm-test.stdout.log trailing blank lines removed before push; original stdout retained in validation/results.json and .test-runs/bullet-quality-2026-10-13/validation-raw/"
+}

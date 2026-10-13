@@ -1,0 +1,45 @@
+[
+  {
+    "name": "npm-test",
+    "command": [
+      "npm",
+      "test"
+    ],
+    "exit_code": 0,
+    "stdout": "\n> project-interview-skill@1.4.1 test\n> python3 -m unittest discover -s tests -v\n\n",
+    "stderr": "test_build_prompt_clarifies_main_question_counting (test_build_prompt.BuildPromptTests.test_build_prompt_clarifies_main_question_counting) ... ok\ntest_build_prompt_escapes_markdown_fences (test_build_prompt.BuildPromptTests.test_build_prompt_escapes_markdown_fences) ... ok\ntest_build_prompt_includes_domain_neutral_bullet_few_shot (test_build_prompt.BuildPromptTests.test_build_prompt_includes_domain_neutral_bullet_few_shot) ... ok\ntest_main_reads_json_file (test_build_prompt.BuildPromptTests.test_main_reads_json_file) ... ok\ntest_main_rejects_invalid_short_name (test_build_prompt.BuildPromptTests.test_main_rejects_invalid_short_name) ... ok\ntest_validate_short_name_accepts_valid_value (test_build_prompt.BuildPromptTests.test_validate_short_name_accepts_valid_value) ... ok\ntest_validate_short_name_rejects_illegal_chars (test_build_prompt.BuildPromptTests.test_validate_short_name_rejects_illegal_chars) ... ok\ntest_validate_short_name_rejects_reserved_names (test_build_prompt.BuildPromptTests.test_validate_short_name_rejects_reserved_names) ... ok\ntest_bundle_relative_markdown_links_resolve (test_bundle_layout.BundleLayoutTests.test_bundle_relative_markdown_links_resolve) ... ok\ntest_package_files_publish_bundle (test_bundle_layout.BundleLayoutTests.test_package_files_publish_bundle) ... ok\ntest_runtime_bundle_has_expected_layers (test_bundle_layout.BundleLayoutTests.test_runtime_bundle_has_expected_layers) ... ok\ntest_analyze_complete_description_has_note (test_check_inputs.CheckInputsTests.test_analyze_complete_description_has_note) ... ok\ntest_analyze_short_description_requires_more_input (test_check_inputs.CheckInputsTests.test_analyze_short_description_requires_more_input) ... ok\ntest_main_prints_json_output (test_check_inputs.CheckInputsTests.test_main_prints_json_output) ... ok\ntest_main_reads_file_input (test_check_inputs.CheckInputsTests.test_main_reads_file_input) ... ok\ntest_accepts_linked_delivery_without_exercises_and_preserves_ids (test_validate_output.ValidateOutputTests.test_accepts_linked_delivery_without_exercises_and_preserves_ids) ... ok\ntest_accepts_titled_bullets_and_ignores_following_sections (test_validate_output.ValidateOutputTests.test_accepts_titled_bullets_and_ignores_following_sections) ... ok\ntest_delivery_keeps_bqc_links_with_english_or_mixed_bullet_titles (test_validate_output.ValidateOutputTests.test_delivery_keeps_bqc_links_with_english_or_mixed_bullet_titles) ... ok\ntest_english_title_still_requires_matching_bullet_mapping (test_validate_output.ValidateOutputTests.test_english_title_still_requires_matching_bullet_mapping) ... ok\ntest_experiment_section_does_not_replace_knowledge_content (test_validate_output.ValidateOutputTests.test_experiment_section_does_not_replace_knowledge_content) ... ok\ntest_ignores_fenced_examples_and_external_links (test_validate_output.ValidateOutputTests.test_ignores_fenced_examples_and_external_links) ... ok\ntest_rejects_broken_source_link_in_lesson (test_validate_output.ValidateOutputTests.test_rejects_broken_source_link_in_lesson) ... ok\ntest_rejects_bullet_without_question_and_course_mapping (test_validate_output.ValidateOutputTests.test_rejects_bullet_without_question_and_course_mapping) ... ok\ntest_rejects_course_not_in_guide_index (test_validate_output.ValidateOutputTests.test_rejects_course_not_in_guide_index) ... ok\ntest_rejects_empty_course_and_missing_backlinks (test_validate_output.ValidateOutputTests.test_rejects_empty_course_and_missing_backlinks) ... ok\ntest_rejects_mapped_question_without_body (test_validate_output.ValidateOutputTests.test_rejects_mapped_question_without_body) ... ok\ntest_rejects_missing_question_trigger (test_validate_output.ValidateOutputTests.test_rejects_missing_question_trigger) ... ok\ntest_rejects_question_with_conflicting_bullet_id (test_validate_output.ValidateOutputTests.test_rejects_question_with_conflicting_bullet_id) ... ok\ntest_rejects_unlabeled_bullet (test_validate_output.ValidateOutputTests.test_rejects_unlabeled_bullet) ... ok\n\n----------------------------------------------------------------------\nRan 29 tests in 0.089s\n\nOK\n"
+  },
+  {
+    "name": "npm-pack-check",
+    "command": [
+      "npm",
+      "run",
+      "pack:check"
+    ],
+    "exit_code": 0,
+    "stdout": "\n> project-interview-skill@1.4.1 pack:check\n> npm pack --dry-run\n\nproject-interview-skill-1.4.1.tgz\n",
+    "stderr": "npm notice\nnpm notice 📦  project-interview-skill@1.4.1\nnpm notice Tarball Contents\nnpm notice 2.0kB LICENSE\nnpm notice 11.4kB README_EN.md\nnpm notice 11.3kB README.md\nnpm notice 13.0kB bin/project-interview-skill.js\nnpm notice 948B package.json\nnpm notice 7.7kB skill/project-interview-skill/references/examples/bullet-few-shots.md\nnpm notice 4.8kB skill/project-interview-skill/references/examples/oral-style-samples.md\nnpm notice 5.0kB skill/project-interview-skill/references/excellent-resumes/ai4se-agent-infra.md\nnpm notice 5.5kB skill/project-interview-skill/references/excellent-resumes/deer-flow-harness.md\nnpm notice 1.6kB skill/project-interview-skill/references/excellent-resumes/README.md\nnpm notice 4.8kB skill/project-interview-skill/references/excellent-resumes/susu-bullet-template.md\nnpm notice 6.8kB skill/project-interview-skill/references/rules/course-design.md\nnpm notice 4.7kB skill/project-interview-skill/references/rules/internal-terms.md\nnpm notice 1.7kB skill/project-interview-skill/references/rules/interview-rubric.md\nnpm notice 11.4kB skill/project-interview-skill/references/rules/oral-and-resume-patterns.md\nnpm notice 5.9kB skill/project-interview-skill/references/rules/repository-investigation.md\nnpm notice 4.5kB skill/project-interview-skill/references/rules/star-framework.md\nnpm notice 5.1kB skill/project-interview-skill/references/templates/output-templates.md\nnpm notice 11.8kB skill/project-interview-skill/scripts/build_prompt.py\nnpm notice 5.3kB skill/project-interview-skill/scripts/check_inputs.py\nnpm notice 8.7kB skill/project-interview-skill/scripts/validate_output.py\nnpm notice 11.6kB skill/project-interview-skill/SKILL.md\nnpm notice Tarball Details\nnpm notice name: project-interview-skill\nnpm notice version: 1.4.1\nnpm notice filename: project-interview-skill-1.4.1.tgz\nnpm notice package size: 57.9 kB\nnpm notice unpacked size: 145.6 kB\nnpm notice shasum: e0ced5d9f16af91f7f72032a6a8d0e910edf7462\nnpm notice integrity: sha512-br85hpqIaYTuK[...]6eR+mmegwfZ5w==\nnpm notice total files: 22\nnpm notice\n"
+  },
+  {
+    "name": "skill-metadata",
+    "command": [
+      "/Users/bytedance/code/Easton/mma/deer-flow/backend/.venv/bin/python",
+      "/Users/bytedance/.codex/skills/.system/skill-creator/scripts/quick_validate.py",
+      "/Users/bytedance/code/Easton/interview-analyzer-skill/skill/project-interview-skill"
+    ],
+    "exit_code": 0,
+    "stdout": "Skill is valid!\n",
+    "stderr": ""
+  },
+  {
+    "name": "git-diff-check",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

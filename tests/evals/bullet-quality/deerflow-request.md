@@ -1,0 +1,1 @@
+请使用给定的 project-interview-skill，为 AI Agent 后端研发岗位生成 DeerFlow 的项目简介和完整简历 bullet。基于 /Users/bytedance/code/Easton/mma/deer-flow 的完整项目范围自行选材，按需只读查证源码。默认目标简历模式；没有个人职责、历史升级或收益数字材料。此次只要简介、bullet 和独立的源码证据记录，不生成课程、面经或启动应用。

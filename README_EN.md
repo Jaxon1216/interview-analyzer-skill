@@ -1,233 +1,185 @@
 <div align="center">
   <h1>project-interview-skill</h1>
-  <p><a href="https://github.com/Jaxon1216/interview-analyzer-skill/blob/main/README.md">简体中文</a></p>
-  <p><em>Turn your project experience into interview-ready docs you can actually explain and defend.</em></p>
+  <p><strong>Turn a real project into resume bullets, source-code lessons, and interview Q&amp;A.</strong></p>
+  <p>Understand how the project works, then learn to explain its design.</p>
   <p>
-    <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
-    <img alt="Type: Agent Skill" src="https://img.shields.io/badge/Type-Agent%20Skill-7c3aed">
-    <img alt="Trae Compatible" src="https://img.shields.io/badge/Trae-Compatible-111827">
-    <img alt="Cursor Compatible" src="https://img.shields.io/badge/Cursor-Compatible-00B8D9">
-    <img alt="VS Code Compatible" src="https://img.shields.io/badge/VS%20Code-Compatible-007ACC?logo=visual-studio-code&logoColor=white">
-    <img alt="Claude Code Compatible" src="https://img.shields.io/badge/Claude%20Code-Compatible-7c3aed">
-    <img alt="Codex Compatible" src="https://img.shields.io/badge/Codex-Compatible-0A66C2">
+    <a href="README.md">简体中文</a> ·
+    <a href="https://www.npmjs.com/package/project-interview-skill">npm</a> ·
+    <a href="LICENSE">MIT License</a>
   </p>
 </div>
 
-Turn a real codebase into interview material you can explain, defend, and study, written under `interview-prep/{short-name}/` in the target project.
+For developers who have a project and want to understand its core design and prepare for interviews. Give your Agent an accessible repository or project material. The skill investigates mechanisms, selects technical pillars, and connects each resume claim to questions, lessons, and source evidence.
 
-## Core Capabilities
+Supports generic Agents, Codex, Claude Code, Cursor, Trae, and VS Code Copilot. The installer requires **Node.js 18+**; your Agent generates the content.
 
-- Core-flow investigation: trace entry points, mechanisms, failure boundaries, and source evidence into technical pillars
-- Goal and evidence mapping: connect pillars to users, goals, and obstacles; distinguish implementation, responsibility, measured results, and documented historical decisions
-- Technical terminology: choose familiar, accurate terms for the target role; keep English when it communicates better, prefer natural Chinese when appropriate, and impose no English quota
-- Resume bullets: turn code facts into reusable resume language
-- Interview expansion: derive primary questions from resume claims and follow-ups from preceding answers; adapt answer structure to question type
-- Explanation guardrails: translate internal implementation terms into interviewer-friendly language
-- Study path: prioritize concepts, source reading, and verification tasks
-- Frontend and backend examples: provide reference templates for depth and phrasing
+[Quick start](#quick-start) · [Output example](#output-example) · [Common requests](#common-requests) · [Install and update](#install-and-update) · [Accuracy and validation](#accuracy-and-validation)
 
-## Quick Start
+## Quick start
+
+**1. Install the published version**
 
 ```bash
-npx project-interview-skill install
+npx project-interview-skill@latest install
 ```
 
-After installation, open the target project root in a new chat and enter:
+The default location is `~/.agents/skills/project-interview-skill/`. Use the [product flags](#install-and-update) for another editor. For the current GitHub source, see [Install from source](#install-from-source).
+
+**2. Open your project root, restart the Agent/editor, and start a new chat**
+
+Copy this request and replace the short name and target role. The stack is identified from source.
 
 ```text
-/project-interview-skill Short name: ecommerce; project description: ...; stack: Vue3, Pinia, Vite; target role: frontend
+Use project-interview-skill to analyze the current repository.
+Project short name: shop
+Target role: backend engineering
+Generate the study guide, all core source-code lessons, and interview Q&A under interview-prep/.
 ```
 
-## Generated Output
+You can also invoke `/project-interview-skill` and append these details. If you only have a project description, paste it as the input.
 
-Starting from one natural-language request, the Skill turns a codebase into three practical preparation views:
+**3. Start with the guide, study the mechanisms, then practice the Q&A**
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/docs/images/bullet-output.png" alt="Resume bullets and prompt sidebar" width="100%">
-</p>
-
-<table>
-  <tr>
-    <td width="50%" align="center"><strong>Interview guide: resume-driven questions</strong></td>
-    <td width="50%" align="center"><strong>Study guide: an ordered learning path</strong></td>
-  </tr>
-  <tr>
-    <td><img src="https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/docs/images/interview-questions.png" alt="Interview questions and spoken answers" width="100%"></td>
-    <td><img src="https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/docs/images/learning-path.png" alt="Learning order and recommended reading" width="100%"></td>
-  </tr>
-</table>
-
-## Install
-
-The default target is the user-level generic Agent directory:
+Example layout for one project targeting backend engineering:
 
 ```text
-~/.agents/skills/project-interview-skill/
+interview-prep/
+├── shop/
+│   ├── 导学.md                 # Project map, study route, and navigation
+│   └── 面经.md                 # Resume bullets, questions, and spoken answers
+└── guide-backend/
+    ├── 01-topic.md             # Complete core lessons
+    └── 02-topic.md
 ```
 
-If you know which editor or Agent you use, specify it explicitly:
+| Output | What it contains | How to use it |
+| --- | --- | --- |
+| Study guide | Module responsibilities, representative flows, lesson prerequisites, and navigation | Build a project-wide view and choose a study order |
+| Core lessons | Real source, runtime mechanisms, failure boundaries, what to understand and remember | Follow a scenario through code and explain the design |
+| Interview guide | Project summary, technical pillars, resume triggers, primary questions, follow-ups, and first-person answers | Practice each claim with supporting explanations |
 
-| Target | User-level command | Install location |
-|--------|--------------------|------------------|
-| Generic Agent / Codex | `npx project-interview-skill install --agents` | `~/.agents/skills/project-interview-skill/` |
-| Trae | `npx project-interview-skill install --trae` | `~/.trae/skills/project-interview-skill/` |
-| Cursor | `npx project-interview-skill install --cursor` | `~/.cursor/rules/project-interview-skill/` |
-| VS Code | `npx project-interview-skill install --vscode` | `~/.copilot/instructions/project-interview-skill.instructions.md` |
-| Claude Code | `npx project-interview-skill install --claude-code` | `~/.claude/skills/project-interview-skill/` |
-| Codex | `npx project-interview-skill install --codex` | `~/.agents/skills/project-interview-skill/` |
+With no direction specified, the default is fullstack and lessons use `guide-fullstack/`; frontend requests use `guide-frontend/`. When several projects share an output root, lessons go under each `{short-name}/guide-{direction}/`. The first delivery expands all core lessons; optional topics expand on demand.
 
-Install every supported target:
+## Output example
 
-```bash
-npx project-interview-skill install --all
-```
+This excerpt is from a **reviewed and revised DeerFlow source-based draft**. The [complete original output](docs/testing/samples/bullet-quality/deerflow-primary-revised.md) and [source evidence](docs/testing/samples/bullet-quality/deerflow-primary-evidence.md) are available in Chinese. The wording below is translated for this README.
 
-Preview paths without writing files:
+> - **Progressive Skill loading and tool authorization:** Skills are directory packages containing SKILL.md. The default prompt provides metadata; explicit selection or read_file loads the body on demand, while session state retains lightweight references to loaded skills.
+>   - An active skill's allowed-tools policy filters model-visible tools and blocks unauthorized calls at execution time.
+> - **Context compaction and cross-session memory:** At the configured threshold, older history is summarized while recent messages are retained. History is replaced only after a summary is generated successfully; summaries, delegation records, and skill references are stored separately and injected into later model requests.
+>   - Oversized tool results are written to files and represented by a synopsis and file reference; unavailable file persistence falls back to head-and-tail truncation.
+>   - In passive memory mode, conversations are queued after execution. User identity is captured at enqueue time; background extraction updates durable memory, which later sessions load within user and Agent scopes.
 
-```bash
-npx project-interview-skill install --trae --dry-run
-npx project-interview-skill doctor
-```
+Titles identify the design; the body explains responsibilities, collaboration, and conditions that change behavior. Important submechanisms can be expanded without forcing a benefit sentence. The project's actual responsibilities and mechanisms determine the pillars, titles, and count. Keep English when it improves recognition or precision; use natural Chinese where it communicates better.
 
-## Project-Level Install
-
-To install the skill only for one application repository, run the command from that repository root:
-
-```bash
-cd /path/to/your-project
-npx project-interview-skill install --project --trae
-```
-
-Supported project-level targets:
-
-| Target | Project-level command | Install location |
-|--------|-----------------------|------------------|
-| Generic Agent / Codex | `npx project-interview-skill install --project --agents` | `.agents/skills/project-interview-skill/` |
-| Trae | `npx project-interview-skill install --project --trae` | `.trae/rules/project-interview-skill/` |
-| Cursor | `npx project-interview-skill install --project --cursor` | `.cursor/rules/project-interview-skill/` |
-| VS Code | `npx project-interview-skill install --project --vscode` | `.github/instructions/project-interview-skill.instructions.md` |
-| Claude Code | `npx project-interview-skill install --project --claude-code` | `.claude/skills/project-interview-skill/` |
-| Codex | `npx project-interview-skill install --project --codex` | `.agents/skills/project-interview-skill/` |
-
-Restart the target IDE or Agent after installation.
-
-## Usage
-
-The skill creates these files under the target project root:
-
-| File | Purpose |
-|------|---------|
-| `interview-prep/{short-name}/导学.md` | Prerequisites, repo-relative reading guide, traced system flows and evidence, design decisions, and key conclusions to remember |
-| `interview-prep/{short-name}/面经.md` | 1-2 sentence resume summary, titled architecture bullets, and interview Q&A mapped to those bullets |
-
-The default delivery also includes all core lessons in `interview-prep/guide-fullstack/01-topic.md`. An explicit frontend/backend direction selects `guide-frontend` / `guide-backend`. For multiple projects sharing one output root, place courses under each `{short-name}/guide-{direction}/` instead. Outline-only and selected-lesson requests keep their requested scope.
-
-Lessons target developers who know the language/framework basics and can write CRUD. Each states its focus, explains a concrete flow, source reading, mechanisms and failure boundaries, and directly gives what to understand and remember. Progress from tracing the flow to understanding mechanisms and then design/explanation. Add predictions, hands-on labs, and exercises only when requested. Optional topics expand on demand.
-
-Resume bullets are learning targets drawn from implemented repository mechanisms; personal commit authorship is not audited or required. Only an explicit actual-contributions request restricts ownership scope. Keep unimplemented improvements and unmeasured gains distinct from current behavior.
-
-Use the [default resume style template](skill/project-interview-skill/references/excellent-resumes/susu-bullet-template.md): name concrete mechanisms, explain actions and effects directly, and place relevant constraints with their steps. Split complex mechanisms into sub-bullets; keep measurement plans and future work outside resume bullets. Every bullet links to questions and core lessons, with source references. Check the linked delivery using:
-
-```bash
-python3 ~/.agents/skills/project-interview-skill/scripts/validate_output.py interview-prep/shop/面经.md --guide interview-prep/shop/导学.md
-```
-
-This checks bullet format, B/Q/C coverage, required lesson sections, and local file links. Semantic accuracy and natural question progression still require content review.
-
-You can also invoke it naturally by asking for project interview preparation docs.
-
-## Source Checkout Compatibility
-
-`install.sh` is kept for users who clone the repository. It is only a wrapper around the Node CLI:
-
-```bash
-git clone https://github.com/Jaxon1216/interview-analyzer-skill.git
-cd interview-analyzer-skill
-./install.sh --trae
-./install.sh --project --cursor
-```
-
-The npm package does not include `install.sh`; regular users should prefer `npx project-interview-skill ...`.
-
-## Standalone Skill Bundle
-
-The repository root contains the npm CLI and development files. The independently portable Skill bundle is:
+A full delivery also connects the material for source-based revision:
 
 ```text
-skill/project-interview-skill/
-├── SKILL.md
-├── references/
-└── scripts/
+B1 Resume pillar
+ └─ Q1 Primary question → Follow-ups based on preceding answers
+     └─ C01 Core lesson → Source paths and key symbols
 ```
 
-Copy this directory to migrate the Skill; `bin/`, `tests/`, and `package.json` are not required. The npm CLI also builds installed targets from this directory only.
+For a different domain, see the [EdgeMetric storage-engine first draft](docs/testing/samples/bullet-quality/edgemetric-first.md).
 
-## Repository Structure
+<details>
+<summary>Historical interface screenshots: interview guide and study route</summary>
 
-```text
-interview-analyzer-skill/
-|-- skill/
-|   `-- project-interview-skill/
-|       |-- SKILL.md
-|       |-- references/
-|       |   |-- rules/
-|       |   |-- templates/
-|       |   |-- examples/
-|       |   `-- excellent-resumes/
-|       `-- scripts/
-|-- bin/
-|   `-- project-interview-skill.js
-|-- install.sh
-|-- package.json
-|-- .npmrc
-|-- README.md
-|-- README_EN.md
-|-- docs/
-|   |-- images/
-|   `-- promo.md
-|-- LICENSE
-`-- tests/
+These screenshots show an earlier reading interface. Current wording and filenames follow the text examples and output contract above.
+
+![Earlier resume bullets and Agent conversation](https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/docs/images/bullet-output.png)
+
+![Earlier primary questions, follow-ups, and spoken answers](https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/docs/images/interview-questions.png)
+
+![Earlier source-code study route](https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/docs/images/learning-path.png)
+
+</details>
+
+## Common requests
+
+Use the quick-start request for a full delivery. Specify a narrower scope or an incremental update when needed.
+
+| Need | Request to copy |
+| --- | --- |
+| Resume wording first | `Use project-interview-skill to analyze the entire current repository for a backend role. Generate only a project summary and resume bullets, with separate source evidence.` |
+| One mechanism in depth | `Use project-interview-skill to expand only the context-compaction source-code lesson. Explain the flow, failure boundaries, what to understand, and what to remember.` |
+| Actual contributions | `Use project-interview-skill to describe only my actual contributions. Scope: …; evidence: …; target role: ….` |
+| Update existing docs | `Use project-interview-skill to update interview-prep/ against the latest source. Preserve my notes, unrelated sections, and existing B/Q/C IDs.` |
+
+The default is **target-resume and learning mode**: implemented repository mechanisms may be selected for use after you understand them; commit authorship is not audited. For personal experience statements, explicitly request actual contributions and provide your participation scope.
+
+## Install and update
+
+The base command is `npx project-interview-skill@latest install`. Append a flag to select a product:
+
+| Product | Flag | User-level location | Location with `--project` |
+| --- | --- | --- | --- |
+| Generic Agent / Codex | `--agents` or `--codex` | `~/.agents/skills/project-interview-skill/` | `.agents/skills/project-interview-skill/` |
+| Claude Code | `--claude-code` | `~/.claude/skills/project-interview-skill/` | `.claude/skills/project-interview-skill/` |
+| Cursor | `--cursor` | `~/.cursor/rules/project-interview-skill/` | `.cursor/rules/project-interview-skill/` |
+| Trae | `--trae` | `~/.trae/skills/project-interview-skill/` | `.trae/rules/project-interview-skill/` |
+| VS Code Copilot | `--vscode` | `~/.copilot/instructions/project-interview-skill.instructions.md` | `.github/instructions/project-interview-skill.instructions.md` |
+
+Examples:
+
+```bash
+# User-level installation for Cursor
+npx project-interview-skill@latest install --cursor
+
+# Project-level installation: run from your application repository root
+npx project-interview-skill@latest install --project --trae
+
+# Preview the install location
+npx project-interview-skill@latest install --trae --dry-run
 ```
 
-## FAQ
+`--project` uses the **current working directory** as the project root. Products are not auto-detected. `--all` installs all supported targets; `doctor` only displays paths.
 
-### Why does the default install target `.agents/skills`?
-
-It is the least surprising user-level default and avoids guessing which product the user wants. Use an explicit flag for Trae, Cursor, VS Code, Claude Code, or Codex.
-
-### Does `install` auto-detect products?
-
-No. The behavior is intentionally narrow: the default installs only to `.agents/skills`, product-specific installs require `--trae`, `--cursor`, `--vscode`, `--claude-code`, or `--codex`. `doctor` only prints paths.
-
-### Do updates apply automatically?
-
-No. Installed skill folders are copied artifacts. Use `@latest` and reinstall to the same target:
+**Update an installed skill** by repeating the original command with the same product flag and scope. For a user-level generic Agent / Codex installation:
 
 ```bash
 npx project-interview-skill@latest install --agents
 ```
 
-This targets Generic Agent / Codex. For Trae, Cursor, Claude Code, or another product, use your original product flag instead. For a project-level installation, run from the target project root and add `--project`. Updating replaces the selected skill installation; existing `interview-prep/` documents only change when you invoke the skill again.
+Installation replaces the selected Skill directory. Restart the Agent/editor and start a new chat afterward. Existing `interview-prep/` files change only when the skill is invoked again. Replace `@latest` with a specific npm version to pin a release.
 
-Restart the Agent/editor and start a new chat. Check the installed version with:
+### Install from source
+
+Current GitHub source and the published npm version may differ. To install the repository's current content:
 
 ```bash
-rg 'version:' ~/.agents/skills/project-interview-skill/SKILL.md
+git clone https://github.com/Jaxon1216/interview-analyzer-skill.git
+cd interview-analyzer-skill
+./install.sh --agents
 ```
 
-To pin a release, replace `@latest` with a version such as `@1.4.1`.
+`install.sh` wraps the Node CLI and accepts the same installation flags; it is not included in the npm package. For an existing clone, update the source and reinstall.
 
-## Tests and Validation
+You can also copy the complete `skill/project-interview-skill/` directory, containing `SKILL.md`, `references/`, and `scripts/`. Migrating the Skill does not require the CLI or test project.
 
-Run `npm test` for scripts and delivery structure, and `npm run pack:check` for package contents. Behavioral review separately checks goal selection, metric attribution, and historical decisions; passing structural checks does not prove these claims.
+## Accuracy and validation
 
-See [tests/README.md](tests/README.md) for cases, replay instructions, and the DeerFlow repository evaluation.
+Source supports technical facts. Historical evolution, personal ownership, and measured gains each need their own evidence. Unimplemented improvements remain separate; end a bullet when there is no supported additional effect.
 
-## Support
+Check the structure of a complete generated delivery with the following command, replacing the installation path as needed:
 
-- **Contact** (feedback, commercial use, derivatives): **jiangxu05@outlook.com**
-- **Star**, **Fork**, **Issues / PRs** are welcome.
+```bash
+python3 ~/.agents/skills/project-interview-skill/scripts/validate_output.py interview-prep/shop/面经.md --guide interview-prep/shop/导学.md
+```
 
-## License
+The validator checks bullet format, B/Q/C links, core lesson sections, and local file links. **Pillar selection, factual accuracy, terminology, and final writing quality still require separate review.**
 
-Licensed under the **[MIT License](LICENSE)**. The file includes the English legal text plus an unofficial Chinese translation for convenience; if they disagree, the English section controls.
+Development checks:
+
+```bash
+npm test
+npm run pack:check
+```
+
+The [test guide](tests/README.md) covers automated regression and manual behavior evaluation. The [latest selection and writing record](docs/testing/2026-10-13-bullet-quality.md) preserves first drafts, revisions, and limitations: independent DeerFlow generation stopped at a usage limit, so the shown draft was generated and revised by the main agent; the cross-domain storage material completed one independent generation. Passing automated checks does not establish writing quality.
+
+## Feedback and license
+
+Report usage issues through [GitHub Issues](https://github.com/Jaxon1216/interview-analyzer-skill/issues), or contribute a PR. Contact: **jiangxu05@outlook.com**.
+
+Licensed under the [MIT License](LICENSE). A Chinese reference translation is included; the English text controls.

@@ -7,6 +7,7 @@
 | 自动回归 | `npm test` | 输入与提示词脚本、Bundle 链接、bullet 格式、B/Q/C 关联、课程与文件链接 |
 | 行为评测 | [business-narrative.json](evals/business-narrative.json) | 业务选材、指标口径与归属、责任模式、历史决策和材料不足时的行为 |
 | 术语行为评测 | [technical-terminology.json](evals/technical-terminology.json) | 事实匹配、目标岗位熟悉度、中英比较、标题与正文一致性；不按英文数量评分 |
+| 支柱与成稿评测 | [bullet-quality/](evals/bullet-quality/README.md) | 从完整项目选材、机制标题、职责与协作、约束与具体作用；术语和成稿分别判定 |
 
 发布内容检查：`npm run pack:check`。测试数据和评测产物留在开发仓库，不进入运行时 Skill Bundle。
 
@@ -36,6 +37,7 @@ E2–E6 是合成材料，不代表 DeerFlow 的事实。JSON 中 `request` 是�
 
 - [2026-10-13 改造与 DeerFlow 验证](../docs/testing/2026-10-13-business-narrative.md)
 - [2026-10-13 常见技术英文选择验证](../docs/testing/2026-10-13-technical-terminology.md)
+- [2026-10-13 支柱与成稿验证](../docs/testing/2026-10-13-bullet-quality.md)：包含首次补稿、修订和跨领域独立首稿；DeerFlow 独立生成未完成，限制单独记录。
 
 ## 术语评测复跑
 

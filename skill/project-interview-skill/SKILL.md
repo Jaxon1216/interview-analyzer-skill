@@ -6,14 +6,14 @@ description: >-
 license: MIT
 metadata:
   author: project-interview-skill
-  version: 1.4.1
+  version: 1.4.2
   created: 2026-04-20
   last_reviewed: 2026-10-13
   review_interval_days: 90
   activation: /project-interview-skill
   provenance:
     maintainer: project-interview-skill
-    version: 1.4.1
+    version: 1.4.2
     created: 2026-04-20
     source_references:
       - references/rules/interview-rubric.md

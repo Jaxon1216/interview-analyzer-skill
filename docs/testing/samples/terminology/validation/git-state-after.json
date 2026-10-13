@@ -1,0 +1,5 @@
+{
+  "porcelain": " M README.md\n M README_EN.md\n M skill/project-interview-skill/SKILL.md\n M skill/project-interview-skill/references/examples/bullet-few-shots.md\n M skill/project-interview-skill/references/excellent-resumes/deer-flow-harness.md\n M skill/project-interview-skill/references/rules/internal-terms.md\n M skill/project-interview-skill/references/rules/oral-and-resume-patterns.md\n M skill/project-interview-skill/references/templates/output-templates.md\n M skill/project-interview-skill/scripts/build_prompt.py\n M tests/README.md\n M tests/test_validate_output.py\n?? docs/testing/2026-10-13-technical-terminology.md\n?? tests/evals/deerflow-terminology-facts.md\n?? tests/evals/technical-terminology.json\n",
+  "unstaged_diff_sha256": "ee5b87d93c9fd5f0e345a501a32477c2c02018c392ab98cd9017ac09c308bc55",
+  "staged_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

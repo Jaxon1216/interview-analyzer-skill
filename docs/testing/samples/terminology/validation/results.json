@@ -1,0 +1,100 @@
+{
+  "created_at": "2026-10-13T10:01:36.686823+00:00",
+  "cwd": "/Users/bytedance/code/Easton/interview-analyzer-skill",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "note": "The pack check is npm pack --dry-run; no publish command was run. All report and log files are outside the repository.",
+  "commands": [
+    {
+      "id": "npm-test",
+      "command": "npm test",
+      "argv": [
+        "npm",
+        "test"
+      ],
+      "cwd": "/Users/bytedance/code/Easton/interview-analyzer-skill",
+      "started_at": "2026-10-13T10:01:34.683175+00:00",
+      "finished_at": "2026-10-13T10:01:35.731710+00:00",
+      "duration_seconds": 1.044,
+      "exit_code": 0,
+      "result": "PASS",
+      "stdout_log": "/private/var/folders/gg/zl4h70_n74b2_4gh_38tgl640000gn/T/bullet-terminology-20261013-qeens1r5/validation-final/logs/npm-test.stdout.log",
+      "stderr_log": "/private/var/folders/gg/zl4h70_n74b2_4gh_38tgl640000gn/T/bullet-terminology-20261013-qeens1r5/validation-final/logs/npm-test.stderr.log"
+    },
+    {
+      "id": "npm-pack-check",
+      "command": "npm run pack:check",
+      "argv": [
+        "npm",
+        "run",
+        "pack:check"
+      ],
+      "cwd": "/Users/bytedance/code/Easton/interview-analyzer-skill",
+      "started_at": "2026-10-13T10:01:35.731897+00:00",
+      "finished_at": "2026-10-13T10:01:36.226641+00:00",
+      "duration_seconds": 0.495,
+      "exit_code": 0,
+      "result": "PASS",
+      "stdout_log": "/private/var/folders/gg/zl4h70_n74b2_4gh_38tgl640000gn/T/bullet-terminology-20261013-qeens1r5/validation-final/logs/npm-pack-check.stdout.log",
+      "stderr_log": "/private/var/folders/gg/zl4h70_n74b2_4gh_38tgl640000gn/T/bullet-terminology-20261013-qeens1r5/validation-final/logs/npm-pack-check.stderr.log"
+    },
+    {
+      "id": "git-diff-check",
+      "command": "git diff --check",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/Users/bytedance/code/Easton/interview-analyzer-skill",
+      "started_at": "2026-10-13T10:01:36.226753+00:00",
+      "finished_at": "2026-10-13T10:01:36.248891+00:00",
+      "duration_seconds": 0.022,
+      "exit_code": 0,
+      "result": "PASS",
+      "stdout_log": "/private/var/folders/gg/zl4h70_n74b2_4gh_38tgl640000gn/T/bullet-terminology-20261013-qeens1r5/validation-final/logs/git-diff-check.stdout.log",
+      "stderr_log": "/private/var/folders/gg/zl4h70_n74b2_4gh_38tgl640000gn/T/bullet-terminology-20261013-qeens1r5/validation-final/logs/git-diff-check.stderr.log"
+    },
+    {
+      "id": "skill-quick-validate",
+      "command": "/Users/bytedance/code/Easton/mma/deer-flow/backend/.venv/bin/python /Users/bytedance/.codex/skills/.system/skill-creator/scripts/quick_validate.py /Users/bytedance/code/Easton/interview-analyzer-skill/skill/project-interview-skill",
+      "argv": [
+        "/Users/bytedance/code/Easton/mma/deer-flow/backend/.venv/bin/python",
+        "/Users/bytedance/.codex/skills/.system/skill-creator/scripts/quick_validate.py",
+        "/Users/bytedance/code/Easton/interview-analyzer-skill/skill/project-interview-skill"
+      ],
+      "cwd": "/Users/bytedance/code/Easton/interview-analyzer-skill",
+      "started_at": "2026-10-13T10:01:36.249015+00:00",
+      "finished_at": "2026-10-13T10:01:36.614550+00:00",
+      "duration_seconds": 0.366,
+      "exit_code": 0,
+      "result": "PASS",
+      "stdout_log": "/private/var/folders/gg/zl4h70_n74b2_4gh_38tgl640000gn/T/bullet-terminology-20261013-qeens1r5/validation-final/logs/skill-quick-validate.stdout.log",
+      "stderr_log": "/private/var/folders/gg/zl4h70_n74b2_4gh_38tgl640000gn/T/bullet-terminology-20261013-qeens1r5/validation-final/logs/skill-quick-validate.stderr.log"
+    }
+  ],
+  "npm_test_total": 29,
+  "required_bqc_tests": [
+    {
+      "test_name": "test_delivery_keeps_bqc_links_with_english_or_mixed_bullet_titles",
+      "executed_and_passed": true,
+      "log_lines": [
+        "test_delivery_keeps_bqc_links_with_english_or_mixed_bullet_titles (test_validate_output.ValidateOutputTests.test_delivery_keeps_bqc_links_with_english_or_mixed_bullet_titles) ... ok"
+      ]
+    },
+    {
+      "test_name": "test_english_title_still_requires_matching_bullet_mapping",
+      "executed_and_passed": true,
+      "log_lines": [
+        "test_english_title_still_requires_matching_bullet_mapping (test_validate_output.ValidateOutputTests.test_english_title_still_requires_matching_bullet_mapping) ... ok"
+      ]
+    }
+  ],
+  "git_state_unchanged": true,
+  "git_state_files": [
+    "/private/var/folders/gg/zl4h70_n74b2_4gh_38tgl640000gn/T/bullet-terminology-20261013-qeens1r5/validation-final/git-state-before.json",
+    "/private/var/folders/gg/zl4h70_n74b2_4gh_38tgl640000gn/T/bullet-terminology-20261013-qeens1r5/validation-final/git-state-after.json"
+  ],
+  "all_required_checks_passed": true
+}

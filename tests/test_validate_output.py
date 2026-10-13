@@ -53,6 +53,22 @@ class ValidateOutputTests(unittest.TestCase):
     def test_accepts_linked_delivery_without_exercises_and_preserves_ids(self):
         self.assertEqual(validate_output.check_delivery(self.interview, self.guide), [])
 
+    def test_delivery_keeps_bqc_links_with_english_or_mixed_bullet_titles(self):
+        original = self.interview.read_text(encoding="utf-8")
+        for title in ("Middleware Chain", "SSE 流式恢复"):
+            with self.subTest(title=title):
+                self.interview.write_text(
+                    original.replace("查询聚合", title), encoding="utf-8"
+                )
+                self.assertEqual(
+                    validate_output.check_delivery(self.interview, self.guide), []
+                )
+
+    def test_english_title_still_requires_matching_bullet_mapping(self):
+        self.replace(self.interview, "**查询聚合：**", "**Middleware Chain：**")
+        errors = validate_output.check_delivery(self.interview, self.guide)
+        self.assertTrue(any("B mapping" in error for error in errors))
+
     def test_rejects_bullet_without_question_and_course_mapping(self):
         self.replace(self.interview, "## 简历 →", "- **会话隔离：** 分离用户会话。\n## 简历 →")
         errors = validate_output.check_delivery(self.interview, self.guide)

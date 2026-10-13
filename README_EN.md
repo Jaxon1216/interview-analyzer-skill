@@ -19,6 +19,7 @@ Turn a real codebase into interview material you can explain, defend, and study,
 
 - Core-flow investigation: trace entry points, mechanisms, failure boundaries, and source evidence into technical pillars
 - Goal and evidence mapping: connect pillars to users, goals, and obstacles; distinguish implementation, responsibility, measured results, and documented historical decisions
+- Technical terminology: choose familiar, accurate terms for the target role; keep English when it communicates better, prefer natural Chinese when appropriate, and impose no English quota
 - Resume bullets: turn code facts into reusable resume language
 - Interview expansion: derive primary questions from resume claims and follow-ups from preceding answers; adapt answer structure to question type
 - Explanation guardrails: translate internal implementation terms into interviewer-friendly language

@@ -1,0 +1,5 @@
+
+> project-interview-skill@1.4.1 pack:check
+> npm pack --dry-run
+
+project-interview-skill-1.4.1.tgz

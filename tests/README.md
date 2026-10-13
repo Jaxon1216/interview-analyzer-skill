@@ -6,6 +6,7 @@
 | --- | --- | --- |
 | 自动回归 | `npm test` | 输入与提示词脚本、Bundle 链接、bullet 格式、B/Q/C 关联、课程与文件链接 |
 | 行为评测 | [business-narrative.json](evals/business-narrative.json) | 业务选材、指标口径与归属、责任模式、历史决策和材料不足时的行为 |
+| 术语行为评测 | [technical-terminology.json](evals/technical-terminology.json) | 事实匹配、目标岗位熟悉度、中英比较、标题与正文一致性；不按英文数量评分 |
 
 发布内容检查：`npm run pack:check`。测试数据和评测产物留在开发仓库，不进入运行时 Skill Bundle。
 
@@ -34,3 +35,14 @@ E2–E6 是合成材料，不代表 DeerFlow 的事实。JSON 中 `request` 是�
 ## 记录
 
 - [2026-10-13 改造与 DeerFlow 验证](../docs/testing/2026-10-13-business-narrative.md)
+- [2026-10-13 常见技术英文选择验证](../docs/testing/2026-10-13-technical-terminology.md)
+
+## 术语评测复跑
+
+T1–T5 是合成材料，T6 使用[已核验的 DeerFlow 事实](evals/deerflow-terminology-facts.md)。六例均只生成 bullet，不需要重新生成课程或启动应用。
+
+`supplemental_cases` 中的 T7/T8 是首轮审读发现 worker 译名过度具体化后加入的定向验证：分别检查执行载体未知和明确为独立进程的材料。它们单独报告，不计入原六例的首次结果。
+
+将保存版与新版 Skill 分别冻结到独立目录，用同一 `request` 执行。执行者不读取 `checks`、另一版本输出或预期答案；每例保存第一次完整的 `output.md`，并把英文/中文取舍说明单独保存为 `terminology-notes.md`。审读者对照事实与 `checks` 评估，若修改正文，保留初稿并记录原因。接受零英文、合法同义表达与不同标题，不用指定词匹配代替语义判断。
+
+自动回归另覆盖英文、中英混合标题的 B/Q/C 关联，以及标题与映射表不一致时的拒绝行为。`npm test` 不运行大模型，也不证明同行熟悉度。

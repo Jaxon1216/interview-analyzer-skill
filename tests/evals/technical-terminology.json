@@ -1,0 +1,100 @@
+{
+  "suite": "technical-terminology-v1",
+  "cases": [
+    {
+      "id": "T1",
+      "name": "常见框架、缩写与公开 API",
+      "source": "synthetic-description",
+      "request": "使用提供的 project-interview-skill。目标岗位：React 前端研发。只写 1 条中文简历 bullet，不生成课程或面经。假设材料：页面使用 React，服务端先生成 HTML，浏览器使用 hydrateRoot 在已有 HTML 上接管交互；没有旧版本或性能数字。请准确呈现已有机制。",
+      "checks": [
+        "React 和 SSR 等常见名称可自然保留，不能强行译成生硬中文",
+        "若使用 Hydration 或 hydrateRoot，须准确描述接管已有 HTML 的行为，不写成重新渲染整页",
+        "不补造首屏耗时、SEO 收益、旧架构或用户主导经历",
+        "标题概括正文机制；不要求固定英文数量或每个 API 名均出现"
+      ]
+    },
+    {
+      "id": "T2",
+      "name": "中文更自然与零英文正例",
+      "source": "synthetic-description",
+      "request": "使用提供的 project-interview-skill。目标岗位：后端研发。只写 1 条中文简历 bullet。假设材料：支付请求携带业务唯一编号，重复请求复用已有处理结果，避免重复扣款；没有框架、数据库或协议的具体名称，没有收益数字或历史材料。",
+      "checks": [
+        "使用自然的幂等、重复请求等中文，无需改成 Idempotency 或去重英语清单",
+        "零英文可以通过，不能为凑术语新增 Redis、锁、事务或其他未提供实现",
+        "只表达已有业务唯一编号与结果复用，不扩大成全链路 exactly-once 保证"
+      ]
+    },
+    {
+      "id": "T3",
+      "name": "目标领域内的常见概念",
+      "source": "synthetic-description",
+      "request": "使用提供的 project-interview-skill。目标岗位：AI 应用后端研发。只写 1 条中文简历 bullet。假设材料：企业文档先切分并建立向量索引，问答时检索相关片段，拼入大模型输入后生成答案并附原文引用；没有多 Agent、模型训练、评测分数或业务指标。",
+      "checks": [
+        "按 AI 应用岗位判断术语熟悉度，可使用有机制支持的 RAG 等领域常见概念",
+        "若选择中文，应在独立术语说明中解释取舍；不以某个指定英文字符串作为唯一正确答案",
+        "正文保留检索、上下文和生成关系，不能只列技术标签",
+        "不新增 GraphRAG、Multi-Agent、微调或未提供的质量收益"
+      ]
+    },
+    {
+      "id": "T4",
+      "name": "公开可搜索的私有类名",
+      "source": "synthetic-description",
+      "request": "使用提供的 project-interview-skill。目标岗位：后端研发。只写 1 条中文简历 bullet。假设材料：某公开仓库的 OmniExecutionFabric 类按任务编号登记当前执行者，最后一个执行者退出时才释放共享客户端；方法名是 finalizeOwnedRunX，字段是 execution_owner_key。这些名字在仓库 README 中可搜索到。没有跨进程实现或性能数据。",
+      "checks": [
+        "可搜索不等于同行常用，私有类名、方法名和字段不充当架构标题或技术标签",
+        "改用能说明执行持有与最后使用者释放的表达，保留机制与收益边界",
+        "不将进程内持有关系包装成分布式锁或跨进程租约",
+        "术语判断理由在独立记录中，不能塞进简历正文"
+      ]
+    },
+    {
+      "id": "T5",
+      "name": "热门术语缺少实现支持",
+      "source": "synthetic-description",
+      "request": "使用提供的 project-interview-skill。目标岗位：AI 应用研发。只写 1 条中文简历 bullet。假设材料：一个问答接口接收问题，拼接固定提示词后调用大模型，将返回文本交给页面；没有文档检索、工具执行循环、子 Agent、长期记忆或上下文压缩。",
+      "checks": [
+        "可保留有事实支持的大模型或 LLM 等表达，不补成 RAG、Agent Harness 或 Context Engineering 架构",
+        "标题与正文准确对应模型调用机制，不制造更高级的能力",
+        "英文没有参与机制解释时应删去，不堆砌名词增加声量"
+      ]
+    },
+    {
+      "id": "T6",
+      "name": "DeerFlow 已核验材料对照",
+      "source": "verified-repository-material",
+      "request": "使用提供的 project-interview-skill。目标岗位：AI Agent 后端研发。只根据 deerflow-facts.md 中已核验的当前机制生成 5 条中文简历 bullet，不生成课程、面经、项目简介或额外支柱。该材料没有个人职责、历史升级或指标证据。",
+      "checks": [
+        "5 条标题分别对应给定机制，不能把展示或传输改名为未提供的多 Agent 编排或完整上下文工程",
+        "逐个判断保留英文是否事实匹配、同行熟悉且比中文有表达优势，允许中英混合",
+        "常见协议、框架和文件格式名不被一律泛化；私有类名不升级为通用概念",
+        "机制、边界和作用清楚，没有为了标题英文化引入新事实",
+        "保持 5 条简历格式；术语说明单独记录，不加在正文尾部"
+      ]
+    }
+  ],
+  "supplemental_cases": [
+    {
+      "id": "T7",
+      "name": "worker 执行载体未确认",
+      "source": "synthetic-description",
+      "request": "使用提供的 project-interview-skill。目标岗位：Python 后端研发。只写 1 条中文简历 bullet。假设材料：服务受理任务并登记运行编号，交给后台 worker 执行，客户端按运行编号查询状态；材料未提供 worker 的进程、线程或协程实现，没有部署拓扑、历史版本或指标。",
+      "checks": [
+        "worker 仅表示后台执行角色，不因译名具体化成独立进程、线程池或协程实现",
+        "保留运行登记、后台执行和状态查询之间的关系；标题与正文一致",
+        "允许清晰中文或有理由保留 worker，不以指定词为唯一正确答案"
+      ]
+    },
+    {
+      "id": "T8",
+      "name": "已确认的独立进程执行",
+      "source": "synthetic-description",
+      "request": "使用提供的 project-interview-skill。目标岗位：Python 后端研发。只写 1 条中文简历 bullet。假设材料：服务将 CPU 密集计算放到明确独立的操作系统进程中执行，父进程通过 multiprocessing.Queue 传递任务和收集结果；没有分布式队列、持久化、自动重试或性能数字。",
+      "checks": [
+        "明确已确认的进程执行与进程间任务/结果传递，不因避免过度翻译而抹去真实执行模型",
+        "multiprocessing.Queue 是公开 API，有助解释实现时可保留；不要求每个 API 必须出现",
+        "不新增跨机器分布式调度、持久化、重试、性能收益或其他未提供保证"
+      ]
+    }
+  ]
+}

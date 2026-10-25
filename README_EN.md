@@ -95,6 +95,24 @@ These screenshots show an earlier reading interface. Current wording and filenam
 
 </details>
 
+## Generate HTML when you reach a lesson
+
+Each lesson ends with a prompt containing its project, document path, scope, and source baseline. Copy it into a new chat with access to the same project to generate an HTML explanation. Add a particular section or difficulty if needed. Older lessons work too: specify the file directly, for example:
+
+```text
+Use project-interview-skill in HTML teaching mode.
+Read interview-prep/guide-backend/03-task-states.md, lesson C03.
+Explain only “Mechanism and boundaries / Bounded retries”.
+I do not understand why a failed attempt still belongs to the same task.
+Generate one offline HTML file and preserve the original document and my notes.
+```
+
+Replace the example path and topic with your lesson. The page explains state changes, key code, and success/failure paths, with explanatory interactions where useful. Quizzes and answer gates are off by default. HTML goes into an adjacent `html/` directory; its link is added to the source Markdown after generation. The initial delivery still contains all core Markdown lessons. Ordinary follow-up questions stay in the conversation.
+
+Writing guidance adapts [Humanizer](https://github.com/blader/humanizer), and teaching guidance adapts Matt Pocock’s [/teach](https://github.com/mattpocock/skills/tree/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/productivity/teach). Both adaptations are included in this Bundle. No separate installation or new `/teach` or `/tech` command is required. See [sources, pinned versions, and licenses](skill/project-interview-skill/references/upstream/sources.md).
+
+The [first synthetic HTML lesson](docs/testing/samples/progressive-teaching/H2-first/interview-prep/guide-backend/html/03-任务状态--有限重试-455e7796.html) and [validation record](docs/testing/2026-10-25-progressive-teaching.md) preserve generated output, note-preservation checks, and browser limitations.
+
 ## Common requests
 
 Use the quick-start request for a full delivery. Specify a narrower scope or an incremental update when needed.
@@ -135,6 +153,8 @@ npx project-interview-skill@latest install --trae --dry-run
 
 `--project` uses the **current working directory** as the project root. Products are not auto-detected. `--all` installs all supported targets; `doctor` only displays paths.
 
+The VS Code instructions file points to a complete `project-interview-skill/` Bundle beside it, including `references/` and `scripts/`. Keep both when moving the installation. `doctor` and `--dry-run` show both locations.
+
 **Update an installed skill** by repeating the original command with the same product flag and scope. For a user-level generic Agent / Codex installation:
 
 ```bash
@@ -168,6 +188,8 @@ python3 ~/.agents/skills/project-interview-skill/scripts/validate_output.py inte
 ```
 
 The validator checks bullet format, B/Q/C links, core lesson sections, and local file links. **Pillar selection, factual accuracy, terminology, and final writing quality still require separate review.**
+
+HTML needs separate checks for local links, offline dependencies, content, and interactions. The validator does not parse HTML or run JavaScript. The Agent reports checks it could perform and any gaps; generating a page does not establish mastery.
 
 Development checks:
 

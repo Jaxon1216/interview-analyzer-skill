@@ -2,6 +2,8 @@
 
 本文件是**可移植规则**，适用于任意项目 / 岗位。写简历 bullet 前默认打开[酥神 bullet 模板](../excellent-resumes/susu-bullet-template.md)，按需再读 [excellent-resumes/](../excellent-resumes/README.md) 的项目级金样；**不要**把金样里的产品名、层名、数字抄进用户项目。生成 bullet 时同时对照领域中立的 [bullet few-shot](../examples/bullet-few-shots.md)，只学习结构，不复制素材。
 
+成稿同时遵从[自然表达规则](writing-style.md)：删无信息铺垫与总结，保留条件、术语、证据边界与本文件规定的结构；不为增加口语感编造个人经历。
+
 ## 回答组织
 
 回答先回应问题，再解释机制、项目例子和边界。项目方案题可用 STAR；原理、故障、演进题按[问题契约](star-framework.md)选择结构，不统一设最低字数或强制重讲背景。

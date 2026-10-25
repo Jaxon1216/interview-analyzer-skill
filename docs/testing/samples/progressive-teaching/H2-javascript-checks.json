@@ -1,0 +1,26 @@
+{
+  "method": "Node vm with a minimal DOM stub; not a browser or keyboard/visual test",
+  "checks": [
+    {
+      "scenario": "recover",
+      "terminal_status": "done",
+      "terminal_attempts": "2 / 2",
+      "steps": 6,
+      "next_previous_reset": true
+    },
+    {
+      "scenario": "exhaust",
+      "terminal_status": "failed",
+      "terminal_attempts": "2 / 2",
+      "steps": 6,
+      "next_previous_reset": true
+    },
+    {
+      "scenario": "success",
+      "terminal_status": "done",
+      "terminal_attempts": "1 / 2",
+      "steps": 4,
+      "next_previous_reset": true
+    }
+  ]
+}

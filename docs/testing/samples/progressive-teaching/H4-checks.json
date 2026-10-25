@@ -1,0 +1,110 @@
+{
+  "checks": [
+    {
+      "check": "用户笔记保留",
+      "passed": true,
+      "detail": "Markdown 在登记区前逐字一致；HTML user-notes 区逐字一致，含手写补充"
+    },
+    {
+      "check": "更新范围",
+      "passed": true,
+      "detail": "原有 5 个项目文件仅目标 HTML 与其来源 Markdown 登记说明改变；其余 3 个文件哈希一致，无新课程文件"
+    },
+    {
+      "check": "首次更新产物",
+      "passed": true,
+      "detail": "first-update 下的两份文件与当前交付逐字节一致，首次写入后没有再修正"
+    },
+    {
+      "check": "页面身份与基线",
+      "passed": true,
+      "detail": "沿用来源、C03、完整小节层级、原文件名和单条登记；项目根目录已对应本测试项目，源码 SHA-256 一致"
+    },
+    {
+      "check": "HTML 静态检查",
+      "passed": true,
+      "detail": "10 个 href/src 目标及锚点可解析；本地依赖、基础页面字段、源码片段与转义检查通过，无远程运行依赖或 innerHTML 执行源码"
+    },
+    {
+      "check": "静态表语义与位置",
+      "passed": true,
+      "detail": "对照表紧接全部尝试失败说明，caption、4 个列标题和 3 个行标题齐备，无脚本条件显示"
+    },
+    {
+      "check": "Python 场景与表值",
+      "passed": true,
+      "detail": {
+        "scenarios": [
+          {
+            "scenario": "success",
+            "status": "done",
+            "attempts": 1,
+            "calls": [
+              "T-17"
+            ]
+          },
+          {
+            "scenario": "recover",
+            "status": "done",
+            "attempts": 2,
+            "calls": [
+              "T-17",
+              "T-17"
+            ]
+          },
+          {
+            "scenario": "exhaust",
+            "status": "failed",
+            "attempts": 2,
+            "calls": [
+              "T-17",
+              "T-17"
+            ]
+          },
+          {
+            "scenario": "runtime",
+            "status": "running",
+            "attempts": 1,
+            "calls": [
+              "T-17"
+            ]
+          }
+        ],
+        "all_failed_source_snapshots": [
+          [
+            "T-17",
+            "queued",
+            0
+          ],
+          [
+            "T-17",
+            "failed",
+            1
+          ],
+          [
+            "T-17",
+            "failed",
+            2
+          ]
+        ],
+        "note": "对象身份在返回的三个场景均保持；RuntimeError 按源码向外抛出"
+      }
+    },
+    {
+      "check": "JavaScript 语法与 DOM 桩路径",
+      "passed": true,
+      "detail": "3 条教学路径 / 16 个状态通过；路径切换、上一步、下一步、重置、边界按钮与代码高亮通过（DOM 桩，非浏览器）"
+    }
+  ],
+  "changed_original_files": [
+    "interview-prep/guide-backend/03-任务状态.md",
+    "interview-prep/guide-backend/html/03-任务状态--有限重试-455e7796.html"
+  ],
+  "unverified": [
+    "浏览器桌面/窄屏实际排版",
+    "真实键盘操作与可访问性体验",
+    "浏览器控制台错误与网络请求",
+    "返回链接实际点击",
+    "file:// 离线打开"
+  ]
+}

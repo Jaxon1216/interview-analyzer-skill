@@ -1,0 +1,40 @@
+[
+  {
+    "scenario": "direct_success",
+    "same_object_returned": true,
+    "status": "done",
+    "attempts": 1,
+    "ids_received": [
+      "T-17"
+    ]
+  },
+  {
+    "scenario": "fail_then_success",
+    "same_object_returned": true,
+    "status": "done",
+    "attempts": 2,
+    "ids_received": [
+      "T-17",
+      "T-17"
+    ]
+  },
+  {
+    "scenario": "fail_twice",
+    "same_object_returned": true,
+    "status": "failed",
+    "attempts": 2,
+    "ids_received": [
+      "T-17",
+      "T-17"
+    ]
+  },
+  {
+    "scenario": "uncaught_RuntimeError",
+    "raised": "RuntimeError",
+    "status": "running",
+    "attempts": 1,
+    "ids_received": [
+      "T-17"
+    ]
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "file_readable": true,
+  "utf8": true,
+  "html_ids_unique": true,
+  "local_links_checked": 10,
+  "unique_link_targets": [
+    "../../%E4%BB%BB%E5%8A%A1%E6%A0%B7%E6%9C%AC/%E5%AF%BC%E5%AD%A6.md",
+    "../../%E4%BB%BB%E5%8A%A1%E6%A0%B7%E6%9C%AC/%E9%9D%A2%E7%BB%8F.md#q1-%E5%90%8C%E4%B8%80%E4%BB%BB%E5%8A%A1%E4%B8%8E%E5%A4%9A%E6%AC%A1%E5%B0%9D%E8%AF%95",
+    "../../../task.py",
+    "../03-%E4%BB%BB%E5%8A%A1%E7%8A%B6%E6%80%81.md"
+  ],
+  "anchors_resolve": true,
+  "external_runtime_dependencies": 0,
+  "source_code_escaped": true,
+  "inline_javascript_extracted": true,
+  "browser_checks": "not performed by this agent"
+}

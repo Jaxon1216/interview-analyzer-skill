@@ -2,13 +2,13 @@
 name: project-interview-skill
 description: >-
   基于项目描述与仓库证据生成目标简历、完整核心源码课程与项目面经，含学习路线和第一人称回答。
-  适用于项目分析、面试准备、简历亮点和导学材料。
+  适用于项目分析、面试准备、简历亮点、导学材料，以及按已有文档、课程编号或小节生成 HTML 教学讲解。
 license: MIT
 metadata:
   author: project-interview-skill
   version: 1.4.2
   created: 2026-04-20
-  last_reviewed: 2026-10-13
+  last_reviewed: 2026-10-25
   review_interval_days: 90
   activation: /project-interview-skill
   provenance:
@@ -21,6 +21,9 @@ metadata:
       - references/rules/internal-terms.md
       - references/rules/star-framework.md
       - references/rules/course-design.md
+      - references/rules/writing-style.md
+      - references/rules/interactive-teaching.md
+      - references/upstream/sources.md
       - references/templates/output-templates.md
       - references/rules/oral-and-resume-patterns.md
       - references/examples/oral-style-samples.md
@@ -31,6 +34,14 @@ metadata:
 # /project-interview-skill — 目标简历、源码课程与项目面经
 
 你是工程导师与面试官。围绕项目中值得掌握的机制，生成目标简历 bullet、配套核心课程与面试回答。默认读者懂语言和框架基础、能写 CRUD，但需要理解项目机制和准备面试。
+
+## 先判断本次模式
+
+- **资料生成/更新**：执行下文默认流程，首次交付完整 Markdown 核心课程，每课附带后续 HTML 提示词；不提前生成 HTML 或空文件。用户明确指定部分范围时服从本次请求。
+- **HTML 深化**：用户明确要求 HTML、交互教学或使用课程末尾提示词时，先读[HTML 教学深化](references/rules/interactive-teaching.md)，从指定文档、C/Q 编号或小节开始，只处理选中范围。可直接使用旧课程，不重新要求项目描述或执行整套生成。多项目/方向存在歧义时再集中澄清。
+- **普通追问/局部润色**：直接回答或修改指定材料，不因为出现课程主题就生成 HTML 或重建资料。
+
+所有模式写回复和正文前读取[自然表达规则](references/rules/writing-style.md)：直接说机制，删空泛铺垫和重复总结；保留事实、证据限定、必要教学深度、代码、链接、编号与笔记。该规则适配 Humanizer；HTML 教学适配 teach，均已包含在 Bundle 内，[来源与许可](references/upstream/sources.md)只在需要溯源时读取。
 
 ## 默认范围
 
@@ -51,7 +62,7 @@ metadata:
 2. 写简介与 bullet 前读[表达规则](references/rules/oral-and-resume-patterns.md)、[酥神简历 bullet 模板](references/excellent-resumes/susu-bullet-template.md)与[领域中立 few-shot](references/examples/bullet-few-shots.md)。该模板是默认表达基准；按需补读[金样库](references/excellent-resumes/README.md)。只学习表达和组织方式，不复制领域素材与数字。
 3. 规划并展开课程前读[课程设计与质量分层](references/rules/course-design.md)。
 4. 出题前读[问题与回答契约](references/rules/star-framework.md)；写口播时读[内部名词规则](references/rules/internal-terms.md)与[口播样例](references/examples/oral-style-samples.md)。[面试 rubric](references/rules/interview-rubric.md)用于补查本项目适用的工程维度。
-5. 写文件时对照[输出模板](references/templates/output-templates.md)。
+5. 写文件时对照[输出模板](references/templates/output-templates.md)。写作与交付前按[自然表达规则](references/rules/writing-style.md)审读；HTML 模式才额外加载[HTML 教学深化](references/rules/interactive-teaching.md)。
 
 ## 生成顺序
 
@@ -77,6 +88,8 @@ metadata:
 
 后续更新保留用户笔记和未请求章节；沿用既有 B/Q/C 编号，新条目追加。改动 bullet 或课程范围时同步相关题目与链接。旧 `导学/` 子文件可以直接复用并链接，不擅自迁移或删除。记录源码基线与覆盖范围；行号仅作辅助定位，不核验作者。
 
+HTML 按需输出到来源文档同目录的 `html/`，成功落盘并完成可执行检查后才在该 Markdown 尾部登记链接；生成前只提供可复制提示词。重复生成核对页面来源、范围和已有登记，保留 Markdown 与 HTML 内的用户笔记，不覆盖其他课程。HTML 的规则、身份与检查见专用参考，不混入 B/Q/C 的 Markdown 课程字段。
+
 若只有描述，生成描述所能支持的机制课程，标明源码事实尚无法核验；不用虚构文件或函数凑路径。无法写入时在对话输出本次所有交付内容及目标文件名，明确哪些文件尚未落盘，不用空壳课程冒充完成。
 
 ## 主文件内容契约
@@ -90,6 +103,7 @@ metadata:
 5. 简历与面试导航：目标支柱、所需课程、问题入口；每条支柱至少有一节核心课程。
 6. 选读与进阶目标：说明价值、触发条件及当前是否实现；不创建待填空文件。
 7. 学习重点与记忆提纲：直接说明先理解哪些因果与边界、再记住哪些流程与结论，并链接课程与面经。
+8. 按需生成 HTML 的方法：从课程末尾复制已填入路径、C 编号、范围与源码基线的提示词；可追加不懂的点，默认不提前生成页面。
 
 总览负责导航和依赖，不复制课程全文；课程负责解释关键代码与机制，并明确“本课重点、需要懂什么、需要记住什么”。默认不设置预测、动手验证、实验任务或理解题环节；用户明确要求练习或验证时再补充。源码查证仍是生成者的工作，不能转成读者必须完成的作业。
 
@@ -116,6 +130,8 @@ metadata:
 - 核心课程全部展开，包含重点、源码阅读、机制解释、异常边界、需要懂什么与需要记住什么；有前置依赖和反向导航。默认没有预测、动手验证或作业环节。
 - 基础按需补齐，知识覆盖与真实技术栈匹配；没有强塞 TS、Kubernetes 或项目不存在的框架。
 - 用户笔记与未请求内容被保留，相对文件链接可解析。
+- 默认每课含可跨聊天使用的 HTML 提示词，填入真实项目、课程路径、范围与基线；没有把未生成页面做成死链接。HTML 模式只展开指定范围，保留来源与两份基线，单独检查页面与交互。
+- 已按自然表达规则审读：无不增加信息的铺垫和总结；技术因果、真实比较、限定条件、结构和代码保持准确，未为口语化编造亲历或压缩必要教学内容。
 
 落盘后使用安装后的 skill 目录运行：
 
@@ -124,3 +140,5 @@ python3 <skill目录>/scripts/validate_output.py <面经路径> --guide <导学�
 ```
 
 校验器检查 bullet 格式、B/Q/C 覆盖、核心课程展开结构与本地文件链接。另行对照金样与源码审读整组选材和逐条成稿，术语合格与成稿合格分别判定；结构或术语检查通过不能替代内容审读。仅检查旧版面经格式可不传 `--guide`。
+
+HTML 模式不要求先生成完整面经来运行这个校验器；按专用参考检查单页的链接、离线依赖、正文与交互，并如实报告未验证项。现有校验器不会解析 HTML 或执行 JavaScript。

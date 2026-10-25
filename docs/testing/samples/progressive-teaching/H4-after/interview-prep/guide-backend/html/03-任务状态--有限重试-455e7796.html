@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C03 · 有限重试：失败后为什么还是同一任务</title>
+<style>
+:root{color-scheme:light;--ink:#183134;--muted:#4c6264;--paper:#f4f3ed;--line:#c7d4cf;--accent:#126559;--warm:#8b482a;--card:#fffefa}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.85;font-size:17px}a{color:var(--accent);text-underline-offset:.22em}a:hover{text-decoration-thickness:2px}a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #a34820;outline-offset:4px}main{max-width:1000px;margin:auto;padding:32px 28px 72px}nav{display:flex;gap:10px 24px;flex-wrap:wrap;font-size:.88rem}.eyebrow{font-weight:750;letter-spacing:.1em;font-size:.82rem;color:var(--accent);margin-top:42px}h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.22;letter-spacing:-.04em;max-width:850px;margin:12px 0 24px}h2{font-size:1.6rem;line-height:1.4;margin:0 0 20px}h3{font-size:1.08rem;margin:0 0 9px}p{margin:0 0 16px}.lede{font-size:1.16rem;max-width:800px}.answer{padding:24px 28px;background:#dfeee7;border-left:5px solid var(--accent);margin:24px 0}.answer p:last-child{margin-bottom:0}.metadata{font-size:.85rem;color:var(--muted);padding:18px 0 8px;border-bottom:1px solid var(--line)}.metadata p{margin-bottom:6px}.metadata code{overflow-wrap:anywhere;font-size:.78rem}section{margin-top:48px;scroll-margin-top:20px}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:18px}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px}.label{font-size:.78rem;letter-spacing:.08em;color:var(--muted);font-weight:700}.identity{font-size:1.8rem;font-weight:800;color:var(--accent);line-height:1.4}.attempt{font-size:1.8rem;font-weight:800;line-height:1.4}.small{font-size:.88rem;color:var(--muted)}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.9em}p code,li code{background:#e9ede7;padding:.1em .3em;border-radius:3px}pre{padding:22px;overflow:auto;background:#153538;color:#f1f6e9;border-radius:10px;font-size:.86rem;line-height:1.75;tab-size:4;max-width:100%}pre code{font-size:1em}.annotation{border-left:3px solid var(--line);padding-left:18px}.steps{padding-left:24px}.steps li{padding-left:5px;margin-bottom:12px}.state-path{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere;font-size:.95rem;color:var(--accent);padding:12px 16px;background:#e8eee6;border-radius:6px}.path-card{margin-top:16px}.path-card p:last-child{margin-bottom:0}.boundary{border-left:4px solid var(--warm);padding:16px 20px;background:#f3e9dd}.controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:22px}label{font-size:.9rem;font-weight:650}select,button{font:inherit;font-size:.9rem;border:1px solid #a6b9b0;border-radius:6px;background:#fffefa;padding:9px 13px;color:var(--ink)}select{max-width:100%}button{cursor:pointer}button.primary{background:var(--accent);color:white;border-color:var(--accent)}button:disabled{opacity:.45;cursor:default}.readout{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.readout>div{border:1px solid var(--line);padding:12px;border-radius:7px;background:#f4f6ee}.readout strong{display:block;font-size:1.15rem;overflow-wrap:anywhere}.event{background:#fffefa;padding:20px;border-radius:8px;border:1px solid var(--line);min-height:145px}.event h3{color:var(--accent)}.event p{margin:8px 0 0}.inline-label{font-weight:750;color:var(--warm)}.code-trace{font-size:.85rem;margin-top:16px}.code-trace [data-lines]{display:block;padding:0 6px;border-left:3px solid transparent;white-space:pre}.code-trace .active{background:#31575a;border-left-color:#f2bc75;color:white}.button-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}.notes{margin-top:44px;padding-top:20px;border-top:1px solid var(--line)}footer{margin-top:30px;font-size:.86rem;color:var(--muted)}details{margin-top:18px}summary{cursor:pointer;color:var(--accent);font-weight:650}ul{padding-left:24px}.no-js{padding:12px;background:#f3e9dd}#demo[hidden]{display:none}@media(max-width:620px){main{padding:22px 18px 48px}.twocol{grid-template-columns:1fr}.answer{padding:20px}.readout{grid-template-columns:1fr}.controls{align-items:flex-start;flex-direction:column}.card{padding:18px}pre{padding:16px;font-size:.78rem}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{body{background:white;font-size:11pt}main{max-width:none;padding:0}nav,.controls,.button-row{display:none}section{break-inside:avoid;margin-top:22px}.card,.answer,.event{break-inside:avoid}pre{white-space:pre-wrap;overflow:visible;background:#f4f4f4;color:#111}a{color:#111}.code-trace .active{background:#ddd;color:#111}.metadata{font-size:9pt}}
+
+.state-comparison{overflow-x:auto;margin-top:20px}.comparison-table{width:100%;border-collapse:collapse;font-size:.9rem}.comparison-table caption{text-align:left;font-weight:700;margin-bottom:10px}.comparison-table th,.comparison-table td{text-align:left;vertical-align:top;padding:10px;border:1px solid var(--line)}.comparison-table thead{background:#e8eee6}.comparison-table tbody th{font-weight:650}.comparison-table code{white-space:nowrap}@media(max-width:620px){.comparison-table th,.comparison-table td{padding:8px}}@media print{.state-comparison{overflow:visible}.comparison-table{break-inside:avoid}}
+</style>
+</head>
+<body>
+<!-- project-interview-html: {"project":"任务样本","project_root":"/private/tmp/interview-teaching-update-20261025/project","source":"interview-prep/guide-backend/03-任务状态.md","course":"C03","related_b":"B1","related_q":"Q1","scope":["机制与边界","有限重试"],"identity_hash":"455e7796","original_baseline":"合成样本 task.py，无独立 Git 历史；无实测结果","original_markdown_sha256":"67003ab979c28416d0211afd135d361eed7462eb91e1918bd5bdf65eaecfabb4","verified_baseline":{"date":"2026-10-25","git_commit":null,"source":"task.py","sha256":"c66c61af304b3ca40086a3e7c3c559744e675700298d650a056d2abac3119953","workspace_changes":"task.py 未修改；本次仅增量更新已登记 HTML 的静态对照表和相关元数据，并更新来源 Markdown 的检查说明","difference_from_original":"本小节与当前 task.py 一致，无机制修正"}} -->
+<!-- generated-content:start -->
+<main>
+<nav aria-label="课程导航">
+<a href="../03-%E4%BB%BB%E5%8A%A1%E7%8A%B6%E6%80%81.md">返回 C03 原文</a>
+<a href="../../%E4%BB%BB%E5%8A%A1%E6%A0%B7%E6%9C%AC/%E5%AF%BC%E5%AD%A6.md">导学</a>
+<a href="../../%E4%BB%BB%E5%8A%A1%E6%A0%B7%E6%9C%AC/%E9%9D%A2%E7%BB%8F.md#q1-%E5%90%8C%E4%B8%80%E4%BB%BB%E5%8A%A1%E4%B8%8E%E5%A4%9A%E6%AC%A1%E5%B0%9D%E8%AF%95">Q1：同一任务与多次尝试</a>
+</nav>
+<header>
+<p class="eyebrow">C03 / 机制与边界 / 有限重试</p>
+<h1>失败的是这次尝试，<br>任务身份仍然是 T-17。</h1>
+<p class="lede">调用者把一个 <code>Task</code> 对象交给 <code>run_task</code>。第一次调用 <code>handle</code> 抛出 <code>ValueError</code> 后，函数还没有返回；只要次数未耗尽，循环就会用这个对象的同一个 <code>id</code> 再调用一次。</p>
+<div class="answer">
+<p><strong>为什么失败后还是同一任务？</strong>因为代码只把 <code>task.status</code> 改成 <code>failed</code>，没有创建新的 <code>Task</code>，也没有修改 <code>task.id</code>。<code>failed</code> 是这个对象当前的状态，不是“换一个任务”的命令。</p>
+<p>下一轮仍操作参数 <code>task</code> 指向的对象，把它改回 <code>running</code> 并增加 <code>attempts</code>。只有成功返回，或预算用尽走到循环外的 <code>return task</code>，这次 <code>run_task</code> 调用才结束。</p>
+</div>
+<div class="metadata">
+<p><strong>来源：</strong>任务样本 · 后端 · <a href="../03-%E4%BB%BB%E5%8A%A1%E7%8A%B6%E6%80%81.md">interview-prep/guide-backend/03-任务状态.md</a> · C03；关联 B1 / Q1。</p>
+<p><strong>本页范围：</strong>机制与边界 → 有限重试；仅补充理解它需要的对象、字段和循环前提。</p>
+<p><strong>原文基线：</strong>合成样本 task.py，无独立 Git 历史；无实测结果。</p>
+<p><strong>本页查证基线：</strong>2026-10-25，临时项目中的 <a href="../../../task.py">task.py 第 6–27 行</a>，无 Git commit；文件未改。SHA-256：<code>c66c61af304b3ca40086a3e7c3c559744e675700298d650a056d2abac3119953</code>。</p>
+<p>原文这段与当前源码一致。本页的执行核验只覆盖文末列出的四个同步场景，没有线上、性能或重启恢复测量。</p>
+</div>
+</header>
+
+<section id="identity">
+<h2>1. 先把“任务”与“尝试”分开</h2>
+<p>以调用者先创建 <code>task = Task("T-17")</code>、再调用 <code>run_task(task, handle)</code> 为例：任务是要完成的这件事；尝试是为完成它而进行的一次 <code>handle</code> 调用。这个例子使用默认总预算 <code>max_attempts=2</code>，因此最多调用两次，不是首次调用之外再重试两次。</p>
+<div class="twocol">
+<article class="card"><p class="label">身份 · id</p><p class="identity">T-17 → T-17</p><p>两次执行都从同一个对象读取 <code>task.id</code>，所以传入 <code>handle</code> 的字符串相同。</p></article>
+<article class="card"><p class="label">已消耗次数 · attempts</p><p class="attempt">0 → 1 → 2</p><p>每次调用 <code>handle</code> 前加一。第一次失败仍占用一次预算，第二次是剩下的最后一次。</p></article>
+</div>
+<p style="margin-top:18px">这些字段都属于同一个 <code>Task</code>。<code>run_task</code> 原地修改对象；<code>handle</code> 收到的只是它的 ID 字符串，不是一个新任务对象。保持同一身份来自这段实现的选择，并不是所有重试系统都天然如此。</p>
+</section>
+
+<section id="code">
+<h2>2. 关键在于 except 后没有 return</h2>
+<p>下面保留 <a href="../../../task.py">task.py 第 14–27 行</a> 的实际执行结构。<code>while</code> 每轮先检查预算；捕获异常后沿代码顺序走到循环体末尾，再回到条件判断。</p>
+<pre><code>def run_task(task: Task, handle: Callable[[str], str], max_attempts: int = 2) -&gt; Task:
+    if max_attempts &lt; 1:
+        raise ValueError("max_attempts must be positive")
+    while task.attempts &lt; max_attempts:
+        task.status = "running"
+        task.attempts += 1
+        try:
+            task.result = handle(task.id)
+        except ValueError:
+            task.status = "failed"
+        else:
+            task.status = "done"
+            return task
+    return task</code></pre>
+<ol class="steps">
+<li><strong>允许进入：</strong><code>0 &lt; 2</code> 成立。对象从 <code>queued</code> 变为 <code>running</code>，<code>attempts</code> 变成 1，然后调用 <code>handle("T-17")</code>。</li>
+<li><strong>第一次失败：</strong><code>ValueError</code> 被捕获，只执行 <code>task.status = "failed"</code>。异常路径跳过 <code>else</code>，因此没有执行其中的 <code>return task</code>。</li>
+<li><strong>再判断：</strong>走到循环末尾，检查 <code>1 &lt; 2</code>。条件成立，所以再次运行同一个循环体；参数 <code>task</code> 仍指向原来的对象。</li>
+<li><strong>第二次调用：</strong>状态改为 <code>running</code>，次数变成 2，继续调用 <code>handle("T-17")</code>。没有任何语句让 ID 变成别的值。</li>
+</ol>
+<p class="annotation"><code>failed</code> 本身不决定退出。退出由<strong>成功分支的 return</strong>，或<strong>次数条件不再成立</strong>决定。这个同步函数里没有消息重新入队；下一轮调用直接发生在同一个循环中。</p>
+</section>
+
+<section id="paths">
+<h2>3. 同一个 failed，可以出现于两个时刻</h2>
+<article class="card path-card">
+<h3>第一次失败后，预算还够</h3>
+<p class="state-path">queued → running（1）→ failed（1）→ running（2）→ done（2）</p>
+<p>第一次的 <code>failed</code> 是函数内部经过的状态；随后 <code>1 &lt; 2</code> 成立。第二次成功，结果写入同一个对象的 <code>result</code>，状态设成 <code>done</code> 并返回。括号表示已用次数，ID 全程是 T-17。</p>
+</article>
+<article class="card path-card">
+<h3>第二次也失败，预算已经用完</h3>
+<p class="state-path">queued → running（1）→ failed（1）→ running（2）→ failed（2）→ 返回</p>
+<p>捕获第二次 <code>ValueError</code> 后，<code>2 &lt; 2</code> 不成立，跳出循环。循环外没有重新改状态，所以返回的还是原对象，<code>status="failed"</code>、<code>attempts=2</code>。这是这次调用结束时的失败状态。</p>
+<div class="state-comparison">
+<table class="comparison-table">
+<caption>两次都抛出 ValueError 时的字段对照（新 Task，总预算 max_attempts=2）</caption>
+<thead><tr><th scope="col">时刻</th><th scope="col">任务 ID</th><th scope="col">状态 status</th><th scope="col">已用次数 attempts</th></tr></thead>
+<tbody>
+<tr><th scope="row">初始：调用前</th><td><code>T-17</code></td><td><code>queued</code></td><td>0</td></tr>
+<tr><th scope="row">第一次失败：捕获后</th><td><code>T-17</code></td><td><code>failed</code></td><td>1</td></tr>
+<tr><th scope="row">最终失败：返回时</th><td><code>T-17</code></td><td><code>failed</code></td><td>2</td></tr>
+</tbody>
+</table>
+</div>
+<p class="small">三个时刻是同一个 Task 对象。第一次失败后还剩一次预算，会再次进入 running；最终失败后预算耗尽，本次 run_task 调用返回。</p>
+</article>
+<article class="card path-card">
+<h3>第一次就成功，立即返回</h3>
+<p class="state-path">queued → running（1）→ done（1）→ 返回</p>
+<p>没有抛异常才进入 <code>else</code>。这里直接 <code>return task</code>，所以即使还剩一次预算，也不会再执行成功任务。</p>
+</article>
+</section>
+
+<section id="walkthrough">
+<h2>4. 沿着一次调用看字段怎样变化</h2>
+<p>这是按上述源码组织的<strong>教学状态模型</strong>，不是浏览器执行 Python，也不是项目实时日志。可选择三条路径，逐步查看同一对象的字段、下一条语句和 <code>handle</code> 已收到的参数。完整解释已经在上文，操作不会解锁正文。</p>
+<noscript><p class="no-js">JavaScript 未启用：上文已完整给出三条路径与退出原因；下面的交互不可用。</p></noscript>
+<div id="demo" class="card" hidden>
+<div class="controls"><label for="scenario">执行路径</label><select id="scenario"><option value="recover">第一次失败，第二次成功</option><option value="exhaust">两次都失败</option><option value="success">第一次成功</option></select></div>
+<p class="small">固定示例：新建 Task("T-17")，attempts=0，总预算=2。</p>
+<div class="readout" aria-label="当前字段"><div><span class="label">task.id · 不变</span><strong id="task-id">T-17</strong></div><div><span class="label">task.status</span><strong id="task-status">queued</strong></div><div><span class="label">task.attempts / max_attempts</span><strong id="task-attempts">0 / 2</strong></div></div>
+<div class="event" aria-live="polite" aria-atomic="true"><p class="small" id="step-count">第 1 步</p><h3 id="event-title">调用前：对象已经存在</h3><p id="event-reason">run_task 接收这个对象；当前还没有调用 handle。</p><p><strong>handle 已收到：</strong><code id="calls">尚未调用</code></p><p><strong>run_task 是否已返回：</strong><span id="returned">否</span></p></div>
+<div class="button-row"><button type="button" id="previous">上一步</button><button type="button" class="primary" id="next">下一步</button><button type="button" id="reset">回到开始</button></div>
+<pre class="code-trace" aria-label="当前关联代码"><code><span data-lines="17">17  while task.attempts &lt; max_attempts:</span><span data-lines="18">18      task.status = "running"</span><span data-lines="19">19      task.attempts += 1</span><span data-lines="21">21      task.result = handle(task.id)</span><span data-lines="23">23      task.status = "failed"</span><span data-lines="25">25      task.status = "done"</span><span data-lines="26">26      return task</span><span data-lines="27">27  return task</span></code></pre>
+</div>
+</section>
+
+<section id="boundaries">
+<h2>5. 保留 ID 能说明什么</h2>
+<div class="boundary"><p><strong>能说明：</strong>同一个 <code>Task</code> 的处理被再次尝试，<code>attempts</code> 延续累计；这段实现没有靠创建新对象来重新获得次数预算。</p><p style="margin-bottom:0"><strong>不能说明：</strong>第二次调用一定安全。如果 <code>handle</code> 在抛错前已经产生副作用，再传相同 ID 也可能重复产生副作用。样本没有利用 ID 做幂等检查；相同 ID 与幂等是两回事。</p></div>
+<ul>
+<li>本页例子从 <code>attempts=0</code> 开始。若调用者传入的对象已有尝试次数，<code>while</code> 使用已有计数，函数不会重置预算。</li>
+<li>只有 <code>handle</code> 抛出的 <code>ValueError</code> 会走这条重试路径。其他异常会向外传播，不能概括成“任何失败都重试”。</li>
+<li>代码没有等待或退避，第一次失败后马上回到循环条件；没有外部队列、持久化或并发控制，也没有重启后恢复任务的实现。</li>
+</ul>
+</section>
+
+<section id="remember">
+<h2>需要懂什么、记住什么</h2>
+<p><strong>懂因果：</strong>异常分支改的是状态，既没有创建任务，也没有结束函数；还有预算就回到循环，用原对象的 ID 再调用一次。是否还是同一个任务，要看对象与 ID 的流向，不能只看状态名称。</p>
+<p><strong>记流程：</strong>检查预算 → running → 次数加一 → handle(同一 ID) → 成功则 done 并返回；ValueError 则 failed，再检查预算。耗尽时从循环外返回，保留 failed。</p>
+<p>回到 <a href="../../%E4%BB%BB%E5%8A%A1%E6%A0%B7%E6%9C%AC/%E9%9D%A2%E7%BB%8F.md#q1-%E5%90%8C%E4%B8%80%E4%BB%BB%E5%8A%A1%E4%B8%8E%E5%A4%9A%E6%AC%A1%E5%B0%9D%E8%AF%95">Q1：同一任务与多次尝试</a> 时，可以直接沿这条因果解释。若继续追问，最相关的下一点是：“相同 ID 为什么仍可能重复产生副作用？”</p>
+</section>
+
+<section id="sources">
+<h2>来源与本次核验</h2>
+<p>主要依据是 <a href="../../../task.py">task.py</a>：第 6–11 行定义对象字段，第 14–27 行定义循环、捕获和返回；原文入口是 <a href="../03-%E4%BB%BB%E5%8A%A1%E7%8A%B6%E6%80%81.md">C03「机制与边界 / 有限重试」</a>。这是合成同步样本，不代表真实生产系统。</p>
+<p>本次实际在 Python 中运行了：直接成功（done / 1 次）、失败后成功（done / 2 次）、连续两次 ValueError（failed / 2 次）。这三条路径均核对返回值是原 Task 对象，且每次收到的 ID 都是 T-17；另运行 RuntimeError 路径，确认它向外抛出、只调用一次，并保留当时 running / 1 次的字段。这里只报告这些场景，不代表完整测试覆盖。</p>
+<p class="small">本页的交互是教学模型，运行记录来自单独执行 task.py 的核验，两者用途不同。浏览器排版、键盘与 file:// 检查的最终状态以交付说明为准。</p>
+</section>
+<!-- generated-content:end -->
+<!-- user-notes:start -->
+<section class="notes" aria-labelledby="notes-title"><h2 id="notes-title">我的笔记</h2><p>我的笔记：下次回顾错误分类。</p><p class="small">此条从来源 Markdown 原样保留。可在 HTML 的 user-notes 区域继续维护笔记；本页没有记录“已掌握”状态。</p></section>
+<p>我手写的补充：不要把同一 ID 当作幂等。</p>
+<!-- user-notes:end -->
+<footer>仅深化 C03 的指定小节。<a href="../03-%E4%BB%BB%E5%8A%A1%E7%8A%B6%E6%80%81.md">返回原课程与笔记</a></footer>
+</main>
+<script>
+'use strict';
+(function(){
+  const make=(title,reason,status,attempts,calls,lines,returned=false)=>({title,reason,status,attempts,calls,lines,returned});
+  const initial=make('调用前：对象已经存在','run_task 接收这个对象；当前还没有调用 handle。','queued',0,[],[]);
+  const firstStart=make('第 1 次调用前：0 < 2 成立','进入循环，先设为 running，再增加 attempts；准备把原对象的 id 传入 handle。','running',1,[],[17,18,19]);
+  const firstFail=make('第 1 次 ValueError：只把状态改为 failed','handle("T-17") 抛错。except 没有 return，函数尚未结束；接下来回到 while 判断。','failed',1,['T-17'],[21,23]);
+  const secondStart=make('第 2 次调用前：1 < 2 仍成立','仍然操作同一个 task。状态改回 running，attempts 变成 2；id 没有被修改。','running',2,['T-17'],[17,18,19]);
+  const paths={
+    recover:[initial,firstStart,firstFail,secondStart,
+      make('第 2 次成功：进入 else','第二次 handle("T-17") 返回 "finished"，写入 task.result；状态改为 done。','done',2,['T-17','T-17'],[21,25]),
+      make('成功分支返回原对象','return task 结束本次函数调用，不再判断下一轮。最终 result="finished"。','done',2,['T-17','T-17'],[26],true)],
+    exhaust:[initial,firstStart,firstFail,secondStart,
+      make('第 2 次 ValueError：再次 failed','第二次 handle("T-17") 也抛错；现在已经消耗 2 次预算。except 本身仍没有 return。','failed',2,['T-17','T-17'],[21,23]),
+      make('2 < 2 不成立：循环外返回','跳出 while，执行最后的 return task。没有再改状态，返回原对象并保留 failed。','failed',2,['T-17','T-17'],[17,27],true)],
+    success:[initial,firstStart,
+      make('第 1 次成功：进入 else','handle("T-17") 返回 "finished"，写入 result，状态改为 done；无需重试。','done',1,['T-17'],[21,25]),
+      make('立即返回原对象','成功分支的 return task 结束调用，剩余预算不会触发多余调用。','done',1,['T-17'],[26],true)]
+  };
+  const byId=id=>document.getElementById(id);
+  let selected='recover',index=0;
+  function render(){
+    const path=paths[selected],s=path[index];
+    byId('task-id').textContent='T-17';
+    byId('task-status').textContent=s.status;
+    byId('task-attempts').textContent=s.attempts+' / 2';
+    byId('step-count').textContent='第 '+(index+1)+' / '+path.length+' 步';
+    byId('event-title').textContent=s.title;
+    byId('event-reason').textContent=s.reason;
+    byId('calls').textContent=s.calls.length?s.calls.map(id=>'"'+id+'"').join('，'):'尚未调用';
+    byId('returned').textContent=s.returned?'是，返回的仍是原 Task 对象':'否';
+    byId('previous').disabled=index===0;
+    byId('next').disabled=index===path.length-1;
+    document.querySelectorAll('[data-lines]').forEach(el=>el.classList.toggle('active',s.lines.includes(Number(el.dataset.lines))));
+  }
+  byId('scenario').addEventListener('change',function(){selected=this.value;index=0;render();});
+  byId('previous').addEventListener('click',()=>{if(index>0){index--;render();}});
+  byId('next').addEventListener('click',()=>{if(index<paths[selected].length-1){index++;render();}});
+  byId('reset').addEventListener('click',()=>{index=0;render();});
+  render();
+  byId('demo').hidden=false;
+})();
+</script>
+</body>
+</html>

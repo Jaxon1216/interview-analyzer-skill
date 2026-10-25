@@ -1,0 +1,45 @@
+
+> project-interview-skill@1.4.2 pack:check
+> npm pack --dry-run
+
+npm notice
+npm notice 📦  project-interview-skill@1.4.2
+npm notice Tarball Contents
+npm notice 2.0kB LICENSE
+npm notice 13.9kB README_EN.md
+npm notice 12.5kB README.md
+npm notice 13.9kB bin/project-interview-skill.js
+npm notice 948B package.json
+npm notice 7.7kB skill/project-interview-skill/references/examples/bullet-few-shots.md
+npm notice 4.8kB skill/project-interview-skill/references/examples/oral-style-samples.md
+npm notice 5.0kB skill/project-interview-skill/references/excellent-resumes/ai4se-agent-infra.md
+npm notice 5.5kB skill/project-interview-skill/references/excellent-resumes/deer-flow-harness.md
+npm notice 1.6kB skill/project-interview-skill/references/excellent-resumes/README.md
+npm notice 4.8kB skill/project-interview-skill/references/excellent-resumes/susu-bullet-template.md
+npm notice 8.0kB skill/project-interview-skill/references/rules/course-design.md
+npm notice 7.9kB skill/project-interview-skill/references/rules/interactive-teaching.md
+npm notice 4.7kB skill/project-interview-skill/references/rules/internal-terms.md
+npm notice 1.7kB skill/project-interview-skill/references/rules/interview-rubric.md
+npm notice 11.6kB skill/project-interview-skill/references/rules/oral-and-resume-patterns.md
+npm notice 5.9kB skill/project-interview-skill/references/rules/repository-investigation.md
+npm notice 4.5kB skill/project-interview-skill/references/rules/star-framework.md
+npm notice 3.9kB skill/project-interview-skill/references/rules/writing-style.md
+npm notice 7.0kB skill/project-interview-skill/references/templates/output-templates.md
+npm notice 1.1kB skill/project-interview-skill/references/upstream/humanizer-LICENSE.txt
+npm notice 1.9kB skill/project-interview-skill/references/upstream/sources.md
+npm notice 1.1kB skill/project-interview-skill/references/upstream/teach-LICENSE.txt
+npm notice 12.5kB skill/project-interview-skill/scripts/build_prompt.py
+npm notice 5.3kB skill/project-interview-skill/scripts/check_inputs.py
+npm notice 8.7kB skill/project-interview-skill/scripts/validate_output.py
+npm notice 14.4kB skill/project-interview-skill/SKILL.md
+npm notice Tarball Details
+npm notice name: project-interview-skill
+npm notice version: 1.4.2
+npm notice filename: project-interview-skill-1.4.2.tgz
+npm notice package size: 70.5 kB
+npm notice unpacked size: 173.0 kB
+npm notice shasum: 416a11598a635e9e74860c219986a9f49cea0c1a
+npm notice integrity: sha512-ikSdjtJ0qh6HG[...]ZB7ag96w9aPRg==
+npm notice total files: 27
+npm notice
+project-interview-skill-1.4.2.tgz

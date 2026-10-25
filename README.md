@@ -60,6 +60,23 @@ interview-prep/
 
 未指定方向时默认全栈，课程目录为 `guide-fullstack/`；明确前端时为 `guide-frontend/`。多个项目共用输出根目录时，课程放在各自的 `{简称}/guide-{方向}/` 下。首次默认完整展开全部核心课程，选读内容按需展开。
 
+## 学到某一课，再生成 HTML
+
+每课末尾会提供一段已经填写项目、课程路径、范围与源码基线的提示词。复制到能访问同一项目的新聊天即可生成整课 HTML；也可以追加自己不懂的小节。已有旧课程没有这个入口时，直接指定文件同样可以使用，例如：
+
+```text
+使用 project-interview-skill 的 HTML 深化模式。
+读取 interview-prep/guide-backend/03-任务状态.md，课程 C03。
+只讲“机制与边界 / 有限重试”：我不懂失败后为什么还是同一任务。
+请生成单文件离线 HTML，保留原文与我的笔记。
+```
+
+这里的路径和主题是示例，替换为你的课程。页面会用状态变化、关键代码和正常/异常分支解释机制，按需要加入步骤切换等互动，默认不加测验或答题解锁。HTML 按需写入该文档同目录的 `html/`，成功生成后在原 Markdown 尾部登记入口；首轮仍完整交付 Markdown，不提前生成全部 HTML。普通追问直接在对话回答。
+
+表达规则适配自 [Humanizer](https://github.com/blader/humanizer)，教学方法适配自 Matt Pocock 的 [/teach](https://github.com/mattpocock/skills/tree/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/productivity/teach)。本 Bundle 已包含适配规则，无需再安装它们，也没有新增 `/tech` 或 `/teach` 命令；[来源、版本与许可](skill/project-interview-skill/references/upstream/sources.md)可供核对。
+
+[合成课程 HTML 首稿](docs/testing/samples/progressive-teaching/H2-first/interview-prep/guide-backend/html/03-任务状态--有限重试-455e7796.html)与[验证记录](docs/testing/2026-10-25-progressive-teaching.md)保留实际生成结果、笔记更新检查和浏览器验证限制。
+
 ## 成品示例
 
 下面节选自 **DeerFlow 源码补稿的审读修订版**，展示如何用具体机制组织正文；完整输出和证据可在[原始记录](docs/testing/samples/bullet-quality/deerflow-primary-revised.md)与[源码索引](docs/testing/samples/bullet-quality/deerflow-primary-evidence.md)中查看。
@@ -135,6 +152,8 @@ npx project-interview-skill@latest install --trae --dry-run
 
 `--project` 以**执行命令时所在目录**为项目根目录。默认不会自动探测产品；`--all` 安装到全部支持目标，`doctor` 只显示路径。
 
+VS Code 的 instructions 是入口，完整 Bundle 安装在其同目录的 `project-interview-skill/`，保留 `references/` 与 `scripts/`；迁移时一并复制。`doctor` 和 `--dry-run` 会同时显示两个位置。
+
 **更新已安装的 Skill**：重新运行原安装命令，保留相同产品参数和作用域。例如，更新用户级通用 Agent / Codex：
 
 ```bash
@@ -168,6 +187,8 @@ python3 ~/.agents/skills/project-interview-skill/scripts/validate_output.py inte
 ```
 
 校验覆盖 bullet 格式、B/Q/C 关联、核心课程章节和本地链接。**整组选材、事实准确性、术语和成稿质量仍需分别审读。**
+
+HTML 单独检查本地链接、离线依赖、正文和交互；上述脚本不解析 HTML 或执行 JavaScript。Agent 会报告可执行检查的结果与未验证项，生成页面不代表已经掌握该课。
 
 开发仓库的检查入口：
 

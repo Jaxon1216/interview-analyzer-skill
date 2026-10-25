@@ -156,7 +156,13 @@ function doctor(options) {
     const projectTarget = resolveTarget(product, { ...options, project: true });
     console.log(`- ${product}`);
     console.log(`  user:    ${userTarget.displayPath}`);
+    if (userTarget.bundleRoot) {
+      console.log(`  user bundle:    ${userTarget.bundleRoot}`);
+    }
     console.log(`  project: ${projectTarget.displayPath}`);
+    if (projectTarget.bundleRoot) {
+      console.log(`  project bundle: ${projectTarget.bundleRoot}`);
+    }
   }
 }
 
@@ -207,6 +213,7 @@ function resolveTarget(product, options) {
     type: 'vscode-instructions',
     product,
     root: instructionsFile,
+    bundleRoot: path.join(path.dirname(instructionsFile), SKILL_DIR_NAME),
     displayPath: instructionsFile,
   };
 }
@@ -214,13 +221,19 @@ function resolveTarget(product, options) {
 function installProduct(product, target, options) {
   if (options.dryRun) {
     info(`[dry-run] ${product}: ${target.displayPath}`);
+    if (target.bundleRoot) {
+      info(`[dry-run] ${product} bundle: ${target.bundleRoot}`);
+    }
     return;
   }
 
   if (target.type === 'vscode-instructions') {
-    writeVsCodeInstructions(target.root);
+    replaceDirectory(target.bundleRoot);
+    copyBundle(target.bundleRoot);
+    writeVsCodeInstructions(target.root, target.bundleRoot);
     ok(`Installed for ${productLabel(product)}`);
     console.log(`     ${dim(target.root)}`);
+    console.log(`     ${dim(target.bundleRoot)}`);
     return;
   }
 
@@ -305,13 +318,19 @@ function writePlainRule(filePath) {
   writeFile(filePath, skillBody());
 }
 
-function writeVsCodeInstructions(filePath) {
-  const body = skillBody();
+function writeVsCodeInstructions(filePath, bundleRoot) {
+  const entryPath = path.relative(path.dirname(filePath), path.join(bundleRoot, 'SKILL.md'))
+    .split(path.sep).join('/');
   const content = [
     '---',
     "applyTo: '**'",
     '---',
-    body,
+    '',
+    '# /project-interview-skill',
+    '',
+    `使用本 Skill 前，先读取并遵循[完整 Skill](${entryPath})。`,
+    '',
+    '`SKILL.md` 中的相对路径（包括 `references/` 和 `scripts/`）均以该文件所在目录为基准。',
   ].join('\n');
   writeFile(filePath, content);
 }
@@ -400,7 +419,7 @@ Options:
   --agents         Install to ~/.agents/skills/ (default user-level target)
   --trae           Install for Trae
   --cursor         Install for Cursor
-  --vscode         Install VS Code Copilot instructions
+  --vscode         Install VS Code Copilot instructions and the skill bundle
   --claude-code    Install for Claude Code
   --codex          Install to .agents/skills for Codex
   --project        Install under the current project instead of the user home

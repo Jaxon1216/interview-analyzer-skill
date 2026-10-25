@@ -1,0 +1,121 @@
+{
+  "python": "3.11.15",
+  "source_sha256_before": "c66c61af304b3ca40086a3e7c3c559744e675700298d650a056d2abac3119953",
+  "source_sha256_after": "c66c61af304b3ca40086a3e7c3c559744e675700298d650a056d2abac3119953",
+  "checks": [
+    {
+      "check": "success",
+      "result": "passed",
+      "observed": {
+        "same_object": true,
+        "task": {
+          "id": "ok",
+          "status": "done",
+          "attempts": 1,
+          "result": "value"
+        },
+        "calls": [
+          "ok"
+        ]
+      }
+    },
+    {
+      "check": "ValueError then success",
+      "result": "passed",
+      "observed": {
+        "task": {
+          "id": "retry",
+          "status": "done",
+          "attempts": 2,
+          "result": "recovered"
+        },
+        "calls": [
+          "retry",
+          "retry"
+        ]
+      }
+    },
+    {
+      "check": "ValueError exhausted",
+      "result": "passed",
+      "observed": {
+        "task": {
+          "id": "fail",
+          "status": "failed",
+          "attempts": 2,
+          "result": null
+        },
+        "calls": [
+          "fail",
+          "fail"
+        ]
+      }
+    },
+    {
+      "check": "invalid maximum",
+      "result": "passed",
+      "observed": {
+        "task": {
+          "id": "invalid",
+          "status": "queued",
+          "attempts": 0,
+          "result": null
+        },
+        "calls": []
+      }
+    },
+    {
+      "check": "no remaining budget",
+      "result": "passed",
+      "observed": {
+        "task": {
+          "id": "spent",
+          "status": "queued",
+          "attempts": 2,
+          "result": null
+        },
+        "calls": []
+      }
+    },
+    {
+      "check": "non-ValueError propagation",
+      "result": "passed",
+      "observed": {
+        "task": {
+          "id": "runtime",
+          "status": "running",
+          "attempts": 1,
+          "result": null
+        }
+      }
+    },
+    {
+      "check": "done task called again",
+      "result": "passed",
+      "observed": {
+        "task": {
+          "id": "repeat",
+          "status": "done",
+          "attempts": 2,
+          "result": "2"
+        },
+        "calls": [
+          "repeat",
+          "repeat"
+        ]
+      }
+    },
+    {
+      "check": "failure retains previous result",
+      "result": "passed",
+      "observed": {
+        "task": {
+          "id": "stale",
+          "status": "failed",
+          "attempts": 1,
+          "result": "old"
+        }
+      }
+    }
+  ]
+}

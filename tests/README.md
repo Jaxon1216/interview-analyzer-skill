@@ -33,11 +33,22 @@ E2–E6 是合成材料，不代表 DeerFlow 的事实。JSON 中 `request` 是�
 
 一次生成通过只证明本次样本的行为。没有运行大模型的 `npm test` 不会执行这六个用例，不能宣称自动覆盖业务语义。
 
+## 自然表达与 HTML 渐进教学
+
+[progressive-teaching.json](evals/progressive-teaching.json) 包含 H1–H5 与 W1：默认完整 Markdown、跨聊天指定小节、普通追问、重复生成和笔记、消歧与源码漂移、中文润色事实守恒。[合成项目](evals/progressive-teaching-fixture/task.py) 提供无外部依赖的同步执行器和已有 C03 课程，没有真实队列、持久化、退避或性能数据。
+
+复跑时把 fixture 复制到临时目录，使用本次安装后的 Bundle；`${FIXTURE_ROOT}` 指该副本，`${OUTPUT_DIR}` 指独立输出目录。执行者只读 request、Skill 与原始材料，不读 checks 或其他版本结果。保存首次输出，审读者再按 checks 核验；未实际执行的用例单独列出，不能用规则中写了该行为代替通过。
+
+H4 是有状态用例，依赖 H2：先冻结 H2 首稿与源码，再在测试副本已有 HTML 的用户区添加请求中的笔记，保留 Markdown 中相同的笔记及登记入口。记录更新前路径与内容后再运行 H4。执行者可以看到这些既有材料；不能仅复制初始 fixture 后把首次建页记为重复更新通过。H5 是用户陈述的歧义场景，预期先澄清，不要求 fixture 提供两套真实课程。
+
+HTML 在浏览器中另行检查离线依赖、正常/失败分支、键盘、窄屏、控制台与导航。`validate_output.py` 不负责这些检查。安装器自动回归使用真实 Node CLI 和临时项目，覆盖 VS Code 伴随 Bundle、相对入口、重装和邻居文件保护，以及其余安装路径。
+
 ## 记录
 
 - [2026-10-13 改造与 DeerFlow 验证](../docs/testing/2026-10-13-business-narrative.md)
 - [2026-10-13 常见技术英文选择验证](../docs/testing/2026-10-13-technical-terminology.md)
 - [2026-10-13 支柱与成稿验证](../docs/testing/2026-10-13-bullet-quality.md)：包含首次补稿、修订和跨领域独立首稿；DeerFlow 独立生成未完成，限制单独记录。
+- [2026-10-25 自然表达与渐进式 HTML 教学](../docs/testing/2026-10-25-progressive-teaching.md)：包含基线、默认首轮、单课 HTML、普通追问、润色与增量笔记保护的首稿，区分静态/脚本检查与未通过工具完成的浏览器检查。
 
 ## 术语评测复跑
 

@@ -1,0 +1,46 @@
+
+> project-interview-skill@1.4.2 test
+> python3 -m unittest discover -s tests -v
+
+test_build_prompt_clarifies_main_question_counting (test_build_prompt.BuildPromptTests.test_build_prompt_clarifies_main_question_counting) ... ok
+test_build_prompt_escapes_markdown_fences (test_build_prompt.BuildPromptTests.test_build_prompt_escapes_markdown_fences) ... ok
+test_build_prompt_includes_domain_neutral_bullet_few_shot (test_build_prompt.BuildPromptTests.test_build_prompt_includes_domain_neutral_bullet_few_shot) ... ok
+test_main_reads_json_file (test_build_prompt.BuildPromptTests.test_main_reads_json_file) ... ok
+test_main_rejects_invalid_short_name (test_build_prompt.BuildPromptTests.test_main_rejects_invalid_short_name) ... ok
+test_validate_short_name_accepts_valid_value (test_build_prompt.BuildPromptTests.test_validate_short_name_accepts_valid_value) ... ok
+test_validate_short_name_rejects_illegal_chars (test_build_prompt.BuildPromptTests.test_validate_short_name_rejects_illegal_chars) ... ok
+test_validate_short_name_rejects_reserved_names (test_build_prompt.BuildPromptTests.test_validate_short_name_rejects_reserved_names) ... ok
+test_bundle_relative_markdown_links_resolve (test_bundle_layout.BundleLayoutTests.test_bundle_relative_markdown_links_resolve) ... ok
+test_package_files_publish_bundle (test_bundle_layout.BundleLayoutTests.test_package_files_publish_bundle) ... ok
+test_runtime_bundle_has_expected_layers (test_bundle_layout.BundleLayoutTests.test_runtime_bundle_has_expected_layers) ... ok
+test_analyze_complete_description_has_note (test_check_inputs.CheckInputsTests.test_analyze_complete_description_has_note) ... ok
+test_analyze_short_description_requires_more_input (test_check_inputs.CheckInputsTests.test_analyze_short_description_requires_more_input) ... ok
+test_main_prints_json_output (test_check_inputs.CheckInputsTests.test_main_prints_json_output) ... ok
+test_main_reads_file_input (test_check_inputs.CheckInputsTests.test_main_reads_file_input) ... ok
+test_all_project_targets_include_vscode_bundle_and_existing_adapters (test_installer.InstallerTests.test_all_project_targets_include_vscode_bundle_and_existing_adapters) ... ok
+test_custom_bundle_dry_run_does_not_create_the_target (test_installer.InstallerTests.test_custom_bundle_dry_run_does_not_create_the_target) ... ok
+test_default_project_target_still_installs_the_complete_bundle (test_installer.InstallerTests.test_default_project_target_still_installs_the_complete_bundle) ... ok
+test_doctor_and_user_dry_run_report_vscode_companion_bundle (test_installer.InstallerTests.test_doctor_and_user_dry_run_report_vscode_companion_bundle) ... ok
+test_vscode_custom_path_remains_a_standalone_bundle (test_installer.InstallerTests.test_vscode_custom_path_remains_a_standalone_bundle) ... ok
+test_vscode_project_dry_run_reports_entry_and_bundle_without_writing (test_installer.InstallerTests.test_vscode_project_dry_run_reports_entry_and_bundle_without_writing) ... ok
+test_vscode_project_entry_reaches_a_complete_adjacent_bundle (test_installer.InstallerTests.test_vscode_project_entry_reaches_a_complete_adjacent_bundle) ... ok
+test_vscode_reinstall_refreshes_only_its_bundle_and_entry (test_installer.InstallerTests.test_vscode_reinstall_refreshes_only_its_bundle_and_entry) ... ok
+test_accepts_linked_delivery_without_exercises_and_preserves_ids (test_validate_output.ValidateOutputTests.test_accepts_linked_delivery_without_exercises_and_preserves_ids) ... ok
+test_accepts_titled_bullets_and_ignores_following_sections (test_validate_output.ValidateOutputTests.test_accepts_titled_bullets_and_ignores_following_sections) ... ok
+test_delivery_keeps_bqc_links_with_english_or_mixed_bullet_titles (test_validate_output.ValidateOutputTests.test_delivery_keeps_bqc_links_with_english_or_mixed_bullet_titles) ... ok
+test_english_title_still_requires_matching_bullet_mapping (test_validate_output.ValidateOutputTests.test_english_title_still_requires_matching_bullet_mapping) ... ok
+test_experiment_section_does_not_replace_knowledge_content (test_validate_output.ValidateOutputTests.test_experiment_section_does_not_replace_knowledge_content) ... ok
+test_ignores_fenced_examples_and_external_links (test_validate_output.ValidateOutputTests.test_ignores_fenced_examples_and_external_links) ... ok
+test_rejects_broken_source_link_in_lesson (test_validate_output.ValidateOutputTests.test_rejects_broken_source_link_in_lesson) ... ok
+test_rejects_bullet_without_question_and_course_mapping (test_validate_output.ValidateOutputTests.test_rejects_bullet_without_question_and_course_mapping) ... ok
+test_rejects_course_not_in_guide_index (test_validate_output.ValidateOutputTests.test_rejects_course_not_in_guide_index) ... ok
+test_rejects_empty_course_and_missing_backlinks (test_validate_output.ValidateOutputTests.test_rejects_empty_course_and_missing_backlinks) ... ok
+test_rejects_mapped_question_without_body (test_validate_output.ValidateOutputTests.test_rejects_mapped_question_without_body) ... ok
+test_rejects_missing_question_trigger (test_validate_output.ValidateOutputTests.test_rejects_missing_question_trigger) ... ok
+test_rejects_question_with_conflicting_bullet_id (test_validate_output.ValidateOutputTests.test_rejects_question_with_conflicting_bullet_id) ... ok
+test_rejects_unlabeled_bullet (test_validate_output.ValidateOutputTests.test_rejects_unlabeled_bullet) ... ok
+
+----------------------------------------------------------------------
+Ran 37 tests in 0.485s
+
+OK

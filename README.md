@@ -1,190 +1,83 @@
-<div align="center">
-  <h1>project-interview-skill</h1>
-  <p><strong>把真实项目整理成简历 bullet、源码课程和递进面经。</strong></p>
-  <p>先读懂项目怎样工作，再准备怎样讲清楚。</p>
-  <p>
-    <a href="README_EN.md">English</a> ·
-    <a href="https://www.npmjs.com/package/project-interview-skill">npm</a> ·
-    <a href="LICENSE">MIT License</a>
-  </p>
-</div>
+# Project Interview Skill · 项目源码导学与面试准备
 
-适合已经有项目、希望理解核心设计并准备面试的开发者。向 Agent 提供可访问的仓库或项目材料，它会查证机制、提炼技术支柱，把每条简历主张关联到问题、课程和源码。
+**简体中文** · [English](README_EN.md) · [npm](https://www.npmjs.com/package/project-interview-skill) · [看 DeerFlow 实例](#deerflow-example)
 
-支持通用 Agent、Codex、Claude Code、Cursor、Trae 和 VS Code Copilot；安装器需要 **Node.js 18+**，内容生成由你使用的 Agent 完成。
+把项目仓库交给 Codex 等 AI 编程助手，生成项目导学、源码课程、简历要点和面试问答。顺着一条简历要点，你能看到面试官可能怎么追问，再沿课程链接找到支撑回答的代码。
 
-[快速开始](#快速开始) · [成品示例](#成品示例) · [常用请求](#常用请求) · [安装与更新](#安装与更新) · [准确性与验证](#准确性与验证)
+## 安装：跨项目使用，还是只给当前项目用？
 
-## 快速开始
+安装器需要 **Node.js 18 或更高版本**。选下面一种即可：
 
-**1. 安装已发布版本**
+**跨项目使用（默认，适用于 Codex 和读取 `.agents/skills/` 的助手）**。在任意目录运行：
 
 ```bash
 npx project-interview-skill@latest install
 ```
 
-默认安装到 `~/.agents/skills/project-interview-skill/`。其他产品使用[对应安装参数](#安装与更新)；要使用 GitHub 当前源码，见[源码安装](#源码安装)。
+安装到 `~/.agents/skills/project-interview-skill/`。这里的 `~` 是你的用户主目录；使用 Codex 不需要另加参数。
 
-**2. 打开你的项目根目录，重启 Agent / 编辑器并开启新对话**
+**仅当前项目使用**。在你要分析的**项目根目录**运行：
 
-复制下面的请求，替换项目简称与岗位即可；技术栈会从源码识别。
-
-```text
-使用 project-interview-skill，分析当前仓库。
-项目简称：商城
-目标岗位：后端研发
-请生成导学、全部核心源码课程和面经，写入 interview-prep/。
+```bash
+npx project-interview-skill@latest install --project
 ```
 
-也可以用 `/project-interview-skill` 调用，并在后面附上上述信息。只有项目描述时，直接粘贴材料即可。
-
-**3. 从导学开始，按课程理解机制，再练面经**
-
-下面是单项目、后端方向的目录示意：
-
-```text
-interview-prep/
-├── 商城/
-│   ├── 导学.md                 # 项目地图、学习路线与导航
-│   └── 面经.md                 # 简历 bullet、主问、追问与口播
-└── guide-backend/
-    ├── 01-主题.md              # 完整核心课程
-    ├── 02-主题.md
-    └── topics/
-        └── C01-断线恢复.html   # C01 的重点专题，可离线打开
-```
-
-| 产物 | 你能看到什么 | 怎么用 |
-| --- | --- | --- |
-| 导学 | 模块职责、代表性链路、课程前置依赖和导航 | 先建立项目全貌，确定学习顺序 |
-| 核心课程 | 真实源码、运行机制、异常边界、需要懂什么与需要记住什么 | 沿场景读代码，讲清机制和取舍 |
-| HTML 专题 | 一页讲透一个需要比较分支、时序或状态变化的难点 | 从导学或对应课文打开页面，观察条件改变后会发生什么 |
-| 面经 | 项目简介、技术支柱、简历触发词、主问与递进追问、第一人称回答 | 对照简历练习，让每个主张都有展开依据 |
-
-未指定方向时默认全栈，课程目录为 `guide-fullstack/`；明确前端时为 `guide-frontend/`。多个项目共用输出根目录时，课程放在各自的 `{简称}/guide-{方向}/` 下。首次默认完整展开全部核心课程，选读内容按需展开。
-
-主会话从核心课程里选 1～3 个适合用 HTML 讲解的难点。宿主支持子 agent 时，每个专题交给一个子 agent，按统一模板生成，再由主会话核验源码和页面并回填链接。其他宿主由主会话使用同一模板完成。材料没有合适的难点时，仅交付 Markdown。
-
-## 成品示例
-
-下面节选自 **DeerFlow 源码补稿的审读修订版**，展示如何用具体机制组织正文；完整输出和证据可在[原始记录](docs/testing/samples/bullet-quality/deerflow-primary-revised.md)与[源码索引](docs/testing/samples/bullet-quality/deerflow-primary-evidence.md)中查看。
-
-> - **Skill 渐进加载与工具授权：** 技能以含 SKILL.md 的目录包组织，默认提示提供元数据，正文由显式选择或 read_file 按需加载；会话状态保留已加载技能的轻量引用。
->   - 活跃技能的 allowed-tools 同时过滤模型可见工具并拦截越权调用，权限声明参与实际执行控制。
-> - **上下文压缩与跨会话记忆：** 达到配置阈值后，将较早历史压成摘要并保留近期消息；摘要生成成功才替换历史，摘要、委派记录与技能引用独立保存并注入后续模型请求。
->   - 过大的工具结果写入文件，以摘要和文件引用进入上下文；文件持久化不可用时退回首尾截断。
->   - 启用被动记忆模式时，对话在执行结束后入队处理，入队时捕获用户身份，后台抽取持久记忆，后续会话按用户与 Agent 作用域加载。
-
-标题让同行识别设计，正文解释职责、协作和改变行为的条件；重要子机制可以展开，不强行补收益句。支柱由项目核心职责和真实机制决定，数量与标题不套金样。英文有辨识价值时保留，中文更自然时使用中文。
-
-完整交付还会建立以下关联，便于回到源码复习：
-
-```text
-B1 简历支柱
- └─ Q1 面试主问 → 根据回答递进追问
-     └─ C01 核心课程 → 源码路径与关键符号
-```
-
-不同领域的例子可看 [EdgeMetric 存储引擎首稿](docs/testing/samples/bullet-quality/edgemetric-first.md)。
+安装到该项目的 `.agents/skills/project-interview-skill/`。如果想和队友共用，可以把这个目录提交到项目仓库。
 
 <details>
-<summary>展开历史界面截图：面经与学习路线</summary>
+<summary>Claude Code、Cursor、Trae、VS Code Copilot 装到哪里？</summary>
 
-以下截图展示早期版本的阅读界面，内容和文件名以当前文字示例及输出契约为准。
+在安装命令末尾加对应参数，例如 `npx project-interview-skill@latest install --claude-code`。下表列出**父目录**；安装器会在其下创建 `project-interview-skill/`。
 
-![早期版本的简历 bullet 与 Agent 对话](https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/docs/images/bullet-output.png)
+| 助手 | 参数 | 用户级父目录 | 加 `--project` 后的父目录 |
+| --- | --- | --- | --- |
+| Claude Code | `--claude-code` | `~/.claude/skills/` | `.claude/skills/` |
+| Cursor | `--cursor` | `~/.cursor/rules/` | `.cursor/rules/` |
+| Trae | `--trae` | `~/.trae/skills/` | `.trae/rules/` |
+| VS Code Copilot | `--vscode` | `~/.copilot/instructions/` | `.github/instructions/` |
 
-![早期版本的主问、追问与口播](https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/docs/images/interview-questions.png)
-
-![早期版本的源码学习路线](https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/docs/images/learning-path.png)
+VS Code Copilot 还会在同一父目录生成 `project-interview-skill.instructions.md`。想先看实际路径，可在安装命令后加 `--dry-run`。若要使用 GitHub 当前源码，克隆本仓库后在仓库根目录运行 [`./install.sh --agents`](install.sh)。
 
 </details>
 
-## 常用请求
+## 如何更新到最新版？
 
-默认交付可以直接用快速开始中的请求；需要缩小范围或增量更新时，把要求写清楚。
+**重跑最初的安装命令**，保留 `@latest`、客户端参数和安装范围。默认安装的用户，在任意目录运行：
 
-| 需要什么 | 可直接复制的请求 |
+```bash
+npx project-interview-skill@latest install
+```
+
+如果当初只为某个项目的 Claude Code 安装，则回到那个项目根目录运行 `npx project-interview-skill@latest install --project --claude-code`。安装器会替换目标 skill 目录；已经生成的 `interview-prep/` 不会随之改写。安装或更新后，重启助手并开启新对话。
+
+## 第一次使用：从导学开始
+
+用助手打开目标仓库，把这句话发给它：
+
+```text
+使用 project-interview-skill 分析当前仓库。我准备面试后端研发岗位，
+请把项目导学、核心源码课程和面经写到 interview-prep/，给适合演示的难点配上 HTML 专题。
+```
+
+只有项目描述时也可以直接粘贴材料；缺少源码的部分会标明。生成后，从 `interview-prep/<项目简称>/导学.md` 开始：
+
+| 想做什么 | 打开哪里 |
 | --- | --- |
-| 先看简历表达 | `使用 project-interview-skill，面向后端岗位分析当前完整仓库，只生成项目简介和简历 bullet，另附源码证据。` |
-| 深入一个机制 | `使用 project-interview-skill，只展开上下文压缩这节源码课程，讲清主链、失败边界、需要懂什么与需要记住什么。` |
-| 整理实际贡献 | `使用 project-interview-skill，仅整理我的实际贡献。参与范围：……；已有证据：……；目标岗位：……。` |
-| 更新已有材料 | `使用 project-interview-skill，基于最新源码更新 interview-prep/，保留我的笔记、未请求章节和既有 B/Q/C 编号。` |
+| 先弄清项目怎么跑 | **导学.md**：看模块、调用链和推荐学习顺序。 |
+| 读懂一个机制 | **核心课程 Markdown**：沿场景读源码，看正常路径、异常分支和设计取舍。 |
+| 比较条件变化后的结果 | **HTML 专题**：从导学或对应课程点进去，离线切换条件。主会话通常选 1～3 个难点；支持子 agent 时按专题分工，没有合适题材时保留 Markdown 即可。 |
+| 准备面试 | **面经.md**：从简历要点练主问、追问和第一人称回答。若只想写本人做过的工作，说明参与范围并要求“仅整理实际贡献”。 |
 
-默认是**目标简历与学习模式**：仓库已实现机制可以入选，供掌握后选用；不主动审核提交作者。需要描述本人实际经历时，明确使用“仅整理实际贡献”并给出参与范围。
+<a name="deerflow-example"></a>
 
-## 安装与更新
+## DeerFlow 实例：为什么同一次保存会先遇到 409？
 
-通用安装命令为 `npx project-interview-skill@latest install`。选择产品时，在后面添加对应参数：
+在 DeerFlow 仓库的一次实际生成中，8 节核心课程配了 2 个 HTML 专题：**事件回放的游标**与**两个标签页保存同一份文件**。下图来自第二个专题。
 
-| 产品 | 参数 | 用户级位置 | 加 `--project` 后的位置 |
-| --- | --- | --- | --- |
-| 通用 Agent / Codex | `--agents` 或 `--codex` | `~/.agents/skills/project-interview-skill/` | `.agents/skills/project-interview-skill/` |
-| Claude Code | `--claude-code` | `~/.claude/skills/project-interview-skill/` | `.claude/skills/project-interview-skill/` |
-| Cursor | `--cursor` | `~/.cursor/rules/project-interview-skill/` | `.cursor/rules/project-interview-skill/` |
-| Trae | `--trae` | `~/.trae/skills/project-interview-skill/` | `.trae/rules/project-interview-skill/` |
-| VS Code Copilot | `--vscode` | `~/.copilot/instructions/project-interview-skill.instructions.md` | `.github/instructions/project-interview-skill.instructions.md` |
+![DeerFlow 文件保存专题：选中「运行中」和「基线过期」，页面显示先返回 409，尚未检查文件版本。](https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/docs/images/deerflow-artifact-save.png)
 
-例如：
+两个标签页读到了同一版文件。甲先保存，乙拿着旧版本再保存：如果线程正忙，乙先收到 **409**；等线程空闲后用旧版本重试，才会收到 **412**。可以对照 [DeerFlow 保存请求的处理代码](https://github.com/bytedance/deer-flow/blob/5ecc1c2ac2de624af354bc515d5cb04f80df226c/backend/app/gateway/routers/artifacts.py#L533) 看这两个检查的顺序。
 
-```bash
-# 用户级：供 Cursor 使用
-npx project-interview-skill@latest install --cursor
+想看简历要点的写法，可以对照 [DeerFlow 简历节选（审读修订版）](docs/testing/samples/bullet-quality/deerflow-primary-revised.md) 和[对应的源码证据](docs/testing/samples/bullet-quality/deerflow-primary-evidence.md)。
 
-# 项目级：在你的业务项目根目录执行
-npx project-interview-skill@latest install --project --trae
-
-# 先查看安装位置
-npx project-interview-skill@latest install --trae --dry-run
-```
-
-`--project` 以**执行命令时所在目录**为项目根目录。默认不会自动探测产品；`--all` 安装到全部支持目标，`doctor` 只显示路径。
-
-**更新已安装的 Skill**：重新运行原安装命令，保留相同产品参数和作用域。例如，更新用户级通用 Agent / Codex：
-
-```bash
-npx project-interview-skill@latest install --agents
-```
-
-安装会替换目标 Skill 目录；更新后重启 Agent / 编辑器并开启新对话。已有 `interview-prep/` 材料在再次调用 Skill 后才会更新。固定 npm 版本时，将 `@latest` 换为具体版本号。
-
-### 源码安装
-
-GitHub 当前源码和 npm 已发布版本可能不同。使用仓库当前内容时：
-
-```bash
-git clone https://github.com/Jaxon1216/interview-analyzer-skill.git
-cd interview-analyzer-skill
-./install.sh --agents
-```
-
-`install.sh` 是 Node CLI 的包装器，支持相同安装参数；它不包含在 npm 包内。已有 clone 时，更新源码后重新安装。
-
-也可以直接复制完整的 `skill/project-interview-skill/` 目录，其中包含 `SKILL.md`、`assets/`（HTML 模板）、`references/` 和 `scripts/`。VS Code 安装会把完整目录放在指令文件旁，供 Agent 读取模板和规则。
-
-## 准确性与验证
-
-源码用于支持技术事实，历史演进、个人身份与收益数字需要各自的证据。未实现增强另列进阶；没有可支持的效果就直接结束，不用待测尾注填充简历。
-
-对生成的完整导学与面经，可检查交付结构（将路径替换为实际安装目录）：
-
-```bash
-python3 ~/.agents/skills/project-interview-skill/scripts/validate_output.py interview-prep/商城/面经.md --guide interview-prep/商城/导学.md
-```
-
-校验覆盖 bullet 格式、B/Q/C 关联、核心课程章节和本地链接，也检查每个 HTML 专题能从导学和所属课程进入并返回。**整组选材、事实准确性、术语和成稿质量仍需分别审读。**
-
-开发仓库的检查入口：
-
-```bash
-npm test
-npm run pack:check
-```
-
-[测试说明](tests/README.md)列出自动回归与人工行为评测。[最近的选材与成稿记录](docs/testing/2026-10-13-bullet-quality.md)保留首次输出、修订和限制：DeerFlow 独立生成因额度中断，展示稿来自主 agent 补稿及修订；跨领域存储材料完成了一次独立生成。自动检查通过不代表内容质量已被证明。
-
-## 反馈与许可
-
-欢迎通过 [Issue](https://github.com/Jaxon1216/interview-analyzer-skill/issues) 反馈使用问题或提交 PR。联系：**jiangxu05@outlook.com**。
-
-采用 [MIT License](LICENSE)。许可证附中文参考译文，英文正文为准。
+[测试与验证](tests/README.md) · [反馈问题](https://github.com/Jaxon1216/interview-analyzer-skill/issues) · [联系维护者](mailto:jiangxu05@outlook.com) · [MIT 许可证](LICENSE)

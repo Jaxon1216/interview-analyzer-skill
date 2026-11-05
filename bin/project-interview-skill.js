@@ -19,6 +19,7 @@ const COLORS = {
 };
 const BUNDLE_ENTRIES = [
   'SKILL.md',
+  'assets',
   'references',
   'scripts',
 ];
@@ -240,6 +241,10 @@ function installProduct(product, target, options) {
 }
 
 function validatePackage() {
+  const topicTemplate = path.join(skillBundleRoot(), 'assets', 'topic.html');
+  if (!fs.existsSync(topicTemplate)) {
+    throw new Error(`Missing HTML topic template: ${topicTemplate}`);
+  }
   const skillPath = path.join(skillBundleRoot(), 'SKILL.md');
   if (!fs.existsSync(skillPath)) {
     throw new Error(`Missing Skill bundle entry: ${skillPath}`);
@@ -306,11 +311,15 @@ function writePlainRule(filePath) {
 }
 
 function writeVsCodeInstructions(filePath) {
-  const body = skillBody();
+  const bundle = path.join(path.dirname(filePath), SKILL_DIR_NAME);
+  copyBundle(bundle);
+  const body = skillBody().replace(/\]\((references|assets|scripts)\//g, `](${SKILL_DIR_NAME}/$1/`);
   const content = [
     '---',
     "applyTo: '**'",
     '---',
+    `Skill 目录及配套文件见 [${SKILL_DIR_NAME}/SKILL.md](${SKILL_DIR_NAME}/SKILL.md)。`,
+    '',
     body,
   ].join('\n');
   writeFile(filePath, content);

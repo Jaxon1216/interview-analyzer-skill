@@ -1,5 +1,7 @@
 import json
 import re
+import subprocess
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -20,11 +22,25 @@ class BundleLayoutTests(unittest.TestCase):
     def test_package_files_publish_bundle(self):
         package = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))
         self.assertIn("skill/project-interview-skill/SKILL.md", package["files"])
+        self.assertIn("skill/project-interview-skill/assets/", package["files"])
         self.assertIn("skill/project-interview-skill/references/", package["files"])
         self.assertIn("skill/project-interview-skill/scripts/*.py", package["files"])
         self.assertNotIn("SKILL.md", package["files"])
         self.assertNotIn("references/", package["files"])
         self.assertNotIn("scripts/", package["files"])
+
+    def test_installed_template_is_available_to_agents_and_copilot(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            project = Path(temp_dir)
+            subprocess.run(
+                ["node", str(ROOT / "bin/project-interview-skill.js"), "install", "--project", "--all"],
+                cwd=project, capture_output=True, check=True,
+            )
+            instructions = project / ".github/instructions/project-interview-skill.instructions.md"
+            copilot_bundle = instructions.parent / "project-interview-skill"
+            for bundle in (project / ".agents/skills/project-interview-skill", copilot_bundle):
+                self.assertEqual((bundle / "assets/topic.html").read_bytes(), (BUNDLE / "assets/topic.html").read_bytes())
+            self.assertIn("(project-interview-skill/SKILL.md)", instructions.read_text(encoding="utf-8"))
 
     def test_bundle_relative_markdown_links_resolve(self):
         link_pattern = re.compile(r"\[[^\]]+\]\(([^)]+)\)")

@@ -49,16 +49,21 @@ interview-prep/
 │   └── 面经.md                 # Resume bullets, questions, and spoken answers
 └── guide-backend/
     ├── 01-topic.md             # Complete core lessons
-    └── 02-topic.md
+    ├── 02-topic.md
+    └── topics/
+        └── C01-stream-recovery.html   # Offline companion to lesson C01
 ```
 
 | Output | What it contains | How to use it |
 | --- | --- | --- |
 | Study guide | Module responsibilities, representative flows, lesson prerequisites, and navigation | Build a project-wide view and choose a study order |
 | Core lessons | Real source, runtime mechanisms, failure boundaries, what to understand and remember | Follow a scenario through code and explain the design |
+| HTML topics | One mechanism per page, with a branch, sequence, or state change to explore | Open from the guide or its lesson and see how a change affects the outcome |
 | Interview guide | Project summary, technical pillars, resume triggers, primary questions, follow-ups, and first-person answers | Practice each claim with supporting explanations |
 
 With no direction specified, the default is fullstack and lessons use `guide-fullstack/`; frontend requests use `guide-frontend/`. When several projects share an output root, lessons go under each `{short-name}/guide-{direction}/`. The first delivery expands all core lessons; optional topics expand on demand.
+
+The main agent selects one to three topics that benefit from an HTML explanation. On hosts with subagents, it assigns each topic to a subagent with the shared template, checks the page against the source, and adds links to both Markdown documents. On other hosts, the main agent uses the same template itself. When the material has no suitable topic, the Markdown lessons are sufficient.
 
 ## Output example
 
@@ -155,7 +160,7 @@ cd interview-analyzer-skill
 
 `install.sh` wraps the Node CLI and accepts the same installation flags; it is not included in the npm package. For an existing clone, update the source and reinstall.
 
-You can also copy the complete `skill/project-interview-skill/` directory, containing `SKILL.md`, `references/`, and `scripts/`. Migrating the Skill does not require the CLI or test project.
+You can also copy the complete `skill/project-interview-skill/` directory, containing `SKILL.md`, `assets/` (the HTML template), `references/`, and `scripts/`. The VS Code installer places this directory next to the instructions file so the agent can read the template and rules.
 
 ## Accuracy and validation
 
@@ -167,7 +172,7 @@ Check the structure of a complete generated delivery with the following command,
 python3 ~/.agents/skills/project-interview-skill/scripts/validate_output.py interview-prep/shop/面经.md --guide interview-prep/shop/导学.md
 ```
 
-The validator checks bullet format, B/Q/C links, core lesson sections, and local file links. **Pillar selection, factual accuracy, terminology, and final writing quality still require separate review.**
+The validator checks bullet format, B/Q/C links, core lesson sections, and local file links. For each HTML topic, it checks navigation to and from both the guide and the owning lesson. **Pillar selection, factual accuracy, terminology, and final writing quality still require separate review.**
 
 Development checks:
 

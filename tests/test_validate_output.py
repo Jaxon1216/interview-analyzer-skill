@@ -50,6 +50,93 @@ class ValidateOutputTests(unittest.TestCase):
     def replace(self, path, old, new):
         path.write_text(path.read_text(encoding="utf-8").replace(old, new), encoding="utf-8")
 
+    def add_topic(self, name="C03-查询边界.html", *, route=True, lesson=True):
+        page = self.lesson.parent / "topics" / name
+        page.parent.mkdir(exist_ok=True)
+        page.write_text(
+            '<nav><a href="../../项目/导学.md">导学</a> '
+            '<a href="../03-查询.md#需要懂什么">回到课程</a></nav>'
+            '<main>为什么先批量查再关联？</main>', encoding="utf-8",
+        )
+        if route:
+            md = "[查询](../guide-fullstack/03-查询.md)"
+            self.replace(self.guide, md, md + f" [专题](<../guide-fullstack/topics/{name}>)")
+        if lesson:
+            with self.lesson.open("a", encoding="utf-8") as stream:
+                stream.write(f"\n[专题](<topics/{name}>)\n")
+        return page
+
+    def test_multiple_linked_topics_leave_ordinary_html_sources_and_other_projects_alone(self):
+        self.add_topic()
+        self.add_topic("C03-异常 分支.html")
+        for path in (self.root / "src" / "C03-源码页面.html",
+                     self.lesson.parent / "topics" / "diagram.html",
+                     self.root / "另一个项目" / "guide-fullstack" / "topics" / "C03-别的课.html"):
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text("", encoding="utf-8")
+        with self.lesson.open("a", encoding="utf-8") as stream:
+            stream.write("\n[源码](../src/C03-源码页面.html) [示意图](topics/diagram.html)\n")
+        self.replace(self.guide, " | 无 |", " [源码](../src/C03-源码页面.html) | 无 |")
+        self.assertEqual(validate_output.check_delivery(self.interview, self.guide), [])
+
+    def test_topic_named_without_course_id_in_route_is_an_error(self):
+        self.add_topic("wrong.html")
+        errors = validate_output.check_delivery(self.interview, self.guide)
+        self.assertTrue(any("invalid topic filename" in error and "wrong.html" in error for error in errors))
+
+    def test_topic_must_be_linked_in_both_route_and_course_even_if_both_omit_it(self):
+        for route, lesson in ((False, True), (True, False), (False, False)):
+            with self.subTest(route=route, lesson=lesson):
+                page = self.add_topic(f"C03-边界-{route}-{lesson}.html", route=route, lesson=lesson)
+                errors = validate_output.check_delivery(self.interview, self.guide)
+                relevant = [error for error in errors if page.name in error]
+                self.assertEqual(any("in guide route" in error for error in relevant), not route)
+                self.assertEqual(any("in course" in error for error in relevant), not lesson)
+
+    def test_rejects_topic_linked_under_another_course_id_or_directory(self):
+        self.add_topic("C04-其他课.html")
+        other = self.root / "另一个项目" / "topics" / "C03-同号.html"
+        other.parent.mkdir(parents=True)
+        other.write_text("另一项目的专题", encoding="utf-8")
+        self.replace(self.guide, " | 无 |", " [错误](../另一个项目/topics/C03-同号.html) | 无 |")
+        errors = validate_output.check_delivery(self.interview, self.guide)
+        for name in ("C04-其他课.html", "C03-同号.html"):
+            self.assertTrue(any(name in error and "outside its course" in error for error in errors))
+
+    def test_rejects_missing_or_empty_topic(self):
+        self.add_topic("C03-空专题.html").write_text(" \n", encoding="utf-8")
+        self.add_topic("C03-断链.html").unlink()
+        errors = validate_output.check_delivery(self.interview, self.guide)
+        self.assertTrue(any("empty topic" in error and "空专题" in error for error in errors))
+        self.assertTrue(any("cannot read topic" in error and "断链" in error for error in errors))
+
+    def test_requires_relative_links_and_html_backlinks(self):
+        page = self.add_topic()
+        self.replace(self.guide, f"../guide-fullstack/topics/{page.name}", str(page))
+        # Absolute, external and fragment-only hrefs cannot stand in for the
+        # two portable backlinks. A Markdown example is only text inside HTML.
+        page.write_text(
+            f'<a href="{self.guide}">导学</a><a href="#lesson">课</a>'
+            '<a href="https://example.org/03-查询.md">外部</a> '
+            '[课](../03-查询.md) [示例](missing.md)', encoding="utf-8",
+        )
+        errors = validate_output.check_delivery(self.interview, self.guide)
+        self.assertTrue(any("needs a relative topic link" in error for error in errors))
+        for target in (self.guide, self.lesson):
+            self.assertTrue(any("missing relative backlink to " + target.name in error for error in errors))
+        self.assertFalse(any("missing.md" in error for error in errors))
+
+    def test_topic_checks_local_source_links_without_checking_fragments_or_external_urls(self):
+        page = self.add_topic()
+        with page.open("a", encoding="utf-8") as stream:
+            stream.write(
+                '<a href="../../service.go#read">源码</a><a href="#read">本页章节</a>'
+                '<a href="https://example.org/missing">文档</a>'
+                '<a href="../../removed.go">旧版证据</a>'
+            )
+        errors = validate_output.check_delivery(self.interview, self.guide)
+        self.assertEqual(errors, [f"broken local file link in {page.name}: {(self.root / 'removed.go').resolve()}"])
+
     def test_accepts_linked_delivery_without_exercises_and_preserves_ids(self):
         self.assertEqual(validate_output.check_delivery(self.interview, self.guide), [])
 

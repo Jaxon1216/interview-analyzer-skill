@@ -1,18 +1,22 @@
 #!/usr/bin/env python3
 """Check resume format, or linked B/Q/C delivery structure with --guide.
 
-Only simple inline Markdown file links are checked. Semantic accuracy, anchors,
-question relevance, and writing quality require content review.
+Checks inline Markdown file links and the backlinks in optional topic pages.
+Semantic accuracy, anchors, question relevance, and writing quality require
+content review.
 """
 from __future__ import annotations
 
 import argparse
 import re
+from collections.abc import Iterator
+from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 TITLE_PATTERN = re.compile(r"^- \*\*[^*：\s][^*：]*：\*\*\s+\S")
 LINK_PATTERN = re.compile(r'(?<!!)\[[^\]]+\]\((<[^>]+>|[^\s)]+)(?:\s+"[^"]*")?\)')
+TOPIC_FILENAME = re.compile(r"(C\d+)-.+\.html")
 
 
 def without_fences(markdown: str) -> str:
@@ -46,16 +50,22 @@ def check_resume_bullets(markdown: str) -> list[str]:
     return [f"use '- **具体支柱名：** 正文': {line}" for line in bullets if not TITLE_PATTERN.match(line)]
 
 
-def local_links(markdown: str, owner: Path) -> list[Path]:
-    result = []
+def file_target(href: str) -> Path | None:
+    target = urlsplit(href)
+    if target.scheme or href.startswith("//") or not target.path:
+        return None
+    return Path(unquote(target.path))
+
+
+def markdown_targets(markdown: str) -> Iterator[Path]:
     for raw in LINK_PATTERN.findall(without_fences(markdown)):
-        target = raw.strip("<>")
-        if target.startswith("#") or urlsplit(target).scheme or target.startswith("//"):
-            continue
-        path = unquote(target.split("#", 1)[0])
-        if path:
-            result.append((owner.parent / path).resolve())
-    return result
+        target = file_target(raw.strip("<>"))
+        if target is not None:
+            yield target
+
+
+def local_links(markdown: str, owner: Path) -> list[Path]:
+    return [(owner.parent / target).resolve() for target in markdown_targets(markdown)]
 
 
 def table_rows(markdown: str, prefix: str) -> list[list[str]]:
@@ -69,6 +79,88 @@ def table_rows(markdown: str, prefix: str) -> list[list[str]]:
 def field(body: str, name: str) -> str:
     match = re.search(r"^(?:-\s*)?(?:\*\*)?" + re.escape(name) + r"(?:\*\*)?\s*[:：]\s*(.+)$", body, re.M)
     return match[1].strip() if match else ""
+
+
+class TopicFileLinks(HTMLParser):
+    def __init__(self, page: Path) -> None:
+        super().__init__()
+        self.page = page
+        self.links: set[Path] = set()
+
+    def handle_starttag(self, tag, attrs):
+        if tag != "a":
+            return
+        href = dict(attrs).get("href")
+        if href:
+            target = file_target(href)
+            if target is not None and not target.is_absolute():
+                self.links.add((self.page.parent / target).resolve())
+
+
+def check_topic_page(page: Path, guide: Path, course: Path) -> list[str]:
+    try:
+        html = page.read_text(encoding="utf-8")
+    except (OSError, UnicodeError) as exc:
+        return [f"cannot read topic {page}: {exc}"]
+    if not html.strip():
+        return [f"empty topic: {page}"]
+    parser = TopicFileLinks(page)
+    parser.feed(html)
+    parser.close()
+    errors = [f"broken local file link in {page.name}: {dest}"
+              for dest in sorted(parser.links) if not dest.is_file()]
+    for dest in (guide, course):
+        if dest not in parser.links:
+            errors.append(f"{page.name}: missing relative backlink to {dest.name}")
+    return errors
+
+
+def check_topics(
+    guide: Path, courses: dict[str, Path], route_cells: dict[str, str], docs: dict[Path, str],
+) -> list[str]:
+    errors = []
+    directories = {(course.parent / "topics").resolve() for course in courses.values()}
+    pages = {
+        page for folder in directories for page in folder.glob("C*-*.html")
+        if TOPIC_FILENAME.fullmatch(page.name)
+    }
+    linked: dict[tuple[str, str], set[Path]] = {}
+    for cid, course in courses.items():
+        topic_dir = (course.parent / "topics").resolve()
+        for place, owner, body in (
+            ("guide route", guide, route_cells[cid]), ("course", course, docs[course]),
+        ):
+            relative = set()
+            for target in markdown_targets(body):
+                page = (owner.parent / target).resolve()
+                if not TOPIC_FILENAME.fullmatch(page.name):
+                    if place == "guide route" and page.parent in directories and page.suffix == ".html":
+                        errors.append(f"{cid}: invalid topic filename in guide route: {page.name}")
+                    continue
+                # The route cell declares a topic alongside the lesson. In the
+                # full lesson, other HTML files can be ordinary source evidence.
+                if page.parent not in directories and (place == "course" or page.parent.name != "topics"):
+                    continue
+                pages.add(page)
+                if place == "guide route" and (page.parent != topic_dir or not page.name.startswith(cid + "-")):
+                    errors.append(f"{cid}: {place} links to a topic outside its course: {page}")
+                if target.is_absolute():
+                    errors.append(f"{cid}: {place} needs a relative topic link: {page}")
+                else:
+                    relative.add(page)
+            linked[cid, place] = relative
+
+    for page in sorted(pages):
+        cid = page.name.split("-", 1)[0]
+        course = courses.get(cid)
+        if course is None or page.parent != (course.parent / "topics").resolve():
+            errors.append(f"topic has no owning course here: {page}")
+            continue
+        for place in ("guide route", "course"):
+            if page not in linked[cid, place]:
+                errors.append(f"{cid}: missing topic link in {place}: {page.name}")
+        errors.extend(check_topic_page(page, guide, course))
+    return errors
 
 
 def check_delivery(interview: Path, guide: Path) -> list[str]:
@@ -96,6 +188,7 @@ def check_delivery(interview: Path, guide: Path) -> list[str]:
     titles = re.findall(r"^- \*\*([^*：]+)：\*\*", section(clean, "简历 bullet"), re.M)
 
     courses: dict[str, Path] = {}
+    route_cells: dict[str, str] = {}
     for row in table_rows(section(without_fences(overview), "核心学习路线"), "C"):
         if len(row) != 5:
             errors.append(f"{row[0]}: core course table needs 5 columns")
@@ -107,6 +200,7 @@ def check_delivery(interview: Path, guide: Path) -> list[str]:
         if row[0] in courses or links[0] in courses.values():
             errors.append(f"duplicate course ID or file: {row[0]}")
         courses[row[0]] = links[0]
+        route_cells[row[0]] = row[1]
     if not courses:
         errors.append("missing core C course rows in '## 核心学习路线'")
 
@@ -124,6 +218,7 @@ def check_delivery(interview: Path, guide: Path) -> list[str]:
             if target not in backlinks:
                 errors.append(f"{cid}: missing backlink to {target.name}")
 
+    errors.extend(check_topics(guide, courses, route_cells, docs))
     mappings: dict[str, str] = {}
     mapped_q: dict[str, set[str]] = {}
     mapped_courses: dict[str, set[Path]] = {}

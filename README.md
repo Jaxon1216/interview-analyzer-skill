@@ -49,16 +49,21 @@ interview-prep/
 │   └── 面经.md                 # 简历 bullet、主问、追问与口播
 └── guide-backend/
     ├── 01-主题.md              # 完整核心课程
-    └── 02-主题.md
+    ├── 02-主题.md
+    └── topics/
+        └── C01-断线恢复.html   # C01 的重点专题，可离线打开
 ```
 
 | 产物 | 你能看到什么 | 怎么用 |
 | --- | --- | --- |
 | 导学 | 模块职责、代表性链路、课程前置依赖和导航 | 先建立项目全貌，确定学习顺序 |
 | 核心课程 | 真实源码、运行机制、异常边界、需要懂什么与需要记住什么 | 沿场景读代码，讲清机制和取舍 |
+| HTML 专题 | 一页讲透一个需要比较分支、时序或状态变化的难点 | 从导学或对应课文打开页面，观察条件改变后会发生什么 |
 | 面经 | 项目简介、技术支柱、简历触发词、主问与递进追问、第一人称回答 | 对照简历练习，让每个主张都有展开依据 |
 
 未指定方向时默认全栈，课程目录为 `guide-fullstack/`；明确前端时为 `guide-frontend/`。多个项目共用输出根目录时，课程放在各自的 `{简称}/guide-{方向}/` 下。首次默认完整展开全部核心课程，选读内容按需展开。
+
+主会话从核心课程里选 1～3 个适合用 HTML 讲解的难点。宿主支持子 agent 时，每个专题交给一个子 agent，按统一模板生成，再由主会话核验源码和页面并回填链接。其他宿主由主会话使用同一模板完成。材料没有合适的难点时，仅交付 Markdown。
 
 ## 成品示例
 
@@ -155,7 +160,7 @@ cd interview-analyzer-skill
 
 `install.sh` 是 Node CLI 的包装器，支持相同安装参数；它不包含在 npm 包内。已有 clone 时，更新源码后重新安装。
 
-也可以直接复制完整的 `skill/project-interview-skill/` 目录，其中包含 `SKILL.md`、`references/` 和 `scripts/`；迁移 Skill 无需复制 CLI 或测试工程。
+也可以直接复制完整的 `skill/project-interview-skill/` 目录，其中包含 `SKILL.md`、`assets/`（HTML 模板）、`references/` 和 `scripts/`。VS Code 安装会把完整目录放在指令文件旁，供 Agent 读取模板和规则。
 
 ## 准确性与验证
 
@@ -167,7 +172,7 @@ cd interview-analyzer-skill
 python3 ~/.agents/skills/project-interview-skill/scripts/validate_output.py interview-prep/商城/面经.md --guide interview-prep/商城/导学.md
 ```
 
-校验覆盖 bullet 格式、B/Q/C 关联、核心课程章节和本地链接。**整组选材、事实准确性、术语和成稿质量仍需分别审读。**
+校验覆盖 bullet 格式、B/Q/C 关联、核心课程章节和本地链接，也检查每个 HTML 专题能从导学和所属课程进入并返回。**整组选材、事实准确性、术语和成稿质量仍需分别审读。**
 
 开发仓库的检查入口：
 

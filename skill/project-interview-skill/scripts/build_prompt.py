@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Build a single consolidated prompt block for generating 导学 + 面经 Markdown files.
+Build a prompt for the project guide, interview notes, lessons, and HTML topics.
 
 Reads fields from CLI flags or a JSON file and prints UTF-8 Markdown for agent consumption.
 """
@@ -124,6 +124,7 @@ def build_prompt(
             "- 口播：先正面回答，按方案/原理/故障/演进题选择结构；项目口播第一人称，不设统一最低字数，不强制每道追问完整 STAR。",
             "- 默认读者能写 CRUD；方向未指定用全栈。基础按需补齐，核心精力用于数据流、特色机制、运行原理、工程质量和设计取舍。",
             "- 导学：总览含项目地图、核心课程路线与 B/Q/C 导航；首次完整展开全部核心课程，选读只列入口；课程直接写本课重点、主链、源码阅读、机制边界、需要懂什么、需要记住什么。默认不生成预测、动手验证、实验任务或理解题；用户明确要求时再补充。",
+            "- HTML 专题：保留完整 Markdown 课程。主会话从本次课程挑 1～3 个有证据、适合展示分支、时序或状态变化的难点，每页讲一个机制；无合适题材可跳过。支持子 agent 的宿主按专题实际委派，否则由主会话沿用同一模板。以 skill 的 assets/topic.html 为模板，写入对应课文目录的 topics/C01-短名.html（用实际课程 ID）。主会话验收后，把相对链接同时写入导学对应路线行第二格和该课课文。",
             "- 源码引用：相对文件链接＋符号名＋必要片段，链接相对当前文档计算；课程反向链接主导学和面经，保留用户笔记。",
             "- 源码查证是生成者职责，不转成读者作业；用户明确要求验证材料时才提供测量方法，未执行不写已通过。",
             "",

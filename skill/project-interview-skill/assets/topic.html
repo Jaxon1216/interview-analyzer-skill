@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{TOPIC_TITLE}}</title>
+  <style>
+    :root { color-scheme: light; --ink: #182d2a; --muted: #495e57; --accent: #126657; --rule: #c4cfc5; --paper: #f8f8f1; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font: 1rem/1.75 system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    main { max-width: 52rem; margin: auto; padding: 2.5rem clamp(1rem, 4vw, 2rem) 4rem; }
+    a { color: var(--accent); text-underline-offset: .2em; overflow-wrap: anywhere; }
+    nav { display: flex; gap: .5rem 1.5rem; flex-wrap: wrap; }
+    header { border-bottom: 2px solid var(--ink); padding: 1rem 0; }
+    h1 { margin: .5rem 0; font-size: clamp(1.8rem, 5vw, 2.8rem); line-height: 1.25; }
+    h2, legend { margin: 0 0 .6rem; font-size: 1.18rem; font-weight: 650; }
+    p { margin: .5rem 0; }
+    section, fieldset { margin: 1.6rem 0 0; }
+    fieldset { min-width: 0; padding: 1rem clamp(.9rem, 3vw, 1.5rem); border: 1px solid var(--rule); border-radius: .7rem; background: #fffefa; }
+    legend { padding: 0 .3rem; }
+    .choices { position: relative; margin-top: .8rem; }
+    .choices input { position: absolute; inline-size: 1px; block-size: 1px; opacity: 0; }
+    .choices label { display: inline-block; margin: 0 .3rem .5rem 0; padding: .4rem .8rem; border: 1px solid var(--rule); border-radius: .4rem; cursor: pointer; }
+    .choices input:checked + label { background: var(--ink); color: white; border-color: var(--ink); }
+    .choices input:focus-visible + label, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    .case { display: none; margin-top: .35rem; padding-top: .6rem; border-top: 1px solid var(--rule); }
+    #case-a:checked ~ .case-a, #case-b:checked ~ .case-b { display: block; }
+    .case h3 { margin: .25rem 0; font-size: 1.05rem; }
+    .path { color: var(--accent); font-weight: 600; overflow-wrap: anywhere; }
+    #evidence { border-top: 1px solid var(--rule); padding-top: 1rem; color: var(--muted); }
+    #evidence ul { padding-inline-start: 1.3rem; }
+    code { font-family: ui-monospace, monospace; overflow-wrap: anywhere; }
+    @media print { body { background: white; } nav, .choices label, .choices input { display: none; } .case { display: block; } fieldset { break-inside: avoid; } }
+  </style>
+</head>
+<body>
+  <!-- 复制到真实专题路径，再替换全部双花括号字段。文本须转义 HTML，链接须按成品文件所在目录计算并转义属性值。 -->
+  <main>
+    <nav aria-label="课程导航">
+      <a href="{{GUIDE_HREF}}">返回导学</a>
+      <a href="{{COURSE_HREF}}">返回课程 · {{COURSE_LABEL}}</a>
+    </nav>
+    <header>
+      <h1>{{TOPIC_TITLE}}</h1>
+      <p>{{LEARNING_OUTCOME}}</p>
+    </header>
+    <section id="mechanism">
+      <h2>机制怎么工作</h2>
+      <!-- 静态讲清触发条件、关键决定和后果。把结论写全，使只读这一段的读者也能理解机制。 -->
+      <p>{{MECHANISM_EXPLANATION}}</p>
+      <p>{{BOUNDARY}}</p>
+    </section>
+    <!-- 两个选择须改变一个有意义的条件、时序位置或状态。路径要写出实际符号、动作或数据；结果说明差异为何发生。
+         若此结构无法解释本机制，可改为合适的原生交互。保留完整讲解和证据入口。 -->
+    <fieldset id="explore">
+      <legend>{{CONTROL_PROMPT}}</legend>
+      <p>{{SHARED_CONTEXT}}</p>
+      <div class="choices">
+        <input id="case-a" type="radio" name="case" aria-controls="result-a" checked><label for="case-a">{{CASE_A_LABEL}}</label>
+        <input id="case-b" type="radio" name="case" aria-controls="result-b"><label for="case-b">{{CASE_B_LABEL}}</label>
+        <div class="case case-a" id="result-a">
+          <h3>{{CASE_A_LABEL}}</h3>
+          <p class="path">{{CASE_A_PATH}}</p>
+          <p>{{CASE_A_EFFECT}}</p>
+        </div>
+        <div class="case case-b" id="result-b">
+          <h3>{{CASE_B_LABEL}}</h3>
+          <p class="path">{{CASE_B_PATH}}</p>
+          <p>{{CASE_B_EFFECT}}</p>
+        </div>
+      </div>
+    </fieldset>
+    <section aria-label="复习提纲">
+      <h2>记住这一点</h2>
+      <p>{{TAKEAWAY}}</p>
+    </section>
+    <section id="evidence">
+      <h2>源码与证据</h2>
+      <p>{{SOURCE_BASELINE}}</p>
+      <!-- 按需复制条目。定位写真实文件路径和符号，可补行号；只有可靠链接才用 a，否则去掉 a 并保留定位。
+           若只有文档或测试，标明证据类型与覆盖边界；缺少依据的路径或运行结果不进入课程。 -->
+      <ul>
+        <li><a href="{{SOURCE_HREF}}"><code>{{SOURCE_LOCATOR}}</code></a> — {{SOURCE_SUPPORT}}</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

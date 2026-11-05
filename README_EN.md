@@ -1,6 +1,6 @@
 # Project Interview Skill · Source code walkthroughs and interview prep
 
-[简体中文](README.md) · **English** · [npm](https://www.npmjs.com/package/project-interview-skill) · [DeerFlow example](#deerflow-example)
+[简体中文](README.md) · **English** · [npm](https://www.npmjs.com/package/project-interview-skill) · [Preview a lesson and resume bullets](#deerflow-example)
 
 Give your coding agent a project repository and a target role. It builds a linked study guide with source code lessons, resume bullets, and interview questions and answers, so you can trace each claim back to the code that supports it.
 
@@ -74,20 +74,24 @@ If you only have project materials, paste them into the chat. The agent identifi
 
 <a name="deerflow-example"></a>
 
-## DeerFlow example · Why does saving a file return 409 first?
+## DeerFlow sample lesson and resume bullets
 
-A walkthrough generated from the DeerFlow repository produced eight core Markdown lessons and two HTML companions. C04 lets you choose the cursor from which to replay events. C08 follows two browser tabs editing the same file. Both pages live under `guide-fullstack/topics/` in the generated output.
+One run on the DeerFlow repository produced eight source code lessons, two interactive HTML topics, and six resume bullets. Here are excerpts from the same run. The sample materials are in Chinese.
 
-The screenshot shows C08. Both tabs read the same version. One saves a change, then the other tries to save. Which check runs first?
+### An HTML lesson
 
-![DeerFlow artifact-save exercise showing a busy thread and an outdated file digest. The save returns HTTP 409 before checking the digest.](https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/docs/images/deerflow-artifact-save.png)
+What can a browser recover after it loses its connection to a running task? Switch between a cursor that is still in the event window and one that has expired. The lesson shows which events the server can replay and when the client needs to reload the thread.
 
-*With a run active, the second tab gets HTTP 409 because the thread is busy. If it retries after the thread is idle with the same stale digest, the save gets HTTP 412.* See the [DeerFlow save handler](https://github.com/bytedance/deer-flow/blob/5ecc1c2ac2de624af354bc515d5cb04f80df226c/backend/app/gateway/routers/artifacts.py#L533).
+![An excerpt from the DeerFlow HTML lesson on connection recovery, with the event window and replay cursor.](https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/docs/images/deerflow-course-preview.png)
 
-A separate, earlier DeerFlow resume draft describes how skills load and how their tool permissions take effect. This translated excerpt comes from its reviewed revision.
+[Download the offline HTML lesson](https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/docs/examples/deerflow/deerflow-c04.zip) · [Read the study guide](docs/examples/deerflow/导学.md). Unzip the download and open the HTML file in a browser to try the different cursors.
 
-> The agent initially sees skill metadata. Selecting a skill or calling `read_file` loads its instructions on demand. An active skill's `allowed-tools` policy filters the tools shown to the model and blocks unauthorized calls at execution time.
+### Resume bullets
 
-[Revised resume bullets](docs/testing/samples/bullet-quality/deerflow-primary-revised.md) · [Source files and symbols behind each claim](docs/testing/samples/bullet-quality/deerflow-primary-evidence.md)
+The same mechanism appears in the generated resume under “Stream replay and session recovery.” The image shows two bullets from the original Chinese output.
+
+![Two DeerFlow resume bullets covering stream replay and session recovery, and concurrent artifact editing.](https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/docs/images/deerflow-resume-preview.png)
+
+[Read and copy all six resume bullets](docs/examples/deerflow/resume-bullets.md)
 
 [Evaluation record](docs/testing/2026-10-13-bullet-quality.md) · [Tests](tests/README.md) · [Report an issue](https://github.com/Jaxon1216/interview-analyzer-skill/issues) · [Email the maintainer](mailto:jiangxu05@outlook.com) · [MIT License](LICENSE)

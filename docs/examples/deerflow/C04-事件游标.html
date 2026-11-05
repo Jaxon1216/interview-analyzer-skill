@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>C04 · 断线后，下一条事件从哪里开始？</title>
+  <style>
+    :root { color-scheme: light; --ink: #182d2a; --muted: #495e57; --accent: #126657; --rule: #c4cfc5; --paper: #f8f8f1; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font: 1rem/1.75 system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    main { max-width: 52rem; margin: auto; padding: 2.5rem clamp(1rem, 4vw, 2rem) 4rem; }
+    a { color: var(--accent); text-underline-offset: .2em; overflow-wrap: anywhere; }
+    nav { display: flex; gap: .5rem 1.5rem; flex-wrap: wrap; }
+    header { border-bottom: 2px solid var(--ink); padding: 1rem 0; }
+    h1 { margin: .5rem 0; font-size: clamp(1.8rem, 5vw, 2.8rem); line-height: 1.25; }
+    h2, legend { margin: 0 0 .6rem; font-size: 1.18rem; font-weight: 650; }
+    p { margin: .5rem 0; }
+    section, fieldset { margin: 1.6rem 0 0; }
+    fieldset { min-width: 0; padding: 1rem clamp(.9rem, 3vw, 1.5rem); border: 1px solid var(--rule); border-radius: .7rem; background: #fffefa; }
+    legend { padding: 0 .3rem; }
+    .choices { position: relative; margin-top: .8rem; }
+    .choices input { position: absolute; inline-size: 1px; block-size: 1px; opacity: 0; }
+    .choices label { display: inline-block; margin: 0 .3rem .5rem 0; padding: .4rem .8rem; border: 1px solid var(--rule); border-radius: .4rem; cursor: pointer; }
+    .choices input:checked + label { background: var(--ink); color: white; border-color: var(--ink); }
+    .choices input:focus-visible + label, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    .case { display: none; margin-top: .35rem; padding-top: .6rem; border-top: 1px solid var(--rule); }
+    #case-a:checked ~ .case-a, #case-b:checked ~ .case-b, #case-c:checked ~ .case-c, #case-d:checked ~ .case-d { display: block; }
+    .case h3 { margin: .25rem 0; font-size: 1.05rem; }
+    .path { color: var(--accent); font-weight: 600; overflow-wrap: anywhere; }
+    #evidence { border-top: 1px solid var(--rule); padding-top: 1rem; color: var(--muted); }
+    #evidence ul { padding-inline-start: 1.3rem; }
+    code { font-family: ui-monospace, monospace; overflow-wrap: anywhere; }
+    @media print { body { background: white; } nav, .choices label, .choices input { display: none; } .case { display: block; } fieldset { break-inside: avoid; } }
+
+    .window { display:flex; gap:.45rem; flex-wrap:wrap; margin:.75rem 0 1rem; }
+    .window span { padding:.36rem .55rem; border:1px solid var(--rule); border-radius:.25rem; font-family:ui-monospace,monospace; }
+    .window .evicted { color:var(--muted); border-style:dashed; text-decoration:line-through; }
+    .window .kept { border-color:var(--accent); background:#e5f0e8; }
+    .frames { display:flex; flex-wrap:wrap; gap:.35rem .8rem; align-items:baseline; padding:.55rem .75rem; background:#e9f1e9; border-left:3px solid var(--accent); }
+    .frames span { color:var(--muted); font-size:.9rem; }
+    pre { margin:.6rem 0; overflow-x:auto; padding:.55rem .8rem; background:#edf0e8; line-height:1.5; }
+  </style>
+</head>
+<body>
+  <main>
+    <nav aria-label="课程导航">
+      <a href="导学.md">返回导学节选</a>
+      <a href="04-事件回放.md">返回课程 · C04 事件回放</a>
+    </nav>
+    <header>
+      <h1>C04 · 断线后，下一条事件从哪里开始？</h1>
+      <p>一次运行已经发过五条事件。浏览器重连时，内存桥能补发多少，取决于最后收到的事件 ID 和服务器仍保留的窗口。</p>
+    </header>
+    <section id="mechanism">
+      <h2>机制怎么工作</h2>
+      <p>每个 run 各有一份内存事件日志。每次发布按「毫秒时间戳-本次运行的序号」生成 ID。超过容量时删除最早的数据，并把 <code>start_offset</code> 推到仍保留的第一条。客户端把最后收到的 ID 放进 <code>Last-Event-ID</code>，服务端据此定位下一条。</p>
+      <p>下面是内存桥选起点的两个判断。序号低于窗口下界时，服务器已经无法核对当时的完整 ID，于是报告缺口。序号落在窗口内时，还要核对完整 ID 才能跳过那一条。订阅期间窗口也可能前移；若待读位置落到窗口外，桥同样发出缺口。</p><pre><code>if seq &lt; stream.start_offset:
+    return self._make_gap(stream, last_event_id)
+local_index = seq - stream.start_offset
+if 0 &lt;= local_index &lt; len(stream.events) and stream.events[local_index].id == last_event_id:
+    return stream.start_offset + local_index + 1</code></pre>
+    </section>
+    <fieldset id="explore">
+      <legend>切换重连请求</legend>
+      <p>示意数据 · 同一 run，容量设为 3，已经发布序号 0 到 4。划线的是已淘汰的两条，实线的是可回放的三条。切换请求时，服务端窗口保持相同。</p>
+      <div aria-label="窗口示意，序号 0、1 已淘汰，2、3、4 仍保留" class="window"><span class="evicted">1000-0</span><span class="evicted">1001-1</span><span class="kept">1002-2</span><span class="kept">1003-3</span><span class="kept">1004-4</span></div>
+      <div class="choices">
+<input id="case-a" type="radio" name="case" aria-controls="result-a" checked><label for="case-a">窗口内命中</label>
+<input id="case-b" type="radio" name="case" aria-controls="result-b"><label for="case-b">游标已淘汰</label>
+<input id="case-c" type="radio" name="case" aria-controls="result-c"><label for="case-c">游标未知</label>
+<input id="case-d" type="radio" name="case" aria-controls="result-d"><label for="case-d">不传游标</label>
+<div class="case case-a" id="result-a"><h3>收到过 1003-3，下一条是 1004-4</h3><p class="path">Last-Event-ID = 1003-3 → seq = 3 → 窗口索引 1 → 从序号 4 发起回放</p><p class="frames"><span>此刻可收到</span><code>1004-4</code></p><p>桥用 3 − 2 得到本地索引 1，再比对该槽位里的完整 ID。两者相同，订阅从命中事件之后开始。当前只补到 1004-4；若 run 仍在运行，订阅继续等新事件。</p></div>
+<div class="case case-b" id="result-b"><h3>收到过 1001-1，第一条是 gap</h3><p class="path">Last-Event-ID = 1001-1 → seq = 1 → 1 &lt; 2 → StreamGap</p><p class="frames"><span>此刻可收到</span><code>gap · stream_replay_gap</code></p><p>此时网关直接发送 gap 帧，不发送窗口里的 1002-2 至 1004-4。载荷给出最早 ID 1002-2、最新 ID 1004-4，以及恢复指令 reload_durable_state。gap 帧省略 SSE 的 id 字段，随后结束这条订阅。</p></div>
+<div class="case case-c" id="result-c"><h3>传入 9999-3，从 1002-2 开始</h3><p class="path">Last-Event-ID = 9999-3 → seq = 3 → 窗口索引 1 → 完整 ID 不匹配</p><p class="frames"><span>此刻可收到</span><code>1002-2 → 1003-3 → 1004-4</code></p><p>窗口索引 1 中存着 1003-3。调用方给的 ID 序号相同，但时间部分不同，桥会记录警告，从当前保留的最早一条开始。格式无法解析的值也走这个回退分支。若能解析且序号低于 2，则走左侧的已淘汰分支，即使时间部分无从核对。</p></div>
+<div class="case case-d" id="result-d"><h3>省略请求头，从 1002-2 开始</h3><p class="path">未携带 Last-Event-ID → 起始位置 = start_offset = 2</p><p class="frames"><span>此刻可收到</span><code>1002-2 → 1003-3 → 1004-4</code></p><p>调用方没有指定上次收到的事件，桥直接从仍保留的窗口头部订阅，无需匹配 ID，也不会记录未知游标警告。序号 0、1 在这个快照中已经被删去。</p></div>
+</div>
+    </fieldset>
+    <section aria-label="复习提纲">
+      <h2>记住这一点</h2>
+      <p>能定位最后一条，就从它的下一条接着读；能判定游标过旧，就用 gap 提示重载持久状态；其余未知游标在内存实现中从窗口头开始。gap 只结束当前订阅，运行可以继续。真正的流结束另发 end；创建连接的断线取消还需要满足独立的策略和运行状态条件。</p>
+    </section>
+    <section id="evidence">
+      <h2>源码与证据</h2>
+      <p>DeerFlow 提交 <code>5ecc1c2</code>。示例限定于仍保有该 run 日志的 <code>MemoryStreamBridge</code>；其他后端另有游标策略。</p>
+      <ul>
+        <li><a href="https://github.com/bytedance/deer-flow/blob/5ecc1c2ac2de624af354bc515d5cb04f80df226c/backend/packages/harness/deerflow/runtime/stream_bridge/memory.py#L75"><code>backend/packages/harness/deerflow/runtime/stream_bridge/memory.py</code></a><br><code>MemoryStreamBridge.publish · _resolve_start_offset · subscribe</code>。追加、截断、按序号定位与再次检查窗口下界。</li>
+<li><a href="https://github.com/bytedance/deer-flow/blob/5ecc1c2ac2de624af354bc515d5cb04f80df226c/backend/app/gateway/services.py#L2465"><code>backend/app/gateway/services.py</code></a><br><code>sse_consumer · format_sse</code>。gap 的恢复载荷、SSE id 字段与取消条件。</li>
+<li><a href="https://github.com/bytedance/deer-flow/blob/5ecc1c2ac2de624af354bc515d5cb04f80df226c/backend/tests/test_stream_bridge.py#L1169"><code>backend/tests/test_stream_bridge.py</code></a><br><code>test_memory_low_numeric_foreign_cursor_conservatively_yields_gap · test_memory_malformed_last_event_id_is_not_reported_as_gap</code>。两条用例分别覆盖低序号的外来 ID 与格式异常的游标。</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

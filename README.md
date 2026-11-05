@@ -1,6 +1,6 @@
 # Project Interview Skill · 项目源码导学与面试准备
 
-**简体中文** · [English](README_EN.md) · [npm](https://www.npmjs.com/package/project-interview-skill) · [看 DeerFlow 实例](#deerflow-example)
+**简体中文** · [English](README_EN.md) · [npm](https://www.npmjs.com/package/project-interview-skill) · [预览 HTML 课程和简历要点](#deerflow-example)
 
 把项目仓库交给 Codex 等 AI 编程助手，生成项目导学、源码课程、简历要点和面试问答。顺着一条简历要点，你能看到面试官可能怎么追问，再沿课程链接找到支撑回答的代码。
 
@@ -70,14 +70,24 @@ npx project-interview-skill@latest install
 
 <a name="deerflow-example"></a>
 
-## DeerFlow 实例：为什么同一次保存会先遇到 409？
+## DeerFlow 样课与简历要点
 
-在 DeerFlow 仓库的一次实际生成中，8 节核心课程配了 2 个 HTML 专题：**事件回放的游标**与**两个标签页保存同一份文件**。下图来自第二个专题。
+分析 DeerFlow 仓库后，skill 写出了 8 节源码课、2 个 HTML 专题和 6 条简历要点。下面节选一页 HTML 课和两条简历原文。
 
-![DeerFlow 文件保存专题：选中「运行中」和「基线过期」，页面显示先返回 409，尚未检查文件版本。](https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/docs/images/deerflow-artifact-save.png)
+### HTML 源码课
 
-两个标签页读到了同一版文件。甲先保存，乙拿着旧版本再保存：如果线程正忙，乙先收到 **409**；等线程空闲后用旧版本重试，才会收到 **412**。可以对照 [DeerFlow 保存请求的处理代码](https://github.com/bytedance/deer-flow/blob/5ecc1c2ac2de624af354bc515d5cb04f80df226c/backend/app/gateway/routers/artifacts.py#L533) 看这两个检查的顺序。
+这节课讲浏览器断线后怎么接上原来的任务。切换“窗口内命中”和“游标已淘汰”，可以看到服务器还能补发哪些事件，什么时候需要重新读取线程状态。下图节选了课程正文和交互演示。
 
-想看简历要点的写法，可以对照 [DeerFlow 简历节选（审读修订版）](docs/testing/samples/bullet-quality/deerflow-primary-revised.md) 和[对应的源码证据](docs/testing/samples/bullet-quality/deerflow-primary-evidence.md)。
+![DeerFlow HTML 源码课节选，展示断线重连的场景、事件窗口和游标回放。](https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/docs/images/deerflow-course-preview.png)
+
+[下载离线 HTML 课程包](https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/docs/examples/deerflow/deerflow-c04.zip) · [阅读配套导学](docs/examples/deerflow/导学.md)。解压课程包后，用浏览器打开其中的 HTML 文件即可切换游标。
+
+### 简历要点
+
+同一个断线重连机制，在面经里写成了“流式回放与会话恢复”。下面是这份项目简历的两条原文。
+
+![DeerFlow 简历中的两条原文，分别介绍流式回放与会话恢复、产物并发编辑。](https://raw.githubusercontent.com/Jaxon1216/interview-analyzer-skill/main/docs/images/deerflow-resume-preview.png)
+
+[复制全部 6 条简历要点](docs/examples/deerflow/resume-bullets.md)
 
 [测试与验证](tests/README.md) · [反馈问题](https://github.com/Jaxon1216/interview-analyzer-skill/issues) · [联系维护者](mailto:jiangxu05@outlook.com) · [MIT 许可证](LICENSE)

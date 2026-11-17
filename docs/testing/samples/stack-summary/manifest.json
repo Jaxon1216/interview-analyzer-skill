@@ -1,0 +1,69 @@
+{
+  "skill_sha256": "384cfbffe7979e450c4f66a4df50d04a4d4fb57115637b501803bf83e6b2534c",
+  "scope": "Intro/stack-only independent source generation; existing resume samples updated only in tech-stack section. Previous full E1 evidence remains tied to its earlier candidate.",
+  "runtime_changed_files": [
+    "SKILL.md",
+    "references/examples/bullet-few-shots.md",
+    "references/excellent-resumes/susu-bullet-template.md",
+    "references/rules/oral-and-resume-patterns.md",
+    "references/templates/output-templates.md",
+    "scripts/build_prompt.py"
+  ],
+  "installed_matches_frozen": true,
+  "summaries": {
+    "genbi": "Go + Gin + GORM + MySQL + Redis + RabbitMQ + DeepSeek",
+    "deerflow": "TypeScript + Next.js + Python + FastAPI + LangChain + LangGraph + MCP"
+  },
+  "sources": {
+    "genbi": {
+      "head": "8bc3edf984d1419e9f2f16d4d72d990d48ca7ad9",
+      "dirty": true
+    },
+    "deerflow": {
+      "head": "6783073a39f2de19b11d952d87f55e3fa67601f9",
+      "dirty": false
+    }
+  },
+  "checks": {
+    "npm-test": {
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 59.02
+    },
+    "pack-check": {
+      "command": [
+        "npm",
+        "run",
+        "pack:check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.74
+    },
+    "quick-validate": {
+      "command": [
+        "uv",
+        "run",
+        "--isolated",
+        "--no-project",
+        "--with",
+        "pyyaml",
+        "python",
+        "<SKILL_CREATOR>/scripts/quick_validate.py",
+        "skill/project-interview-skill"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.72
+    }
+  },
+  "gold_provenance": "Gold OCR has no standalone tech-stack list; compact core combination is an adaptation of its version heading, retaining the user-requested subheading.",
+  "archived_sha256": {
+    "deerflow-resume-revised.md": "9f1717475fdbf045b8e929600b51b1f031f9dcb6f1f4fb90289708ed21081b0c",
+    "deerflow.md": "b6ad359a2e49f977efcb09b5075674580b8bc07701ef904c028003ae274c1f95",
+    "evidence.md": "81f66ec6dde6e3e1992879eee3114d71729a92772d77291f650464730d2924e1",
+    "genbi-resume-revised.md": "ee0cdd6f7f2e4a3539dcca47ee9de2d4a1db901b7d3df4fe9640c7f5342004d6",
+    "genbi.md": "6e22fc27272570d7703219765c2cfedada9ff7f74ee72fd57dc9097efe8db59b"
+  }
+}

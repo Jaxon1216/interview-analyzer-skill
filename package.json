@@ -1,6 +1,6 @@
 {
   "name": "project-interview-skill",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "Install a project interview preparation skill for AI coding agents.",
   "license": "MIT",
   "author": "EastonJiang <jiangxu05@outlook.com>",
@@ -24,6 +24,8 @@
   ],
   "scripts": {
     "test": "python3 -m unittest discover -s tests -v",
+    "test:html": "node tests/html/run.cjs",
+    "test:html:update": "node tests/html/run.cjs --update-snapshots",
     "pack:check": "npm pack --dry-run"
   },
   "publishConfig": {
@@ -31,5 +33,8 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.0"
   }
 }

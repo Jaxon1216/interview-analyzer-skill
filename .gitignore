@@ -7,6 +7,10 @@ ASu-skills/
 
 # Local model evaluation deliveries; portable results live in docs/testing/.
 .test-runs/
+.test-repos/
+node_modules/
+test-results/
+playwright-report/
 
 .DS_Store
 __pycache__/

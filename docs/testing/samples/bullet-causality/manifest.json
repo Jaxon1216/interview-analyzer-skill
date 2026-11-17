@@ -1,0 +1,163 @@
+{
+  "date": "2026-11-17",
+  "environment": {
+    "platform": "macOS-26.4.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.4",
+    "node": "v24.15.0",
+    "npm": "11.12.1"
+  },
+  "skill_before_sha256": "5209a0243ced38fab4cc6cd75454577f42daab47e4058007fe676b37127e6ac1",
+  "skill_after_sha256": "bdc4a6b621f86da76b8f3314274f5d36657c6c01fbe267679aeb3b9000ba55b1",
+  "runtime_changed_files": [
+    "SKILL.md",
+    "references/examples/bullet-few-shots.md",
+    "references/excellent-resumes/README.md",
+    "references/excellent-resumes/susu-bullet-template.md",
+    "references/rules/oral-and-resume-patterns.md",
+    "references/rules/repository-investigation.md",
+    "references/templates/output-templates.md",
+    "scripts/build_prompt.py"
+  ],
+  "installed_matches_frozen": true,
+  "sources": {
+    "deerflow": {
+      "head": "6783073a39f2de19b11d952d87f55e3fa67601f9",
+      "dirty": false,
+      "comparable_to_pinned_source": true
+    },
+    "genbi": {
+      "head": "8bc3edf984d1419e9f2f16d4d72d990d48ca7ad9",
+      "dirty": true,
+      "head_and_status_unchanged": true,
+      "scope": "Current backend working tree; frontend only for HTTP and event contracts",
+      "comparable_to_clean_commit": false
+    }
+  },
+  "requests_sha256": {
+    "edgemetric": "b2ec633eb73d1bb4fe8c9fd64a64e53174b2659f4b63414d7173f5f2ac3376d8",
+    "genbi": "93084d51eb3dbf816977140fdb0884193cabeafcdc9330346a7b7c6f81f9a9a5",
+    "E4": "2286ffa7055ba50f21be5e2096a7870a9543fed6957166e101200bf3b8bceebf",
+    "E5": "13fca6e021cbc28f4e801103f74b870b3940a893ed2f7067f03e902dc64fd0ba",
+    "E6": "6dc9e1a9ea7f96f839f3c61219668260f4c1415a7fd1e7d4c8087e2df50c237c",
+    "deerflow": "afaaa244819b1b5557d57f02d28cc51ee239285c9122e3e2b9f04d66b99dfe26"
+  },
+  "outputs": {
+    "deerflow": {
+      "first_output": "deerflow-first.md",
+      "raw_sha256": "f10eec81135f4e970facde96cbe9711c19b28b52d634f67ca96fecd4f668513b",
+      "archived_sha256": "f10eec81135f4e970facde96cbe9711c19b28b52d634f67ca96fecd4f668513b",
+      "evidence": "deerflow-evidence.md"
+    },
+    "genbi": {
+      "first_output": "genbi-first.md",
+      "raw_sha256": "c8b7a72b289f73ba0c33c377334312379edb42a35060eb3c82961a6b2e31cf99",
+      "archived_sha256": "c8b7a72b289f73ba0c33c377334312379edb42a35060eb3c82961a6b2e31cf99",
+      "evidence": "genbi-evidence.md"
+    },
+    "edgemetric": {
+      "first_output": "edgemetric-first.md",
+      "raw_sha256": "4ad20942fed4e6274b4c0898c6a7502afc0426a1afcba59f09303ceb29054793",
+      "archived_sha256": "3a1b10c7bbcc63dd93b79c13cdef4e3bc90d43a441d9e21cf819b8b63e110776",
+      "evidence": "edgemetric-evidence.md"
+    },
+    "E4": {
+      "first_output": "E4-first.md",
+      "raw_sha256": "35dd22df9b6f6d2fa0c920b6736f819b646a2bbf46ad3b6d0345c198df72b8cc",
+      "archived_sha256": "35dd22df9b6f6d2fa0c920b6736f819b646a2bbf46ad3b6d0345c198df72b8cc"
+    },
+    "E5": {
+      "first_output": "E5-first.md",
+      "raw_sha256": "46528a025448369d42b8f59d7c5942f7a0b54837cb7759489c85b2e90bd28e94",
+      "archived_sha256": "46528a025448369d42b8f59d7c5942f7a0b54837cb7759489c85b2e90bd28e94"
+    },
+    "E6": {
+      "first_output": "E6-first.md",
+      "raw_sha256": "9bf3127509fbff959599aa1f1109eba8f3350b4b6f09b165351236a29f6f90da",
+      "archived_sha256": "9bf3127509fbff959599aa1f1109eba8f3350b4b6f09b165351236a29f6f90da"
+    }
+  },
+  "archive_transform": "First outputs retained. Only machine-local paths and links to archived evidence are normalized; content is not revised. Raw files and logs remain in ignored run directory.",
+  "automatic_checks": {
+    "npm-test": {
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 57.92
+    },
+    "pack-check": {
+      "command": [
+        "npm",
+        "run",
+        "pack:check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.63
+    },
+    "skill-validate": {
+      "command": [
+        "python3",
+        "<SKILL_CREATOR>/scripts/quick_validate.py",
+        "skill/project-interview-skill"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 0.07,
+      "note": "System Python lacks PyYAML; rerun in isolated uv environment passed without modifying project dependencies."
+    },
+    "skill-validate-uv": {
+      "command": [
+        "uv",
+        "run",
+        "--isolated",
+        "--no-project",
+        "--with",
+        "pyyaml",
+        "python",
+        "<SKILL_CREATOR>/scripts/quick_validate.py",
+        "skill/project-interview-skill"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.09
+    }
+  },
+  "semantic_review": {
+    "report": "review.md",
+    "review_raw_sha256": "5412b4733719986d0d1671fc8d30b02ad373720ff09d861e4253bf297ad80ee9",
+    "review_archived_sha256": "3dd3ef4e6da0dbdabe5b7728766b0b56dcaf411159dc12a9995ecfd8612d0b17",
+    "method": "Separate reviewer checked raw requests, first outputs and evidence; sampled original sources; no editing of first outputs.",
+    "cases": {
+      "deerflow": {
+        "composition": "pass",
+        "facts_and_terminology": "pass",
+        "required_revisions": []
+      },
+      "genbi": {
+        "composition": "pass",
+        "facts_and_terminology": "pass",
+        "required_revisions": []
+      },
+      "edgemetric": {
+        "composition": "pass",
+        "facts_and_terminology": "pass",
+        "required_revisions": []
+      },
+      "E4": {
+        "composition": "pass",
+        "facts_and_terminology": "pass",
+        "required_revisions": []
+      },
+      "E5": {
+        "composition": "pass",
+        "facts_and_terminology": "pass",
+        "required_revisions": []
+      },
+      "E6": {
+        "composition": "pass",
+        "facts_and_terminology": "pass",
+        "required_revisions": []
+      }
+    },
+    "limitations": "One first generation per case; no statistical comparison or runtime validation of source applications."
+  }
+}

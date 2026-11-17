@@ -50,6 +50,16 @@ def check_resume_bullets(markdown: str) -> list[str]:
     return [f"use '- **具体支柱名：** 正文': {line}" for line in bullets if not TITLE_PATTERN.match(line)]
 
 
+def check_project_intro(markdown: str) -> list[str]:
+    body = section(without_fences(markdown), "项目简介")
+    if not body.strip():
+        return ["missing '## 项目简介' section"]
+    stack = re.search(r"^### 技术栈[ \t]*\n(.*?)(?=^#{1,3} |\Z)", body, re.M | re.S)
+    if stack is None or not stack[1].strip():
+        return ["missing non-empty '### 技术栈' under '## 项目简介'"]
+    return []
+
+
 def file_target(href: str) -> Path | None:
     target = urlsplit(href)
     if target.scheme or href.startswith("//") or not target.path:
@@ -184,6 +194,7 @@ def check_delivery(interview: Path, guide: Path) -> list[str]:
     interview, guide = interview.resolve(), guide.resolve()
     text, overview = read(interview), read(guide)
     errors.extend(check_resume_bullets(text))
+    errors.extend(check_project_intro(text))
     clean = without_fences(text)
     titles = re.findall(r"^- \*\*([^*：]+)：\*\*", section(clean, "简历 bullet"), re.M)
 

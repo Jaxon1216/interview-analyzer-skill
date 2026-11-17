@@ -69,8 +69,10 @@ If you only have project materials, paste them into the chat. The agent identifi
 | --- | --- |
 | `interview-prep/shop/导学.md` | A project map and the order in which to read the lessons. |
 | `interview-prep/guide-backend/` | Markdown lessons that follow a request through real code, including failure paths. |
-| `interview-prep/guide-backend/topics/` | One to three offline HTML pages where changing a condition helps explain a mechanism. Agents that support delegation can assign one topic per subagent. If no topic fits, the Markdown lessons stand on their own. |
+| `interview-prep/guide-backend/topics/` | One to three offline short lessons: follow one worked example, change a condition, and see feedback explaining the result. Agents that support delegation can assign one topic per subagent. If no topic fits, the Markdown lessons stand on their own. |
 | `interview-prep/shop/面经.md` | Resume bullets, opening questions, follow-ups, and first-person answers linked back to the relevant lessons. |
+
+HTML rendering and interactions are checked in the background by default. Ask the assistant to open a preview when you want to view it. Development checks are documented in [tests/README.md](tests/README.md).
 
 <a name="deerflow-example"></a>
 

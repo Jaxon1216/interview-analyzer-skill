@@ -1,0 +1,214 @@
+{
+  "date": "2026-11-17",
+  "branch": "main",
+  "base_commit": "19ce7f88e26e53cd45759f5f213fad006a9a7317",
+  "environment": {
+    "platform": "macOS-26.4.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.4",
+    "node": "v24.15.0",
+    "npm": "11.12.1"
+  },
+  "skill_sha256": "b12585db6d9055db37ab13a9095b2c7db03a386bae3c554e03b2d705125485a1",
+  "runtime_changed_files": [
+    "SKILL.md",
+    "references/examples/bullet-few-shots.md",
+    "references/excellent-resumes/susu-bullet-template.md",
+    "references/rules/oral-and-resume-patterns.md",
+    "references/templates/output-templates.md",
+    "scripts/build_prompt.py",
+    "scripts/validate_output.py"
+  ],
+  "source": {
+    "repository_url": "https://github.com/Jaxon1216/deer-flow.git",
+    "head": "6783073a39f2de19b11d952d87f55e3fa67601f9",
+    "dirty": false,
+    "managed_cache_reused": true,
+    "fresh_clone_this_run": false
+  },
+  "installed_bundle_matches_tested_skill": true,
+  "genbi_status_unchanged": true,
+  "first_e1": {
+    "courses": 9,
+    "bullets": 5,
+    "main_questions": 6,
+    "html_topics": 2,
+    "semantic_status": "F1 revision required; see review-first.md",
+    "root_layout_status": "Mobile C05 entry below first viewport; see root-review-first.md"
+  },
+  "final_e1": {
+    "semantic_status": "F1 fixed; 5 E1 checks satisfied; see review-final.md",
+    "structure": "pass",
+    "browser": "8/8 pass"
+  },
+  "checks": {
+    "npm-test": {
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 55.13
+    },
+    "pack-check": {
+      "command": [
+        "npm",
+        "run",
+        "pack:check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.71
+    },
+    "quick-validate": {
+      "command": [
+        "uv",
+        "run",
+        "--isolated",
+        "--no-project",
+        "--with",
+        "pyyaml",
+        "python",
+        "<SKILL_CREATOR>/scripts/quick_validate.py",
+        "skill/project-interview-skill"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.27
+    },
+    "html-baseline": {
+      "command": [
+        "npm",
+        "run",
+        "test:html"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 5.14
+    },
+    "genbi-format": {
+      "scope": "GenBI intro/stack hierarchy and bullet formatting only",
+      "errors": [],
+      "exit_code": 0
+    },
+    "e1-structure-first": {
+      "command": [
+        "python3",
+        "<RUN_DIR>/frozen/project-interview-skill/scripts/validate_output.py",
+        "<RUN_DIR>/e1/delivery/interview-prep/DeerFlow/面经.md",
+        "--guide",
+        "<RUN_DIR>/e1/delivery/interview-prep/DeerFlow/导学.md"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.21
+    },
+    "html-e1-first": {
+      "command": [
+        "npm",
+        "run",
+        "test:html",
+        "--",
+        "--topic-root",
+        "<RUN_DIR>/e1/delivery/interview-prep/guide-fullstack/topics"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 7.46
+    },
+    "e1-structure-final": {
+      "command": [
+        "python3",
+        "<RUN_DIR>/frozen/project-interview-skill/scripts/validate_output.py",
+        "<RUN_DIR>/e1/delivery/interview-prep/DeerFlow/面经.md",
+        "--guide",
+        "<RUN_DIR>/e1/delivery/interview-prep/DeerFlow/导学.md"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.16
+    },
+    "html-e1-final": {
+      "command": [
+        "npm",
+        "run",
+        "test:html",
+        "--",
+        "--topic-root",
+        "<RUN_DIR>/e1/delivery/interview-prep/guide-fullstack/topics"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 7.63
+    }
+  },
+  "layout_first": [
+    {
+      "page": "C05-sandbox-leases.html",
+      "viewport": "desktop",
+      "first_action_y": 921.1875,
+      "viewport_height": 1000,
+      "first_action_visible_without_scroll": true
+    },
+    {
+      "page": "C06-skill-loading.html",
+      "viewport": "desktop",
+      "first_action_y": 550.6875,
+      "viewport_height": 1000,
+      "first_action_visible_without_scroll": true
+    },
+    {
+      "page": "C05-sandbox-leases.html",
+      "viewport": "mobile",
+      "first_action_y": 1033.90625,
+      "viewport_height": 844,
+      "first_action_visible_without_scroll": false
+    },
+    {
+      "page": "C06-skill-loading.html",
+      "viewport": "mobile",
+      "first_action_y": 611.125,
+      "viewport_height": 844,
+      "first_action_visible_without_scroll": true
+    }
+  ],
+  "layout_final": [
+    {
+      "page": "C05-sandbox-leases.html",
+      "viewport": "desktop",
+      "first_action_y": 539.046875,
+      "viewport_height": 1000,
+      "first_action_visible_without_scroll": true
+    },
+    {
+      "page": "C06-skill-loading.html",
+      "viewport": "desktop",
+      "first_action_y": 550.6875,
+      "viewport_height": 1000,
+      "first_action_visible_without_scroll": true
+    },
+    {
+      "page": "C05-sandbox-leases.html",
+      "viewport": "mobile",
+      "first_action_y": 461.125,
+      "viewport_height": 844,
+      "first_action_visible_without_scroll": true
+    },
+    {
+      "page": "C06-skill-loading.html",
+      "viewport": "mobile",
+      "first_action_y": 611.125,
+      "viewport_height": 844,
+      "first_action_visible_without_scroll": true
+    }
+  ],
+  "archive_note": "Resume excerpts and review records have machine-local paths normalized; raw complete first delivery, final delivery, logs, screenshots and backup stay in the ignored run directory.",
+  "compiled_cache_note": "Root dynamic loading of frozen validator generated __pycache__. The formal fingerprint excludes bytecode caches; rules, templates and scripts are unchanged.",
+  "archive_sha256": {
+    "course-audit-first.md": "34dcee8159489dd3948a9b54f778a4082561ad7dd5c8b14825310cf7f23658e7",
+    "deerflow-resume-final.md": "33d3106d06373a0de60a1f3494e8b7c1e068b51706d3d7d51e1b437072b47f8c",
+    "deerflow-resume-first.md": "0268bab4ef6c0f86ef97d9283125a40a4e02e39fdaadb4ed028b93e520c3a4c2",
+    "genbi-evidence.md": "f580a65d7ad9bbff3d44f69011bb84a3ba2e92f71a8e1774bec23daf10292bdb",
+    "genbi-first.md": "76ae49eb96cfb4d03bc6352c3e8d58652d94dca111386558703cab85dcbb31d3",
+    "review-final.md": "7adf870bc112bb824ad011cf2721c16744ac98e55c5c06dd01c6526e4469497b",
+    "review-first.md": "6d695de427cd84ff0ddb4fd7b842599ee52435a28f35ea6671b125af904190c1",
+    "revisions.md": "da4d81fa8a722c05a83a4940b5213571be737cdd36b38f072367724915a4a5a8",
+    "root-review-first.md": "74ea0a53018c8367d44e15d33285a1a13195b2370c3cd8f1e6a25c2a0da03859"
+  },
+  "raw_review_sha256": {
+    "review-first.md": "4a78f0cd406f267b9ecd4c4800a5a4451415d7190035fdf65750e89650c4295a",
+    "review-final.md": "fdda131cef48ec06a4cb6cc049ac30d3cc77ad57f312971e933024c33bf5f3f0"
+  }
+}

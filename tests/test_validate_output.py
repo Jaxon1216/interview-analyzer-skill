@@ -24,6 +24,8 @@ class ValidateOutputTests(unittest.TestCase):
         self.lesson.parent.mkdir()
         (self.root / "service.go").write_text("package service\n", encoding="utf-8")
         self.interview.write_text(
+            "## 项目简介（简历可用）\n向调用方聚合查询资料。\n"
+            "### 技术栈\nGo、MySQL。\n"
             "## 简历 bullet\n- **查询聚合：** 聚合资料，向调用方提供完整读模型。\n"
             "## 简历 → 面试展开\n"
             "| B2 | 查询聚合 | 完整读模型 | 为什么后端聚合？ | Q4 | [C03](../guide-fullstack/03-查询.md) |\n"
@@ -49,6 +51,34 @@ class ValidateOutputTests(unittest.TestCase):
 
     def replace(self, path, old, new):
         path.write_text(path.read_text(encoding="utf-8").replace(old, new), encoding="utf-8")
+
+    def test_requires_tech_stack_inside_project_intro(self):
+        original = self.interview.read_text(encoding="utf-8")
+        for replacement in (
+            "",
+            "## 技术栈\nGo、MySQL。\n",
+            "```markdown\n### 技术栈\nGo、MySQL。\n```\n",
+        ):
+            with self.subTest(replacement=replacement):
+                self.interview.write_text(
+                    original.replace("### 技术栈\nGo、MySQL。\n", replacement),
+                    encoding="utf-8",
+                )
+                errors = validate_output.check_delivery(self.interview, self.guide)
+                self.assertTrue(any("技术栈" in error for error in errors))
+
+    def test_rejects_empty_tech_stack(self):
+        self.replace(self.interview, "Go、MySQL。", "  ")
+        errors = validate_output.check_delivery(self.interview, self.guide)
+        self.assertTrue(any("技术栈" in error for error in errors))
+
+    def test_bullet_only_validation_accepts_documents_without_intro(self):
+        self.assertEqual(
+            validate_output.check_resume_bullets(
+                "## 简历 bullet\n- **请求幂等：** 按业务编号复用结果，避免重复扣款。\n"
+            ),
+            [],
+        )
 
     def add_topic(self, name="C03-查询边界.html", *, route=True, lesson=True):
         page = self.lesson.parent / "topics" / name

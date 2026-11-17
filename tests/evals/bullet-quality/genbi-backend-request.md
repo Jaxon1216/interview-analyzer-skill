@@ -1,0 +1,1 @@
+请使用给定的 project-interview-skill，为后端研发岗位生成 GenBI 的项目简介和完整简历 bullet。基于 ${GENBI_ROOT}/backend 的完整后端范围自行选材，按需只读查证源码；前端仅用于确认 HTTP 与事件通知契约。默认目标简历模式，没有个人职责或线上收益数字材料。不要读取现有 interview-prep 等生成材料作为事实来源。此次只要简介、bullet 和独立的源码证据记录，分别保存到 ${OUTPUT_DIR}/output.md 和 ${OUTPUT_DIR}/evidence.md，不生成课程、面经或启动应用。
